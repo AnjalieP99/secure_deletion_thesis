@@ -1,0 +1,18 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{List of Tables}{v}{section*.1}%
+\contentsline {chapter}{List of Figures}{vi}{section*.2}%
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Goal}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Struttura della tesi}{1}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Background}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}A Taxonomy of Anti-Forensic Techniques}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}The Principles of Data Deletion and Persistence}{3}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Traditional Secure Deletion Techniques}{4}{section.2.3}%
+\contentsline {section}{\numberline {2.4}The Flash Memory Challenge}{4}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Secure Deletion in Virtualized and Containerized Environments}{5}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Legal and Ethical Dimensions}{5}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Summary and Identified Research Gaps}{5}{section.2.7}%
+\contentsline {chapter}{\numberline {A}Galileo}{6}{appendix.A}%

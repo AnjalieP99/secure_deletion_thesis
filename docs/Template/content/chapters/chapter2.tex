@@ -1,0 +1,85 @@
+\chapter{Background}
+\label{sec:literature_review}
+
+The growing dependence on digital systems for both personal and professional activities has resulted in an unprecedented accumulation of sensitive information. As organizations and individuals increasingly store confidential data on a wide range of digital media—ranging from traditional hard drives to solid-state drives and cloud environments—the need for reliable and verifiable data deletion mechanisms has become critical. Failure to ensure proper data sanitization can expose users to privacy breaches, corporate espionage, and regulatory non-compliance.
+
+From a cybersecurity perspective, secure deletion plays a dual role. On one hand, it is an essential component of data protection and privacy preservation, ensuring that information is irretrievably removed when no longer needed. On the other hand, it can also be employed as part of anti-forensic strategies, deliberately obstructing digital investigations by erasing potential evidence. Understanding this duality is fundamental to appreciating the technical and ethical challenges that surround secure deletion.
+
+The following sections provide an overview of the conceptual and technical foundations that inform this research. First, a taxonomy of anti-forensic techniques is presented to situate secure deletion within the broader context of digital obfuscation strategies. Then, the principles of data deletion and persistence are examined, followed by an analysis of traditional and modern deletion approaches across different storage technologies and virtualized environments. Finally, the legal and ethical implications of secure deletion are discussed, highlighting the complex balance between privacy rights and forensic accountability.
+
+This background establishes the theoretical basis for the experimental framework proposed in this thesis, which aims to evaluate and compare the effectiveness of secure deletion methods across contemporary computing infrastructures.
+
+% use [] to set name for ToC
+\section {A Taxonomy of Anti-Forensic Techniques} % ok with fontsize=12pt
+
+Anti-forensics refers to a collection of methods, tools, and strategies designed to hinder or prevent digital forensic analysis. These techniques aim to obscure, alter, or destroy digital evidence in ways that reduce the likelihood of recovery or interpretation. They can be broadly categorized into four groups: \textbf{ data hiding, artifact wiping, data obfuscation, and trail obfuscation.}
+
+\begin{itemize}
+    \item \textbf{Data hiding} involves concealing information within other files or unused storage areas. Common examples include steganography, slack space manipulation, or the use of hidden partitions.
+
+    \item \textbf{Artifact wiping} refers to the deliberate deletion of data to remove traces of activity—this is where secure deletion techniques become highly relevant.
+
+    \item  \textbf{Data obfuscation} aims to mislead investigators through encryption, compression, or format alteration.
+    
+    \item \textbf{Trail obfuscation} manipulates timestamps, logs, or metadata to confuse event timelines.
+\end{itemize}
+
+
+Understanding these categories provides context for why secure deletion is often used not only for privacy or compliance, but also as an anti-forensic tool. However, this dual use highlights the ethical balance between data protection and evidence preservation that this research seeks to explore.
+
+\section{The Principles of Data Deletion and Persistence} % ok with fontsize=12pt
+
+When data is deleted from a digital system, it is rarely removed immediately from physical storage. Instead, operating systems typically mark the storage space as available, leaving the underlying data intact until it is overwritten. This phenomenon is known as \textbf{data remanence.}
+
+The persistence of data depends on multiple layers:
+
+\begin{itemize}
+    \item \textbf{File system behavior:} For example, NTFS, ext4, and APFS handle deletion metadata differently.
+    
+    \item \textbf{Storage medium characteristics:} Magnetic disks allow partial overwriting, while flash-based storage requires block-level erasure.
+    
+    \item \textbf{Caching and journaling mechanisms:} Modern systems often maintain hidden copies for reliability, which can retain deleted content.
+
+\end{itemize}
+
+Effective secure deletion must therefore operate below the file system layer and take into account these persistence mechanisms to ensure irrecoverability.
+
+
+\section{Traditional Secure Deletion Techniques}
+
+Historically, secure deletion relied on \textit{overwriting} — writing random or fixed patterns over the data to prevent recovery. Tools like shred, srm, and dd were widely used for this purpose. Standards such as the \textbf{U.S. Department of Defense (DoD 5220.22-M)} specified multiple overwrite passes to ensure data erasure on magnetic media.
+
+However, as storage technologies evolved, it became clear that overwriting is not always reliable:
+\begin{itemize}
+    \item Logical and physical mapping layers (e.g., in SSDs) can redirect writes, leaving original data intact.
+    
+    \item Wear leveling mechanisms in flash memory complicate direct access to physical storage locations.
+    
+    \item Modern drives may maintain hidden or reserved areas inaccessible to user-level commands.
+
+\end{itemize}
+
+While traditional techniques remain relevant for certain media, they no longer guarantee complete data sanitization on modern hardware.
+
+
+\section{The Flash Memory Challenge}
+
+Flash-based storage, including SSDs and USB drives, introduces unique challenges for secure deletion due to its internal \textbf{wear-leveling algorithms and block-based architecture}. Unlike magnetic disks, flash memory cannot overwrite data directly; instead, it must erase entire blocks before writing new data. This results in copies of deleted information potentially persisting in unaddressed cells.
+
+Additional complications arise from:
+
+\begin{itemize}
+    \item \textbf{Over-provisioning:} Manufacturers reserve hidden blocks for performance, inaccessible to standard overwriting commands.
+    
+    \item \textbf{Garbage collection:} Automated internal processes may relocate or temporarily preserve deleted data.
+    
+    \item \textbf{TRIM command behavior:} While intended to improve SSD performance, TRIM’s effect on secure deletion is inconsistent across devices and operating systems.
+
+\end{itemize}
+
+These characteristics make flash memory a critical focus area for experimental evaluation frameworks like the one proposed in this thesis.
+
+
+\section{Secure Deletion in Virtualized and Containerized Environments}
+\section{Legal and Ethical Dimensions}
+\section{Summary and Identified Research Gaps}

@@ -17,11 +17,11 @@ This research aims to create an experimental framework for evaluating secure del
 
 ## Repository Structure
 
-secure-deletion-thesis/
-├── docs/ # Documentation, papers, references
-├── scripts/ # Automation and testing scripts
-├── images/ # Diagrams, charts, screenshots
-├── results/ # Experimental data and analysis
-├── logs/ # Experiment logs and raw outputs
-└── README.md
+- secure-deletion-thesis/
+- ├── docs/ # Documentation, papers, references
+- ├── scripts/ # Automation and testing scripts
+- ├── images/ # Diagrams, charts, screenshots
+- ├── results/ # Experimental data and analysis
+- ├── logs/ # Experiment logs and raw outputs
+- └── README.md
 

@@ -1,4 +1,3 @@
-# Thesis_Secure_Deletion
 # Secure Deletion Techniques Evaluation Framework
 
 A Master's Thesis Project on Digital Forensics and Anti-Forensics

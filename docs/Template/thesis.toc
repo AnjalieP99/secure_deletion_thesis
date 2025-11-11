@@ -14,3 +14,4 @@
 \contentsline {section}{\numberline {2.6}Legal and Ethical Dimensions}{5}{section.2.6}%
 \contentsline {section}{\numberline {2.7}Summary and Identified Research Gaps}{5}{section.2.7}%
 \contentsline {chapter}{\numberline {A}Galileo}{6}{appendix.A}%
+\contentsline {chapter}{Bibliography}{7}{lstnumber.-1.1}%

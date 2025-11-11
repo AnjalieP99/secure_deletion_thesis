@@ -1,0 +1,82 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{app14125302}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=05877e667648f0530b9099d14336ef0d}{%
+           family={González\bibnamedelima Arias},
+           familyi={G\bibinitperiod\bibinitdelim A\bibinitperiod},
+           given={Rafael},
+           giveni={R\bibinitperiod}}}%
+        {{hash=a82c1fc73bbc63a3ddb77c609e682240}{%
+           family={Bermejo\bibnamedelima Higuera},
+           familyi={B\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Javier},
+           giveni={J\bibinitperiod}}}%
+        {{hash=064df8ff1b58f194911e93c17e1089e5}{%
+           family={Rainer\bibnamedelima Granados},
+           familyi={R\bibinitperiod\bibinitdelim G\bibinitperiod},
+           given={J.\bibnamedelimi Javier},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=e53bdf84bf47d95dd986ad2b164a5a53}{%
+           family={Bermejo\bibnamedelima Higuera},
+           familyi={B\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Juan\bibnamedelima Ramón},
+           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=66a9012bc810399ee72561c866f63633}{%
+           family={Sicilia\bibnamedelima Montalvo},
+           familyi={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Juan\bibnamedelima Antonio},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{4f0067382df307ae9363fc954e6a1037}
+      \strng{fullhash}{158797a21a720e109238b4edce9a8aae}
+      \strng{fullhashraw}{158797a21a720e109238b4edce9a8aae}
+      \strng{bibnamehash}{158797a21a720e109238b4edce9a8aae}
+      \strng{authorbibnamehash}{158797a21a720e109238b4edce9a8aae}
+      \strng{authornamehash}{4f0067382df307ae9363fc954e6a1037}
+      \strng{authorfullhash}{158797a21a720e109238b4edce9a8aae}
+      \strng{authorfullhashraw}{158797a21a720e109238b4edce9a8aae}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one’s way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.}
+      \field{issn}{2076-3417}
+      \field{journaltitle}{Applied Sciences}
+      \field{number}{12}
+      \field{title}{Systematic Review: Anti-Forensic Computer Techniques}
+      \field{volume}{14}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.3390/app14125302
+      \endverb
+      \verb{urlraw}
+      \verb https://www.mdpi.com/2076-3417/14/12/5302
+      \endverb
+      \verb{url}
+      \verb https://www.mdpi.com/2076-3417/14/12/5302
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

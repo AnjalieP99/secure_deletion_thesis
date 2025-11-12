@@ -7,11 +7,11 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {chapter}{\numberline {2}Background}{2}{chapter.2}%
 \contentsline {section}{\numberline {2.1}A Taxonomy of Anti-Forensic Techniques}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}The Principles of Data Deletion and Persistence}{3}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Traditional Secure Deletion Techniques}{4}{section.2.3}%
-\contentsline {section}{\numberline {2.4}The Flash Memory Challenge}{4}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Secure Deletion in Virtualized and Containerized Environments}{5}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Legal and Ethical Dimensions}{5}{section.2.6}%
-\contentsline {section}{\numberline {2.7}Summary and Identified Research Gaps}{5}{section.2.7}%
-\contentsline {chapter}{\numberline {A}}{6}{appendix.A}%
-\contentsline {chapter}{Bibliography}{7}{lstnumber.-1.1}%
+\contentsline {section}{\numberline {2.2}The Principles of Data Deletion and Persistence}{4}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Traditional Secure Deletion Techniques}{5}{section.2.3}%
+\contentsline {section}{\numberline {2.4}The Flash Memory Challenge}{5}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Secure Deletion in Virtualized and Containerized Environments}{6}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Legal and Ethical Dimensions}{6}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Summary and Identified Research Gaps}{6}{section.2.7}%
+\contentsline {chapter}{\numberline {A}}{7}{appendix.A}%
+\contentsline {chapter}{Bibliography}{8}{lstnumber.-1.1}%

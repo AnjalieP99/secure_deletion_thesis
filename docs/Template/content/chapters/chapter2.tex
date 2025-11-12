@@ -13,44 +13,51 @@ This background establishes the theoretical basis for the experimental framework
 % use [] to set name for ToC
 \section {A Taxonomy of Anti-Forensic Techniques} % ok with fontsize=12pt
 
-AntiForensics refer to the deliberate use of various techniques, procedures, tools and stratergies to obstruct the collection of digital evidences from a computer system.
-The main objective of these methodologies are to hinder Data Collection and impede Forensic investigations. hese techniques aim to obscure, alter, or destroy digital 
-evidence in ways that reduce the likelihood of recovery or interpretation. A Systematic Review by González Arias, et al. \cite{app14125302} presents a comprehensive 
-taxonomy of anti-forensic techniques and tools, categorizing them into below primary groups:
+The field of digital forensics is founded on the assumption that traces of user activity persist within digital systems and can be extracted for analysis and attribution.
+Anti-Forensics challenges this assumption by allowing the deliberate use of various techniques, procedures, tools and stratergies to obstruct the collection of digital 
+evidences from a computer system. The main objective of these methodologies are to hinder Data Collection and impede Forensic investigations. hese techniques aim to obscure, 
+alter, or destroy digital evidence in ways that reduce the likelihood of recovery or interpretation. González Arias, et al. \cite{SystematicReview} provide one of the most 
+comprehensive systematic reviews of this domain, analyzing 220 studies spanning from 2006 to 2022. Their taxonomy identifies four overarching categories of anti-forensic 
+activity: \textbf{data destruction, artefact deletion, obfuscation, and attacks on forensic tools and methods.}
 
 
 \begin{itemize}
-    \item \textbf{Data hiding} involves concealing information within other files or unused storage areas. Common examples include steganography, slack space manipulation, or the use of hidden partitions.
+    \item \textbf{Data destruction} refers to the deliberate and irreversible removal of information, often achieved through overwriting, encryption, or physical destruction.
 
-    \item \textbf{Artifact deletion} refers to the deliberate deletion of data to remove traces of activity—this is where secure deletion techniques become highly relevant.
+    \item \textbf{Artifact deletion} refers to the deliberate deletion of data to remove traces of activity—this is where \textit{secure deletion} techniques become highly relevant.
 
-    \item  \textbf{Obfuscation of data} aims to mislead investigators through encryption, compression, or format alteration.
-    
-    \item \textbf{Trail obfuscation} manipulates timestamps, logs, or metadata to confuse event timelines.
+    \item  \textbf{Obfuscation} aims to mislead investigators disguising the nature, structure, or location of data to hinder recognition and analysis (e.g., steganography or data fragmentation).
     
     \item \textbf{Attacks of Forensic Tools and Methods} exploit vulnerabilities in forensic software or hardware to corrupt or mislead analysis.
-\end{itemize}
+\end{itemize} 
 
-
-Understanding these categories provides context for why secure deletion is often used not only for privacy or compliance, but also as an anti-forensic tool. However, this dual use highlights the ethical balance between data protection and evidence preservation that this research seeks to explore.
+This review highlights that while forensic techniques continue to evolve, so too do the methods employed to counteract them. But anti-forensic strategies remains a neglected 
+research field, lacking standardized terminology, empirical testing, and benchmark datasets which makes it difficult to compare results across studies or build systematic defenses.   
+Understanding these categories provides context for why secure deletion is often used for privacy or compliance, and also as an anti-forensic tool. However, this dual use 
+highlights the ethical balance between data protection and evidence preservation that this research seeks to explore. Secure deletion has an unclear place in this classification.  
+If it is used to hide criminal conduct, it could be considered a purposeful anti-forensic act, although it could fulfill lawful privacy or regulatory compliance aims, such as the EU's \textit{right to erasure.}
+Context and intent make the difference, as Arias et al note, \cite{SystematicReview} “the same technique that safeguards confidentiality can, in adversarial hands, obstruct justice.”  
+Therefore, any balanced cybersecurity framework must take both forensic countermeasures and privacy-preserving computing into account when studying secure deletion.
 
 \section{The Principles of Data Deletion and Persistence} % ok with fontsize=12pt
 
-When data is deleted from a digital system, it is rarely removed immediately from physical storage. Instead, operating systems typically mark the storage space as available, leaving the underlying data intact until it is overwritten. This phenomenon is known as \textbf{data remanence.}
+Data deletion in digital systems is far more complex than its terminology suggests. Deleting a file from an operating system interface rarely removes its physical presence from the storage
+medium. Instead, the system merely updates metadata; marking sectors as available for reuse while leaving the original data intact until overwritten. Joukov, Papaxenopoulos, and Zadok \cite{SecureDeletionMyths}
+famously identified several pervasive misconceptions about secure deletion that persist even among professionals. Chief among these is the assumption that encryption alone guarantees data 
+destruction, or that multiple overwrites are necessary for secure erasure.
+Their research demonstrated that a single, atomic overwrite operation is generally sufficient for magnetic storage, provided it is executed consistently and covers all data replicas, including 
+journaling and metadata. However, the authors also highlighted the challenge of maintaining crash consistency — ensuring that deletion operations complete even in the event of system interruptions 
+or power loss. This observation remains crucial in the context of modern SSDs, where caches and mapping tables may retain data even after deletion is logically completed. \\
 
-The persistence of data depends on multiple layers:
+Reardon, Basin, and Čapkun \cite{reardon2013sok} contributed a foundational Systematization of Knowledge (SoK) on secure data deletion, bridging the gap between disparate methods and definitions.
+They proposed a layered taxonomy consisting of the user layer, file system, device driver, controller, and physical hardware. Each layer offers varying trade-offs between identifiability (the precision 
+with which data can be targeted for deletion) and irrecoverability (the assurance that deleted data cannot be restored).
 
-\begin{itemize}
-    \item \textbf{File system behavior:} For example, NTFS, ext4, and APFS handle deletion metadata differently.
-    
-    \item \textbf{Storage medium characteristics:} Magnetic disks allow partial overwriting, while flash-based storage requires block-level erasure.
-    
-    \item \textbf{Caching and journaling mechanisms:} Modern systems often maintain hidden copies for reliability, which can retain deleted content.
+Their analysis revealed that higher layers (e.g., application or file system) possess semantic understanding of what to delete but lack physical control over the underlying media. Conversely, lower
+layers (e.g., hardware controllers) can permanently erase data but cannot discern its logical context. The tension between these layers defines the central challenge of secure deletion: achieving both
+semantic correctness and physical assurance.
 
-\end{itemize}
-
-Effective secure deletion must therefore operate below the file system layer and take into account these persistence mechanisms to ensure irrecoverability.
-
+Moreover, Reardon et al. \cite{reardon2013sok} emphasized the importance of considering adversary models — differentiating between threats such as casual software recovery, forensic examination, or physical chip-level analysis. A deletion method effective against software recovery may still be vulnerable to forensic or hardware attacks. Thus, any secure deletion solution must be context-aware, calibrated to the adversary’s capabilities and the sensitivity of the stored data.
 
 \section{Traditional Secure Deletion Techniques}
 
@@ -90,3 +97,5 @@ These characteristics make flash memory a critical focus area for experimental e
 \section{Secure Deletion in Virtualized and Containerized Environments}
 \section{Legal and Ethical Dimensions}
 \section{Summary and Identified Research Gaps}
+
+\vspace{\stretch{1}}

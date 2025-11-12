@@ -19,7 +19,7 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
-    \entry{app14125302}{article}{}{}
+    \entry{SystematicReview}{article}{}{}
       \name{author}{5}{}{%
         {{hash=05877e667648f0530b9099d14336ef0d}{%
            family={González\bibnamedelima Arias},
@@ -74,6 +74,107 @@
       \endverb
       \verb{url}
       \verb https://www.mdpi.com/2076-3417/14/12/5302
+      \endverb
+    \endentry
+    \entry{SecureDeletionMyths}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=f2862c318c3585afa247d89a85a46648}{%
+           family={Joukov},
+           familyi={J\bibinitperiod},
+           given={Nikolai},
+           giveni={N\bibinitperiod}}}%
+        {{hash=a8421f62c4aa3783e99951a4cba2c879}{%
+           family={Papaxenopoulos},
+           familyi={P\bibinitperiod},
+           given={Harry},
+           giveni={H\bibinitperiod}}}%
+        {{hash=6c79b4d2fa53538347e4a5f171a1cd36}{%
+           family={Zadok},
+           familyi={Z\bibinitperiod},
+           given={Erez},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Alexandria, Virginia, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{ed660761aa94cd788b5c2a9ea2b71fe1}
+      \strng{fullhash}{364fbcef8e1fc65080cc1162f8973e51}
+      \strng{fullhashraw}{364fbcef8e1fc65080cc1162f8973e51}
+      \strng{bibnamehash}{364fbcef8e1fc65080cc1162f8973e51}
+      \strng{authorbibnamehash}{364fbcef8e1fc65080cc1162f8973e51}
+      \strng{authornamehash}{ed660761aa94cd788b5c2a9ea2b71fe1}
+      \strng{authorfullhash}{364fbcef8e1fc65080cc1162f8973e51}
+      \strng{authorfullhashraw}{364fbcef8e1fc65080cc1162f8973e51}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper has three goals. (1) We try to debunk several held misconceptions about secure deletion: that encryption is an ideal solution for everybody, that existing data-overwriting tools work well, and that securely deleted files must be overwritten many times. (2) We discuss new and important issues that are often neglected: secure deletion consistency in case of power failures, handling versioning and journalling file systems, and metadata overwriting. (3) We present two solutions for on-demand secure deletion. First, we have created a highly portable and flexible system that performs only the minimal amount of work in kernel mode. Second, we present two in-kernel solutions in the form of Ext3 file system patches that can perform comprehensive data and metadata overwriting. We evaluated our proposed solutions and discuss the trade-offs involved.}
+      \field{booktitle}{Proceedings of the Second ACM Workshop on Storage Security and Survivability}
+      \field{isbn}{1595935525}
+      \field{series}{StorageSS '06}
+      \field{title}{Secure deletion myths, issues, and solutions}
+      \field{year}{2006}
+      \field{pages}{61\bibrangedash 66}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1145/1179559.1179571
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/1179559.1179571
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/1179559.1179571
+      \endverb
+      \keyw{unintended data recovery,security,secure deletion,file systems}
+    \endentry
+    \entry{reardon2013sok}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=90e5044a229d18b7353f255882213933}{%
+           family={Reardon},
+           familyi={R\bibinitperiod},
+           given={Joel},
+           giveni={J\bibinitperiod}}}%
+        {{hash=96dd2002d303d0089f664a145acfbf90}{%
+           family={Basin},
+           familyi={B\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=eaa8a2cbadef36f8e7f4cba7b108b867}{%
+           family={Čapkun},
+           familyi={Č\bibinitperiod},
+           given={Srdjan},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Francisco, CA, USA}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{97cfa77dde8cff54e00664055821758a}
+      \strng{fullhash}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{fullhashraw}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{bibnamehash}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{authorbibnamehash}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{authornamehash}{97cfa77dde8cff54e00664055821758a}
+      \strng{authorfullhash}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{authorfullhashraw}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper systematizes knowledge on secure data deletion, proposing a taxonomy across hardware and software layers and identifying the trade-offs between efficiency, reliability, and irrecoverability for different deletion mechanisms.}
+      \field{booktitle}{Proceedings of the 2013 IEEE Symposium on Security and Privacy (SP'13)}
+      \field{title}{SoK: Secure Data Deletion}
+      \field{year}{2013}
+      \field{pages}{301\bibrangedash 315}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1109/SP.2013.28
       \endverb
     \endentry
   \enddatalist

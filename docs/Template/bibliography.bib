@@ -7,7 +7,7 @@
 % % The three most common and typical types of references used in
 % % IEEE publications:
 
-@article{app14125302,
+@article{SystematicReview,
 AUTHOR = {González Arias, Rafael and Bermejo Higuera, Javier and Rainer Granados, J. Javier and Bermejo Higuera, Juan Ramón and Sicilia Montalvo, Juan Antonio},
 TITLE = {Systematic Review: Anti-Forensic Computer Techniques},
 JOURNAL = {Applied Sciences},
@@ -19,4 +19,85 @@ URL = {https://www.mdpi.com/2076-3417/14/12/5302},
 ISSN = {2076-3417},
 ABSTRACT = {The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one’s way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.},
 DOI = {10.3390/app14125302}
+};
+
+@misc{holepunch, 
+author = {Zachary Ratliff and Wittmann Goh and Abe Wieland and James Mickens and Ryan Williams}, 
+title = {Holepunch: Fast, Secure File Deletion with Crash Consistency}, 
+howpublished = {Cryptology {ePrint} Archive, Paper 2023/1927}, 
+year = {2023}, 
+url = {https://eprint.iacr.org/2023/1927}
+};
+
+@Article{SyncComForensics,
+AUTHOR = {Ahmed, Abdulghani Ali and Farhan, Khalid and Ninggal, Mohd Izuan Hafez and Alselwi, Ghadir},
+TITLE = {Retrieving and Identifying Remnants of Artefacts on Local Devices Using Sync.com Cloud},
+JOURNAL = {Sensors},
+VOLUME = {25},
+YEAR = {2025},
+NUMBER = {1},
+ARTICLE-NUMBER = {106},
+URL = {https://www.mdpi.com/1424-8220/25/1/106},
+PubMedID = {39796896},
+ISSN = {1424-8220},
+ABSTRACT = {Most current research in cloud forensics is focused on tackling the challenges encountered by forensic investigators in identifying and recovering artifacts from cloud devices. These challenges arise from the diverse array of cloud service providers as each has its distinct rules, guidelines, and requirements. This research proposes an investigation technique for identifying and locating data remnants in two main stages: artefact collection and evidence identification. In the artefacts collection stage, the proposed technique determines the location of the artefacts in cloud storage and collects them for further investigation in the next stage. In the evidence identification stage, the collected artefacts are investigated to identify the evidence relevant to the cybercrime currently being investigated. These two stages perform an integrated process for mitigating the difficulty of locating the artefacts and reducing the time of identifying the relevant evidence. The proposed technique is implemented and tested by applying a forensics investigation algorithm on Sync.com cloud storage using the Microsoft Windows 10 operating system.},
+DOI = {10.3390/s25010106}
+};
+
+@mastersthesis{aronsson2025secure,
+title        = {Secure Data Deletion: Ensuring Confidentiality in Digital Systems – A Survey of Methods for Data Erasure},
+author       = {Aronsson, Fabian and Lund, Oskar},
+year         = {2025},
+school       = {Link{\"o}ping University},
+address      = {Link{\"o}ping, Sweden},
+type         = {Master's thesis},
+note         = {LIU-IDA/LITH-EX-A--2025/074--SE},
+url          = {http://www.ep.liu.se/},
+abstract     = {Secure data deletion is a critical aspect of modern cybersecurity. This thesis surveys methods for secure data deletion in digital systems, focusing on SSDs and their unique challenges compared to HDDs. It evaluates real-world secure erasure techniques and provides recommendations for defense applications.}
+};
+
+@inproceedings{SecureDeletionMyths,
+author = {Joukov, Nikolai and Papaxenopoulos, Harry and Zadok, Erez},
+title = {Secure deletion myths, issues, and solutions},
+year = {2006},
+isbn = {1595935525},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1179559.1179571},
+doi = {10.1145/1179559.1179571},
+abstract = {This paper has three goals. (1) We try to debunk several held misconceptions about secure deletion: that encryption is an ideal solution for everybody, that existing data-overwriting tools work well, and that securely deleted files must be overwritten many times. (2) We discuss new and important issues that are often neglected: secure deletion consistency in case of power failures, handling versioning and journalling file systems, and metadata overwriting. (3) We present two solutions for on-demand secure deletion. First, we have created a highly portable and flexible system that performs only the minimal amount of work in kernel mode. Second, we present two in-kernel solutions in the form of Ext3 file system patches that can perform comprehensive data and metadata overwriting. We evaluated our proposed solutions and discuss the trade-offs involved.},
+booktitle = {Proceedings of the Second ACM Workshop on Storage Security and Survivability},
+pages = {61–66},
+numpages = {6},
+keywords = {unintended data recovery, security, secure deletion, file systems},
+location = {Alexandria, Virginia, USA},
+series = {StorageSS '06}
+};
+
+
+@inproceedings{NANDSecureDeletion,
+title        = {Secure Deletion for NAND Flash File System},
+author       = {Lee, Jongmoo and Heo, Jihong and Cho, Youngjae and Hong, Joonwon and Shin, Seungyong},
+booktitle    = {Proceedings of the 2008 ACM Symposium on Applied Computing (SAC'08)},
+year         = {2008},
+pages        = {1710--1714},
+address      = {Fortaleza, Ceará, Brazil},
+publisher    = {ACM},
+doi          = {10.1145/1363686.1364093},
+isbn         = {978-1-59593-753-7},
+abstract     = {This work proposes a secure deletion mechanism for NAND flash file systems by ensuring that all encryption keys and metadata of a file are stored within the same block, allowing a single erase operation to securely delete the file.}
+};
+
+@inproceedings{reardon2013sok,
+title        = {SoK: Secure Data Deletion},
+author       = {Reardon, Joel and Basin, David and {\v{C}}apkun, Srdjan},
+booktitle    = {Proceedings of the 2013 IEEE Symposium on Security and Privacy (SP'13)},
+year         = {2013},
+pages        = {301--315},
+publisher    = {IEEE},
+address      = {San Francisco, CA, USA},
+doi          = {10.1109/SP.2013.28},
+abstract     = {This paper systematizes knowledge on secure data deletion, proposing a taxonomy across hardware and software layers and identifying the trade-offs between efficiency, reliability, and irrecoverability for different deletion mechanisms.}
 }
+
+

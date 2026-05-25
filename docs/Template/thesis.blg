@@ -1,22 +1,23 @@
 [0] Config.pm:328> INFO - This is Biber 2.21
 [0] Config.pm:331> INFO - Logfile is 'thesis.blg'
-[312] biber-MSWIN64:342> INFO - === 
-[437] Biber.pm:421> INFO - Reading 'thesis.bcf'
-[624] Biber.pm:1002> INFO - Found 3 citekeys in bib section 0
-[655] Biber.pm:4487> INFO - Processing section 0
-[694] Biber.pm:4678> INFO - Looking for bibtex file 'bibliography.bib' for section 0
-[801] bibtex.pm:1713> INFO - LaTeX decoding ...
-[858] bibtex.pm:1519> INFO - Found BibTeX data source 'bibliography.bib'
-[1127] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[1127] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
-[1127] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'it-IT'
-[1128] Biber.pm:4313> INFO - No sort tailoring available for locale 'it-IT'
-[1196] bbl.pm:676> INFO - Writing 'thesis.bbl' with encoding 'UTF-8'
-[1202] bbl.pm:779> INFO - Output to thesis.bbl
-[1202] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SMCm\f4d088b3f9f145b5c3058da33afd57d4_18340.utf8, line 24, warning: 1 characters of junk seen at toplevel
-[1203] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SMCm\f4d088b3f9f145b5c3058da33afd57d4_18340.utf8, line 32, warning: 1 characters of junk seen at toplevel
-[1203] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SMCm\f4d088b3f9f145b5c3058da33afd57d4_18340.utf8, line 47, warning: 1 characters of junk seen at toplevel
-[1203] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SMCm\f4d088b3f9f145b5c3058da33afd57d4_18340.utf8, line 59, warning: 1 characters of junk seen at toplevel
-[1204] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SMCm\f4d088b3f9f145b5c3058da33afd57d4_18340.utf8, line 78, warning: 1 characters of junk seen at toplevel
-[1204] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SMCm\f4d088b3f9f145b5c3058da33afd57d4_18340.utf8, line 91, warning: 1 characters of junk seen at toplevel
-[1204] Biber.pm:134> INFO - WARNINGS: 6
+[256] biber-MSWIN64:342> INFO - === 
+[330] Biber.pm:421> INFO - Reading 'thesis.bcf'
+[516] Biber.pm:1002> INFO - Found 4 citekeys in bib section 0
+[536] Biber.pm:4487> INFO - Processing section 0
+[553] Biber.pm:4678> INFO - Looking for bibtex file 'bibliography.bib' for section 0
+[781] bibtex.pm:1713> INFO - LaTeX decoding ...
+[820] bibtex.pm:1519> INFO - Found BibTeX data source 'bibliography.bib'
+[947] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[947] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
+[948] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'it-IT'
+[948] Biber.pm:4313> INFO - No sort tailoring available for locale 'it-IT'
+[958] bbl.pm:676> INFO - Writing 'thesis.bbl' with encoding 'UTF-8'
+[965] bbl.pm:779> INFO - Output to thesis.bbl
+[965] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SBRX\f4d088b3f9f145b5c3058da33afd57d4_19792.utf8, line 24, warning: 1 characters of junk seen at toplevel
+[965] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SBRX\f4d088b3f9f145b5c3058da33afd57d4_19792.utf8, line 32, warning: 1 characters of junk seen at toplevel
+[965] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SBRX\f4d088b3f9f145b5c3058da33afd57d4_19792.utf8, line 47, warning: 1 characters of junk seen at toplevel
+[965] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SBRX\f4d088b3f9f145b5c3058da33afd57d4_19792.utf8, line 59, warning: 1 characters of junk seen at toplevel
+[965] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SBRX\f4d088b3f9f145b5c3058da33afd57d4_19792.utf8, line 78, warning: 1 characters of junk seen at toplevel
+[965] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SBRX\f4d088b3f9f145b5c3058da33afd57d4_19792.utf8, line 91, warning: 1 characters of junk seen at toplevel
+[965] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_SBRX\f4d088b3f9f145b5c3058da33afd57d4_19792.utf8, line 103, warning: 1 characters of junk seen at toplevel
+[966] Biber.pm:134> INFO - WARNINGS: 7

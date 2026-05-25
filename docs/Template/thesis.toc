@@ -5,13 +5,18 @@
 \contentsline {chapter}{List of Tables}{v}{section*.1}%
 \contentsline {chapter}{List of Figures}{vi}{section*.2}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Background}{2}{chapter.2}%
-\contentsline {section}{\numberline {2.1}A Taxonomy of Anti-Forensic Techniques}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}The Principles of Data Deletion and Persistence}{4}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Traditional Secure Deletion Techniques}{5}{section.2.3}%
-\contentsline {section}{\numberline {2.4}The Flash Memory Challenge}{5}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Secure Deletion in Virtualized and Containerized Environments}{6}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Legal and Ethical Dimensions}{6}{section.2.6}%
-\contentsline {section}{\numberline {2.7}Summary and Identified Research Gaps}{6}{section.2.7}%
-\contentsline {chapter}{\numberline {A}}{7}{appendix.A}%
-\contentsline {chapter}{Bibliography}{8}{lstnumber.-1.1}%
+\contentsline {chapter}{\numberline {2} Background and Related Work }{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}A Taxonomy of Anti-Forensic Techniques}{4}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Secure Deletion; Challenges and Limitations}{5}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Traditional Secure Deletion Techniques}{6}{section.2.3}%
+\contentsline {section}{\numberline {2.4}The Flash Memory Challenge}{6}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Secure Deletion in Virtualized and Containerized Environments}{7}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Legal and Ethical Dimensions}{7}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Summary and Identified Research Gaps}{7}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Systematic Review of Secure Deletion Methods}{8}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Experimental Framework and Methodology}{9}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Experimental Results and Analysis}{10}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Interpretation of Findings and Implications}{11}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Conclusions and Future Work}{12}{chapter.7}%
+\contentsline {chapter}{\numberline {A}Appendix A}{13}{appendix.A}%
+\contentsline {chapter}{Bibliography}{14}{lstnumber.-1.1}%

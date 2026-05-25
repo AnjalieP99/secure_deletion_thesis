@@ -1,21 +1,29 @@
-\chapter {Background}
+\chapter { Background and Related Work } % ok with fontsize=12pt
 
 \label{sec:literature_review}
 
-The growing dependence on digital systems for both personal and professional activities has resulted in an unprecedented accumulation of sensitive information. As organizations and individuals increasingly store confidential data on a wide range of digital media—ranging from traditional hard drives to solid-state drives and cloud environments—the need for reliable and verifiable data deletion mechanisms has become critical. Failure to ensure proper data sanitization can expose users to privacy breaches, corporate espionage, and regulatory non-compliance.
+The growing dependence on digital systems for both personal and professional activities has resulted in an unprecedented accumulation of sensitive information. As organizations and individuals 
+increasingly store confidential data on a wide range of digital media—ranging from traditional hard drives to solid-state drives and cloud environments—the need for reliable and verifiable data 
+deletion mechanisms has become critical. Failure to ensure proper data sanitization can expose users to privacy breaches, corporate espionage, and regulatory non-compliance.
 
-From a cybersecurity perspective, secure deletion plays a dual role. On one hand, it is an essential component of data protection and privacy preservation, ensuring that information is irretrievably removed when no longer needed. On the other hand, it can also be employed as part of anti-forensic strategies, deliberately obstructing digital investigations by erasing potential evidence. Understanding this duality is fundamental to appreciating the technical and ethical challenges that surround secure deletion.
+From a cybersecurity perspective, secure deletion plays a dual role. On one hand, it is an essential component of data protection and privacy preservation, ensuring that information is irretrievably 
+removed when no longer needed. On the other hand, it can also be employed as part of anti-forensic strategies, deliberately obstructing digital investigations by erasing potential evidence. 
+Understanding this duality is fundamental to appreciating the technical and ethical challenges that surround secure deletion.
 
-The following sections provide an overview of the conceptual and technical foundations that inform this research. First, a taxonomy of anti-forensic techniques is presented to situate secure deletion within the broader context of digital obfuscation strategies. Then, the principles of data deletion and persistence are examined, followed by an analysis of traditional and modern deletion approaches across different storage technologies and virtualized environments. Finally, the legal and ethical implications of secure deletion are discussed, highlighting the complex balance between privacy rights and forensic accountability.
+The following sections provide an overview of the conceptual and technical foundations that inform this research. First, a taxonomy of anti-forensic techniques is presented to situate secure deletion
+ within the broader context of digital obfuscation strategies. Then, the principles of data deletion and persistence are examined, followed by an analysis of traditional and modern deletion approaches 
+ across different storage technologies and virtualized environments. Finally, the legal and ethical implications of secure deletion are discussed, highlighting the complex balance between privacy 
+ rights and forensic accountability.
 
-This background establishes the theoretical basis for the experimental framework proposed in this thesis, which aims to evaluate and compare the effectiveness of secure deletion methods across contemporary computing infrastructures.
+This background establishes the theoretical basis for the experimental framework proposed in this thesis, which aims to evaluate and compare the effectiveness of secure deletion methods across 
+contemporary computing infrastructures.
 
 % use [] to set name for ToC
 \section {A Taxonomy of Anti-Forensic Techniques} % ok with fontsize=12pt
 
 The field of digital forensics is founded on the assumption that traces of user activity persist within digital systems and can be extracted for analysis and attribution.
 Anti-Forensics challenges this assumption by allowing the deliberate use of various techniques, procedures, tools and stratergies to obstruct the collection of digital 
-evidences from a computer system. The main objective of these methodologies are to hinder Data Collection and impede Forensic investigations. hese techniques aim to obscure, 
+evidences from a computer system. The main objective of these methodologies are to hinder Data Collection and impede Forensic investigations. These techniques aim to obscure, 
 alter, or destroy digital evidence in ways that reduce the likelihood of recovery or interpretation. González Arias, et al. \cite{SystematicReview} provide one of the most 
 comprehensive systematic reviews of this domain, analyzing 220 studies spanning from 2006 to 2022. Their taxonomy identifies four overarching categories of anti-forensic 
 activity: \textbf{data destruction, artefact deletion, obfuscation, and attacks on forensic tools and methods.}
@@ -39,10 +47,10 @@ If it is used to hide criminal conduct, it could be considered a purposeful anti
 Context and intent make the difference, as Arias et al note, \cite{SystematicReview} “the same technique that safeguards confidentiality can, in adversarial hands, obstruct justice.”  
 Therefore, any balanced cybersecurity framework must take both forensic countermeasures and privacy-preserving computing into account when studying secure deletion.
 
-\section{The Principles of Data Deletion and Persistence} % ok with fontsize=12pt
+\section {Secure Deletion; Challenges and Limitations} % ok with fontsize=12pt
 
-Data deletion in digital systems is far more complex than its terminology suggests. Deleting a file from an operating system interface rarely removes its physical presence from the storage
-medium. Instead, the system merely updates metadata; marking sectors as available for reuse while leaving the original data intact until overwritten. Joukov, Papaxenopoulos, and Zadok \cite{SecureDeletionMyths}
+Data deletion in digital systems is far more complex than its terminology suggests. Deleting a file from an operating system interface rarely removes its physical presence from the storage medium. 
+Instead, the system merely updates metadata; marking sectors as available for reuse while leaving the original data intact until overwritten. Joukov, Papaxenopoulos, and Zadok \cite{SecureDeletionMyths}
 famously identified several pervasive misconceptions about secure deletion that persist even among professionals. Chief among these is the assumption that encryption alone guarantees data 
 destruction, or that multiple overwrites are necessary for secure erasure.
 Their research demonstrated that a single, atomic overwrite operation is generally sufficient for magnetic storage, provided it is executed consistently and covers all data replicas, including 
@@ -57,11 +65,14 @@ Their analysis revealed that higher layers (e.g., application or file system) po
 layers (e.g., hardware controllers) can permanently erase data but cannot discern its logical context. The tension between these layers defines the central challenge of secure deletion: achieving both
 semantic correctness and physical assurance.
 
-Moreover, Reardon et al. \cite{reardon2013sok} emphasized the importance of considering adversary models — differentiating between threats such as casual software recovery, forensic examination, or physical chip-level analysis. A deletion method effective against software recovery may still be vulnerable to forensic or hardware attacks. Thus, any secure deletion solution must be context-aware, calibrated to the adversary’s capabilities and the sensitivity of the stored data.
+Moreover, Reardon et al. \cite{reardon2013sok} emphasized the importance of considering adversary models — differentiating between threats such as casual software recovery, forensic examination, or physical 
+chip-level analysis. A deletion method effective against software recovery may still be vulnerable to forensic or hardware attacks. Thus, any secure deletion solution must be context-aware, calibrated to 
+the adversary’s capabilities and the sensitivity of the stored data.
 
 \section{Traditional Secure Deletion Techniques}
 
-Historically, secure deletion relied on \textit{overwriting} — writing random or fixed patterns over the data to prevent recovery. Tools like shred, srm, and dd were widely used for this purpose. Standards such as the \textbf{U.S. Department of Defense (DoD 5220.22-M)} specified multiple overwrite passes to ensure data erasure on magnetic media.
+Historically, secure deletion relied on \textit{overwriting} — writing random or fixed patterns over the data to prevent recovery. Tools like shred, srm, and dd were widely used for this purpose. Standards 
+such as the \textbf{U.S. Department of Defense (DoD 5220.22-M)} specified multiple overwrite passes to ensure data erasure on magnetic media.
 
 However, as storage technologies evolved, it became clear that overwriting is not always reliable:
 \begin{itemize}
@@ -78,7 +89,8 @@ While traditional techniques remain relevant for certain media, they no longer g
 
 \section{The Flash Memory Challenge}
 
-Flash-based storage, including SSDs and USB drives, introduces unique challenges for secure deletion due to its internal \textbf{wear-leveling algorithms and block-based architecture}. Unlike magnetic disks, flash memory cannot overwrite data directly; instead, it must erase entire blocks before writing new data. This results in copies of deleted information potentially persisting in unaddressed cells.
+Flash-based storage, including SSDs and USB drives, introduces unique challenges for secure deletion due to its internal \textbf{wear-leveling algorithms and block-based architecture}. Unlike magnetic disks, 
+flash memory cannot overwrite data directly; instead, it must erase entire blocks before writing new data. This results in copies of deleted information potentially persisting in unaddressed cells.
 
 Additional complications arise from:
 
@@ -95,7 +107,13 @@ These characteristics make flash memory a critical focus area for experimental e
 
 
 \section{Secure Deletion in Virtualized and Containerized Environments}
+
+While secure deletion has been extensively studied in classical filesystems, flash storage, cloud storage, and virtual machines, there is virtually no focused research evaluating secure deletion inside 
+containerized environments (e.g., Docker, containerd, Kubernetes ephemeral storage). This absence highlights the need for foundational work in defining threat models, measuring residual artifacts, and 
+establishing deletion guarantees in layered container storage systems.
+
+
 \section{Legal and Ethical Dimensions}
 \section{Summary and Identified Research Gaps}
 
-\vspace{\stretch{1}}
+\vfill

@@ -1,6 +1,26 @@
 \chapter{Introduction}
 \label{sec:introduction}
 
+Secure data deletion — the task of rendering data irrecoverable from physical storage media — has become a critical concern across 
+cybersecurity, regulatory compliance, and digital forensics. In the physical world, the importance of destroying 
+sensitive information is well understood: confidential documents are shredded, and storage media containing classified material are 
+physically destroyed. In the digital domain, the problem is significantly more complex. Standard file deletion operations, implemented
+across all modern file systems, simply unlink the file's metadata entry while leaving the full contents intact on the storage medium 
+\cite{reardon2013sok}. Users typically assume, falsely, that once they delete a file it is irrecoverable.
+
+The urgency of this problem has been compounded by two converging forces. First, regulatory frameworks such as the GDPR right to 
+erasure, NIST SP 800-88 Rev. 1, and IEEE 2883-2022 now mandate demonstrable, verifiable data removal at defined sanitization levels 
+— Clear, Purge, and Destruct — each specifying the required assurance against data recovery \cite{aronsson2025secure}. Second, 
+the widespread transition from Hard Disk Drives (HDDs) to Solid-State Drives (SSDs) has fundamentally altered the storage landscape, 
+rendering decades of established secure deletion practice inadequate.
+
+Unlike HDDs, SSDs employ a Flash Translation Layer (FTL) that maps logical block addresses to physical flash pages. Due to the 
+erase-before-write property of NAND flash memory, the FTL performs out-of-place updates: modified data is written to a new physical 
+location while the old page, still containing the original data, is marked as invalid. Wear-leveling algorithms further disperse 
+data across the device to distribute program-erase cycles, and background garbage collection reclaims invalid pages only when the 
+pool of free blocks runs low. Over-provisioning reserves additional memory invisible to the host operating system, where residual 
+copies of deleted data may persist indefinitely. These mechanisms collectively ensure that a conventional delete operation at the 
+operating system level does not reliably remove the underlying data, creating a persistent risk of data remanence \cite{reardon2013sok, aronsson2025secure}.
 
 % use [] to set name for ToC
 %\section[Goal]{Goal} % ok with fontsize=12pt

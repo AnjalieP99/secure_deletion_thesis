@@ -19,6 +19,95 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
+    \entry{reardon2013sok}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=90e5044a229d18b7353f255882213933}{%
+           family={Reardon},
+           familyi={R\bibinitperiod},
+           given={Joel},
+           giveni={J\bibinitperiod}}}%
+        {{hash=96dd2002d303d0089f664a145acfbf90}{%
+           family={Basin},
+           familyi={B\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=eaa8a2cbadef36f8e7f4cba7b108b867}{%
+           family={Čapkun},
+           familyi={Č\bibinitperiod},
+           given={Srdjan},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Francisco, CA, USA}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{97cfa77dde8cff54e00664055821758a}
+      \strng{fullhash}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{fullhashraw}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{bibnamehash}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{authorbibnamehash}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{authornamehash}{97cfa77dde8cff54e00664055821758a}
+      \strng{authorfullhash}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \strng{authorfullhashraw}{39ea22d8bd3f6f4973ad558b07a7208f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper systematizes knowledge on secure data deletion, proposing a taxonomy across hardware and software layers and identifying the trade-offs between efficiency, reliability, and irrecoverability for different deletion mechanisms.}
+      \field{booktitle}{Proceedings of the 2013 IEEE Symposium on Security and Privacy (SP'13)}
+      \field{title}{SoK: Secure Data Deletion}
+      \field{year}{2013}
+      \field{pages}{301\bibrangedash 315}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1109/SP.2013.28
+      \endverb
+    \endentry
+    \entry{aronsson2025secure}{thesis}{}{}
+      \name{author}{2}{}{%
+        {{hash=f3d2c05d5e58a15cbe5fc6d121549afb}{%
+           family={Aronsson},
+           familyi={A\bibinitperiod},
+           given={Fabian},
+           giveni={F\bibinitperiod}}}%
+        {{hash=d98d0ce1effcd5d52f5402aa15a6f081}{%
+           family={Lund},
+           familyi={L\bibinitperiod},
+           given={Oskar},
+           giveni={O\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Linköping University}%
+      }
+      \list{location}{1}{%
+        {Linköping, Sweden}%
+      }
+      \strng{namehash}{5fa8ea4d3c6e40fd394cd06b291d94f6}
+      \strng{fullhash}{5fa8ea4d3c6e40fd394cd06b291d94f6}
+      \strng{fullhashraw}{5fa8ea4d3c6e40fd394cd06b291d94f6}
+      \strng{bibnamehash}{5fa8ea4d3c6e40fd394cd06b291d94f6}
+      \strng{authorbibnamehash}{5fa8ea4d3c6e40fd394cd06b291d94f6}
+      \strng{authornamehash}{5fa8ea4d3c6e40fd394cd06b291d94f6}
+      \strng{authorfullhash}{5fa8ea4d3c6e40fd394cd06b291d94f6}
+      \strng{authorfullhashraw}{5fa8ea4d3c6e40fd394cd06b291d94f6}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Secure data deletion is a critical aspect of modern cybersecurity. This thesis surveys methods for secure data deletion in digital systems, focusing on SSDs and their unique challenges compared to HDDs. It evaluates real-world secure erasure techniques and provides recommendations for defense applications.}
+      \field{note}{LIU-IDA/LITH-EX-A--2025/074--SE}
+      \field{title}{Secure Data Deletion: Ensuring Confidentiality in Digital Systems ; A Survey of Methods for Data Erasure}
+      \field{type}{Master's thesis}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb http://www.ep.liu.se/
+      \endverb
+      \verb{url}
+      \verb http://www.ep.liu.se/
+      \endverb
+    \endentry
     \entry{SystematicReview}{article}{}{}
       \name{author}{5}{}{%
         {{hash=05877e667648f0530b9099d14336ef0d}{%
@@ -55,8 +144,8 @@
       \strng{authornamehash}{4f0067382df307ae9363fc954e6a1037}
       \strng{authorfullhash}{158797a21a720e109238b4edce9a8aae}
       \strng{authorfullhashraw}{158797a21a720e109238b4edce9a8aae}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one’s way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.}
@@ -108,8 +197,8 @@
       \strng{authornamehash}{ed660761aa94cd788b5c2a9ea2b71fe1}
       \strng{authorfullhash}{364fbcef8e1fc65080cc1162f8973e51}
       \strng{authorfullhashraw}{364fbcef8e1fc65080cc1162f8973e51}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{This paper has three goals. (1) We try to debunk several held misconceptions about secure deletion: that encryption is an ideal solution for everybody, that existing data-overwriting tools work well, and that securely deleted files must be overwritten many times. (2) We discuss new and important issues that are often neglected: secure deletion consistency in case of power failures, handling versioning and journalling file systems, and metadata overwriting. (3) We present two solutions for on-demand secure deletion. First, we have created a highly portable and flexible system that performs only the minimal amount of work in kernel mode. Second, we present two in-kernel solutions in the form of Ext3 file system patches that can perform comprehensive data and metadata overwriting. We evaluated our proposed solutions and discuss the trade-offs involved.}
@@ -130,52 +219,6 @@
       \verb https://doi.org/10.1145/1179559.1179571
       \endverb
       \keyw{unintended data recovery,security,secure deletion,file systems}
-    \endentry
-    \entry{reardon2013sok}{inproceedings}{}{}
-      \name{author}{3}{}{%
-        {{hash=90e5044a229d18b7353f255882213933}{%
-           family={Reardon},
-           familyi={R\bibinitperiod},
-           given={Joel},
-           giveni={J\bibinitperiod}}}%
-        {{hash=96dd2002d303d0089f664a145acfbf90}{%
-           family={Basin},
-           familyi={B\bibinitperiod},
-           given={David},
-           giveni={D\bibinitperiod}}}%
-        {{hash=eaa8a2cbadef36f8e7f4cba7b108b867}{%
-           family={Čapkun},
-           familyi={Č\bibinitperiod},
-           given={Srdjan},
-           giveni={S\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {San Francisco, CA, USA}%
-      }
-      \list{publisher}{1}{%
-        {IEEE}%
-      }
-      \strng{namehash}{97cfa77dde8cff54e00664055821758a}
-      \strng{fullhash}{39ea22d8bd3f6f4973ad558b07a7208f}
-      \strng{fullhashraw}{39ea22d8bd3f6f4973ad558b07a7208f}
-      \strng{bibnamehash}{39ea22d8bd3f6f4973ad558b07a7208f}
-      \strng{authorbibnamehash}{39ea22d8bd3f6f4973ad558b07a7208f}
-      \strng{authornamehash}{97cfa77dde8cff54e00664055821758a}
-      \strng{authorfullhash}{39ea22d8bd3f6f4973ad558b07a7208f}
-      \strng{authorfullhashraw}{39ea22d8bd3f6f4973ad558b07a7208f}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{This paper systematizes knowledge on secure data deletion, proposing a taxonomy across hardware and software layers and identifying the trade-offs between efficiency, reliability, and irrecoverability for different deletion mechanisms.}
-      \field{booktitle}{Proceedings of the 2013 IEEE Symposium on Security and Privacy (SP'13)}
-      \field{title}{SoK: Secure Data Deletion}
-      \field{year}{2013}
-      \field{pages}{301\bibrangedash 315}
-      \range{pages}{15}
-      \verb{doi}
-      \verb 10.1109/SP.2013.28
-      \endverb
     \endentry
   \enddatalist
 \endrefsection

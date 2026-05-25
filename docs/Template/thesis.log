@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.23)  12 NOV 2025 17:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.23)  25 MAY 2026 21:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1377,7 +1377,7 @@ Package translations Info: loading dictionary `translations-basic-dictionary' fo
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<images/logo/polito_logo_2021_blu-2-2.jpg, id=59, 845.3181pt x 326.4195pt>
+<images/logo/polito_logo_2021_blu-2-2.jpg, id=79, 845.3181pt x 326.4195pt>
 File: images/logo/polito_logo_2021_blu-2-2.jpg Graphic file (type jpg)
 <use images/logo/polito_logo_2021_blu-2-2.jpg>
 Package pdftex.def Info: images/logo/polito_logo_2021_blu-2-2.jpg  used on input line 6.
@@ -1505,35 +1505,64 @@ Chapter 1.
 
 
 ]
+
+[2]
 Chapter 2.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-
-[2
+[3
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 25.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 33.
  (c:/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) in paragraph at lines 44--51
+Underfull \hbox (badness 10000) in paragraph at lines 52--59
 
  []
 
 
 
-[3{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+[4{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[4]) (./content/appendix.tex
-
 [5]
 
-[6]
+[6]) (./content/chapters/chapter3.tex
+
+[7]
+Chapter 3.
+) (./content/chapters/chapter4.tex
+
+[8
+
+]
+Chapter 4.
+) (./content/chapters/chapter5.tex
+
+[9
+
+]
+Chapter 5.
+) (./content/chapters/chapter6.tex
+
+[10
+
+]
+Chapter 6.
+) (./content/chapters/chapter7.tex
+
+[11
+
+]
+Chapter 7.
+) (./content/appendix.tex
+
+[12
+
+]
 Appendix A.
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 16.
 (c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
@@ -1545,7 +1574,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 )
 
-[7
+[13
 
 {c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}]
 
@@ -1555,7 +1584,7 @@ This document will not have a glossary.
 
 
 
-[8
+[14
 
 
 ] (./thesis.aux)
@@ -1568,28 +1597,24 @@ L3 programming layer <2025-09-02>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 6871390EBFA92F2C821C627B3BAA2AA0;2411.
-
-Package biblatex Warning: Please rerun LaTeX.
-(biblatex)                Page breaks have changed.
-
+(rerunfilecheck)             Checksum: 0D1F254EB53A16B520F945D40FDABC8F;3750.
 Package logreq Info: Writing requests to 'thesis.run.xml'.
 \openout1 = `thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46322 strings out of 467748
- 923101 string characters out of 5431137
- 2070019 words of memory out of 5000000
- 74146 multiletter control sequences out of 15000+600000
- 721981 words of font info for 181 fonts, out of 8000000 for 9000
+ 46396 strings out of 467748
+ 924966 string characters out of 5431137
+ 2071409 words of memory out of 5000000
+ 74187 multiletter control sequences out of 15000+600000
+ 722260 words of font info for 184 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  138i,10n,135p,2648b,2049s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmro10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on thesis.pdf (16 pages, 2465903 bytes).
+Output written on thesis.pdf (22 pages, 2475398 bytes).
 PDF statistics:
- 231 PDF objects out of 1000 (max. 8388607)
- 188 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
- 56442 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 296 PDF objects out of 1000 (max. 8388607)
+ 246 compressed objects within 3 object streams
+ 44 named destinations out of 1000 (max. 500000)
+ 56482 words of extra memory for PDF output out of 61914 (max. 10000000)
 

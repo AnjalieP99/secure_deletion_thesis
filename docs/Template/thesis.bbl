@@ -92,8 +92,8 @@
       \strng{authornamehash}{5fa8ea4d3c6e40fd394cd06b291d94f6}
       \strng{authorfullhash}{5fa8ea4d3c6e40fd394cd06b291d94f6}
       \strng{authorfullhashraw}{5fa8ea4d3c6e40fd394cd06b291d94f6}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Secure data deletion is a critical aspect of modern cybersecurity. This thesis surveys methods for secure data deletion in digital systems, focusing on SSDs and their unique challenges compared to HDDs. It evaluates real-world secure erasure techniques and provides recommendations for defense applications.}
@@ -107,6 +107,182 @@
       \verb{url}
       \verb http://www.ep.liu.se/
       \endverb
+    \endentry
+    \entry{homaidi2009data}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=04571494fd058ae9f08e1ed984a504a6}{%
+           family={Homaidi},
+           familyi={H\bibinitperiod},
+           given={Omar\bibnamedelima A.},
+           giveni={O\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Blekinge Institute of Technology}%
+      }
+      \strng{namehash}{04571494fd058ae9f08e1ed984a504a6}
+      \strng{fullhash}{04571494fd058ae9f08e1ed984a504a6}
+      \strng{fullhashraw}{04571494fd058ae9f08e1ed984a504a6}
+      \strng{bibnamehash}{04571494fd058ae9f08e1ed984a504a6}
+      \strng{authorbibnamehash}{04571494fd058ae9f08e1ed984a504a6}
+      \strng{authornamehash}{04571494fd058ae9f08e1ed984a504a6}
+      \strng{authorfullhash}{04571494fd058ae9f08e1ed984a504a6}
+      \strng{authorfullhashraw}{04571494fd058ae9f08e1ed984a504a6}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Data Remanence: Secure Deletion of Data in SSDs}
+      \field{type}{Bachelor's thesis}
+      \field{year}{2009}
+      \verb{urlraw}
+      \verb https://urn.kb.se/resolve?urn=urn:nbn:se:bth-5165
+      \endverb
+      \verb{url}
+      \verb https://urn.kb.se/resolve?urn=urn:nbn:se:bth-5165
+      \endverb
+    \endentry
+    \entry{duplicateschen2022}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=5aac368c49837d8475c8bf985a8656b9}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Niusen},
+           giveni={N\bibinitperiod}}}%
+        {{hash=31960f03389184b7f052f5b197cc9fdf}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Bo},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Nagasaki, Japan}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{6d3e4e3114f79f2a98625a0632c974be}
+      \strng{fullhash}{6d3e4e3114f79f2a98625a0632c974be}
+      \strng{fullhashraw}{6d3e4e3114f79f2a98625a0632c974be}
+      \strng{bibnamehash}{6d3e4e3114f79f2a98625a0632c974be}
+      \strng{authorbibnamehash}{6d3e4e3114f79f2a98625a0632c974be}
+      \strng{authornamehash}{6d3e4e3114f79f2a98625a0632c974be}
+      \strng{authorfullhash}{6d3e4e3114f79f2a98625a0632c974be}
+      \strng{authorfullhashraw}{6d3e4e3114f79f2a98625a0632c974be}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Flash memory has been used extensively as external storage of smartphones, tablets, IoT devices, laptops, etc. Therefore, more and more sensitive or even mission critical data are stored in flash and, once the data turn obsolete, securely deleting them is necessary for both regulation compliance and privacy protection. Traditional secure deletion on flash memory mainly focuses on sanitizing data. However, unique nature of flash memory may cause various data ''remnants'' and, even though the data are removed, the remnants may be utilized by the adversary to recover the deleted data, compromising the secure deletion guarantee.Based on both theoretic analysis and experiments using real-world workloads, we have identified one common type of remnants in the flash memory, namely duplicates, which are caused by unique internal functions of flash storage media including garbage collection, wear leveling, bad block management. We propose RedFlash, a novel secure deletion scheme which can efficiently Remove both the data and the corresponding duplicates towards secure deletion on Flash memory. Security analysis and experimental evaluation show that RedFlash can ensure the secure deletion guarantee, at the cost of a small performance degradation, compared to a regular (non-secure) flash controller.}
+      \field{booktitle}{Proceedings of the 2022 ACM on Asia Conference on Computer and Communications Security}
+      \field{isbn}{9781450391405}
+      \field{series}{ASIA CCS '22}
+      \field{title}{Duplicates also Matter! Towards Secure Deletion on Flash-based Storage Media by Removing Duplicates}
+      \field{year}{2022}
+      \field{pages}{54\bibrangedash 66}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1145/3488932.3523255
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3488932.3523255
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3488932.3523255
+      \endverb
+      \keyw{duplicates,flash memory,ftl,secure deletion,snapshot adversary}
+    \endentry
+    \entry{zhang2018ensuring}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=16a6bb056f6786baa492ae9c2e59ac22}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Qi},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=c0e38c289e23f929cd34988d391ae4c3}{%
+           family={Jia},
+           familyi={J\bibinitperiod},
+           given={Siqi},
+           giveni={S\bibinitperiod}}}%
+        {{hash=edfbdc612e2b22b57194d92a49f54309}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Bo},
+           giveni={B\bibinitperiod}}}%
+        {{hash=b6f25c2ea695f4385f6acab832194dfc}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Yan},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=265010d33e12defd9b473277d50c9833}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Zheli},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{1eb643fcc82907c6156d742538054524}
+      \strng{fullhash}{e3c278167f172981f54ce312166a3347}
+      \strng{fullhashraw}{e3c278167f172981f54ce312166a3347}
+      \strng{bibnamehash}{e3c278167f172981f54ce312166a3347}
+      \strng{authorbibnamehash}{e3c278167f172981f54ce312166a3347}
+      \strng{authornamehash}{1eb643fcc82907c6156d742538054524}
+      \strng{authorfullhash}{e3c278167f172981f54ce312166a3347}
+      \strng{authorfullhashraw}{e3c278167f172981f54ce312166a3347}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Cybersecurity}
+      \field{number}{1}
+      \field{title}{Ensuring data confidentiality via plausibly deniable encryption and secure deletion – a survey}
+      \field{volume}{1}
+      \field{year}{2018}
+      \field{pages}{1}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1186/s42400-018-0005-8
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1186/s42400-018-0005-8
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1186/s42400-018-0005-8
+      \endverb
+    \endentry
+    \entry{ahn2021forensics}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=3c2cbbe053bdd4cbbedec5312290679f}{%
+           family={Ahn},
+           familyi={A\bibinitperiod},
+           given={Na\bibnamedelima Young},
+           giveni={N\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+        {{hash=3026a1e694e034f0ca608f650838f6e9}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Dong\bibnamedelima Hoon},
+           giveni={D\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{f72f45f432eece27de10e2c59dbf7c95}
+      \strng{fullhash}{f72f45f432eece27de10e2c59dbf7c95}
+      \strng{fullhashraw}{f72f45f432eece27de10e2c59dbf7c95}
+      \strng{bibnamehash}{f72f45f432eece27de10e2c59dbf7c95}
+      \strng{authorbibnamehash}{f72f45f432eece27de10e2c59dbf7c95}
+      \strng{authornamehash}{f72f45f432eece27de10e2c59dbf7c95}
+      \strng{authorfullhash}{f72f45f432eece27de10e2c59dbf7c95}
+      \strng{authorfullhashraw}{f72f45f432eece27de10e2c59dbf7c95}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Access}
+      \field{title}{Forensics and Anti-Forensics of a NAND Flash Memory: From a Copy-Back Program Perspective}
+      \field{volume}{9}
+      \field{year}{2021}
+      \field{pages}{14130\bibrangedash 14137}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/ACCESS.2021.3052353
+      \endverb
+      \keyw{Flash memories;Performance evaluation;Computer hacking;Random access memory;Memory management;Digital forensics;Data privacy;Forensic;anti-forensic;NAND flash memory;copy-back program;deletion operation;privacy;hacker;overwriting;program disturbance;victim cell;program prohibition}
     \endentry
     \entry{SystematicReview}{article}{}{}
       \name{author}{5}{}{%
@@ -144,8 +320,8 @@
       \strng{authornamehash}{4f0067382df307ae9363fc954e6a1037}
       \strng{authorfullhash}{158797a21a720e109238b4edce9a8aae}
       \strng{authorfullhashraw}{158797a21a720e109238b4edce9a8aae}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one’s way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.}
@@ -197,8 +373,8 @@
       \strng{authornamehash}{ed660761aa94cd788b5c2a9ea2b71fe1}
       \strng{authorfullhash}{364fbcef8e1fc65080cc1162f8973e51}
       \strng{authorfullhashraw}{364fbcef8e1fc65080cc1162f8973e51}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{This paper has three goals. (1) We try to debunk several held misconceptions about secure deletion: that encryption is an ideal solution for everybody, that existing data-overwriting tools work well, and that securely deleted files must be overwritten many times. (2) We discuss new and important issues that are often neglected: secure deletion consistency in case of power failures, handling versioning and journalling file systems, and metadata overwriting. (3) We present two solutions for on-demand secure deletion. First, we have created a highly portable and flexible system that performs only the minimal amount of work in kernel mode. Second, we present two in-kernel solutions in the form of Ext3 file system patches that can perform comprehensive data and metadata overwriting. We evaluated our proposed solutions and discuss the trade-offs involved.}

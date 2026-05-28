@@ -100,6 +100,70 @@ doi          = {10.1109/SP.2013.28},
 abstract     = {This paper systematizes knowledge on secure data deletion, proposing a taxonomy across hardware and software layers and identifying the trade-offs between efficiency, reliability, and irrecoverability for different deletion mechanisms.}
 };
 
+@mastersthesis{homaidi2009data,
+  title        = {Data Remanence: Secure Deletion of Data in SSDs},
+  author       = {Omar A. Homaidi},
+  school       = {Blekinge Institute of Technology},
+  year         = {2009},
+  type         = {Bachelor's thesis},
+  url          = {https://urn.kb.se/resolve?urn=urn:nbn:se:bth-5165}
+};
+
+@inproceedings{duplicateschen2022,
+author = {Chen, Niusen and Chen, Bo},
+title = {Duplicates also Matter! Towards Secure Deletion on Flash-based Storage Media by Removing Duplicates},
+year = {2022},
+isbn = {9781450391405},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3488932.3523255},
+doi = {10.1145/3488932.3523255},
+abstract = {Flash memory has been used extensively as external storage of smartphones, tablets, IoT devices, laptops, etc. Therefore, more and more sensitive or even mission critical data are stored in flash and, once the data turn obsolete, securely deleting them is necessary for both regulation compliance and privacy protection. Traditional secure deletion on flash memory mainly focuses on sanitizing data. However, unique nature of flash memory may cause various data ''remnants'' and, even though the data are removed, the remnants may be utilized by the adversary to recover the deleted data, compromising the secure deletion guarantee.Based on both theoretic analysis and experiments using real-world workloads, we have identified one common type of remnants in the flash memory, namely duplicates, which are caused by unique internal functions of flash storage media including garbage collection, wear leveling, bad block management. We propose RedFlash, a novel secure deletion scheme which can efficiently Remove both the data and the corresponding duplicates towards secure deletion on Flash memory. Security analysis and experimental evaluation show that RedFlash can ensure the secure deletion guarantee, at the cost of a small performance degradation, compared to a regular (non-secure) flash controller.},
+booktitle = {Proceedings of the 2022 ACM on Asia Conference on Computer and Communications Security},
+pages = {54–66},
+numpages = {13},
+keywords = {duplicates, flash memory, ftl, secure deletion, snapshot adversary},
+location = {Nagasaki, Japan},
+series = {ASIA CCS '22}
+};
+
+@article{zhang2018ensuring,
+  author    = {Zhang, Qi and Jia, Siqi and Chang, Bo and Chen, Yan and Liu, Zheli},
+  title     = {Ensuring data confidentiality via plausibly deniable encryption and secure deletion – a survey},
+  journal   = {Cybersecurity},
+  volume    = {1},
+  number    = {1},
+  pages     = {1},
+  year      = {2018},
+  doi       = {10.1186/s42400-018-0005-8},
+  url       = {https://doi.org/10.1186/s42400-018-0005-8}
+};
+
+@ARTICLE{ahn2021forensics,
+  author={Ahn, Na Young and Lee, Dong Hoon},
+  journal={IEEE Access}, 
+  title={Forensics and Anti-Forensics of a NAND Flash Memory: From a Copy-Back Program Perspective}, 
+  year={2021},
+  volume={9},
+  number={},
+  pages={14130-14137},
+  keywords={Flash memories;Performance evaluation;Computer hacking;Random access memory;Memory management;Digital forensics;Data privacy;Forensic;anti-forensic;NAND flash memory;copy-back program;deletion operation;privacy;hacker;overwriting;program disturbance;victim cell;program prohibition},
+  doi={10.1109/ACCESS.2021.3052353}
+  };
+
+@ARTICLE{3dnandwang2018,
+  author={Wang, Wei-Chen and Ho, Chien-Chung and Chang, Yuan-Hao and Kuo, Tei-Wei and Lin, Ping-Hsien},
+  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}, 
+  title={Scrubbing-Aware Secure Deletion for 3-D NAND Flash}, 
+  year={2018},
+  volume={37},
+  number={11},
+  pages={2790-2801},
+  keywords={Three-dimensional displays;Cryptography;Electronic mail;Computer science;Two dimensional displays;Bit error rate;Embedded systems;Nonvolatile memory;Security;Embedded systems;3-D nand flash;nonvolatile memory;scrubbing;secure deletion},
+  doi={10.1109/TCAD.2018.2857260}
+  };
+
+
 @misc{onarlioglu2018_3,
   title     = {Eraser: Your Data Won't Be Back},
   author    = {Kaan Onarlioglu and William Robertson and Engin Kirda},

@@ -1,26 +1,150 @@
 \chapter{Introduction}
 \label{sec:introduction}
 
-Secure data deletion — the task of rendering data irrecoverable from physical storage media — has become a critical concern across 
-cybersecurity, regulatory compliance, and digital forensics. In the physical world, the importance of destroying 
-sensitive information is well understood: confidential documents are shredded, and storage media containing classified material are 
-physically destroyed. In the digital domain, the problem is significantly more complex. Standard file deletion operations, implemented
-across all modern file systems, simply unlink the file's metadata entry while leaving the full contents intact on the storage medium 
-\cite{reardon2013sok}. Users typically assume, falsely, that once they delete a file it is irrecoverable.
+The task of deleting data and ensuring that they remain irrecoverable is known as Secure 
+Data deletion. It has currently become one of the most pressing concerns in the 
+cybersecurity, regulatory compliance, and digital forensics domains. While there exists 
+physical means of making data irrecoverable in the physical world where confidential 
+documents are shredded, and storage media containing classified material are physically 
+destroyed, in the digital domain this is significantly complex. The standard delete 
+operation on modern systems only implements file unlinking, which only changes the file 
+system metadata while full contents will still remain intact in the system but users 
+assume that all the content has been permanently erased. \cite{reardon2013sok}
 
-The urgency of this problem has been compounded by two converging forces. First, regulatory frameworks such as the GDPR right to 
-erasure, NIST SP 800-88 Rev. 1, and IEEE 2883-2022 now mandate demonstrable, verifiable data removal at defined sanitization levels 
-— Clear, Purge, and Destruct — each specifying the required assurance against data recovery \cite{aronsson2025secure}. Second, 
-the widespread transition from Hard Disk Drives (HDDs) to Solid-State Drives (SSDs) has fundamentally altered the storage landscape, 
-rendering decades of established secure deletion practice inadequate.
+The criticality of this problem has been addressed by two intersecting forces. First, 
+regulatory frameworks including GDPR right to erasure, NIST SP 800-88 Rev. 1, and IEEE 
+2883-2022 have mandated demonstrative and verifiable data removal evidences at defined 
+sanitization levels; Clear, Purge and Destroy, with specific assurance against data recovery. 
+Next, the mainstream transition from the usage of Hard Disk Drives (HDDs) to Solid-State 
+Drives (SSDs) has led to a fundamental alteration of the storage landscape resulting in 
+decades of secure deletion practices being inadequate.\cite{aronsson2025secure}
 
-Unlike HDDs, SSDs employ a Flash Translation Layer (FTL) that maps logical block addresses to physical flash pages. Due to the 
-erase-before-write property of NAND flash memory, the FTL performs out-of-place updates: modified data is written to a new physical 
-location while the old page, still containing the original data, is marked as invalid. Wear-leveling algorithms further disperse 
-data across the device to distribute program-erase cycles, and background garbage collection reclaims invalid pages only when the 
-pool of free blocks runs low. Over-provisioning reserves additional memory invisible to the host operating system, where residual 
-copies of deleted data may persist indefinitely. These mechanisms collectively ensure that a conventional delete operation at the 
-operating system level does not reliably remove the underlying data, creating a persistent risk of data remanence \cite{reardon2013sok, aronsson2025secure}.
+In contrast to HDDs, newer SSDs use a Flash Translation Layer (FTL) that maps logical block 
+addresses to physical flash pages. The FTL performs out-of-place updates due to the 
+erase-before-write property of NAND flash memory: modified data is written to a new physical 
+location, and the old page containing the original data is marked as invalid. Furthermore, 
+wear-leveling algorithms disperse data across the device to distribute program/erase cycles, 
+and invalid pages are reclaimed by garbage-collection mechanisms only when free blocks run 
+low, freeing them for new write operations. \cite{aronsson2025secure}
+
+The problem of secure deletion not only occurs in the technical domain but also spans into
+the legal and ethical domains. On the legal front, regulations such as the GDPR, the 
+California Consumer Privacy Act (CCPA), and emerging AI governance frameworks impose 
+obligations for data erasure that existing technical mechanisms struggle to satisfy.
+
+The literature review below surveys state-of-the-art techniques in secure deletion, 
+identifies methodological gaps, and motivates the need for a systematic framework that can 
+reliably assess deletion effectiveness across diverse modern storage environments. The 
+remainder of this thesis is organized as follows. Chapter 2 reviews the background of NAND 
+flash storage architecture and the secure deletion problem in detail. Chapter 3 presents a 
+systematic review of existing secure deletion techniques and their empirical evaluations. 
+Chapter 4 describes the proposed experimental framework, including its metric system, test 
+methodology, and verification protocols. Chapter 5 presents the results of applying the 
+framework across a diverse set of storage devices and deletion techniques. Chapter 6 
+discusses the implications of the findings, Chapter 7 examines the legal and regulatory 
+framework: the GDPR right to erasure, the right to be forgotten in emerging contexts, 
+digital evidence and cross-border procedure, and broader data rights.and Chapter 8 concludes 
+with directions for future work.
+
+\section {NAND flash storage architecture}
+NAND flash memory which was introduced by Toshiba in 1988, is a type of non-volatile 
+semiconductor memory that has become the dominant storage technology for solid-state drives 
+(SSDs), USB flash drives, and mobile devices \cite{aronsson2025secure}. Unlike NOR flash, 
+which supports random access and high read performance at smaller capacities, NAND flash 
+offers significantly higher storage density and faster write/erase operations at a lower 
+cost, making it ideal for bulk data storage \cite{homaidi2009data}
+
+\subsection{Cell Structure and Memory Organization}
+At the physical level, each NAND flash memory cell is a floating-gate transistor. Data is 
+stored by injecting electrical charge into the floating gate, which is electrically isolated 
+and can retain charge without power. A charged floating gate (programmed state) represents a 
+logical "0," while an uncharged gate (erased state) represents a logical "1" \cite{homaidi2009data}.
+Single-level cell (SLC) flash stores one bit per cell, whereas multi-level cell (MLC) stores two 
+bits, triple-level cell (TLC) stores three bits, and quad-level cell (QLC) stores four bits. 
+Each increase in bit density reduces cost per gigabyte at the expense of reduced endurance and 
+lower performance \cite{aronsson2025secure}.
+
+Memory cells are arranged hierarchically. Cells connected to the same word line form a page, 
+which is the smallest unit for read and program (write) operations. Pages are grouped into 
+blocks, the smallest unit for erase operations. Blocks are organized into planes, multiple 
+planes reside on a single die, and multiple dies are packaged into a NAND chip. Typical page 
+sizes range from 2 KB to 16 KB, and blocks typically contain 64 to 256 pages\cite{aronsson2025secure}.
+Each page also includes a spare or out-of-band (OOB) area used to store error-correcting codes 
+(ECC) and metadata \cite{duplicateschen2022}.
+
+\subsection{Basic Operations and Timing}
+The three fundamental operations on NAND flash are read, program, and erase. Read and program 
+operate at page granularity, while erase operates at block granularity. Their latencies differ 
+by orders of magnitude: a page read takes approximately 20 to 60 $\mu$s, a page program takes 200 to 500 $\mu$s
+$\mu$s, and a block erase takes 1.5 to 5 ms \cite{aronsson2025secure,duplicateschen2022}
+
+\subsection{Write-Once Property and Out-of-Place Updates}
+NAND flash has a fundamental constraint: a page cannot be overwritten in place. To write new data to a 
+page, the entire encompassing block must first be erased, which resets all cells in that block to the 
+"1" (erased) state \cite{aronsson2025secure} Because erasing a block is an expensive operation that 
+destroys all data within it, SSDs do not perform in-place updates. Instead, they use out-of-place 
+updates: modified data is written to an available free page elsewhere, and the old page is marked 
+as invalid \cite{zhang2018ensuring}. Pages containing current data are termed valid pages, while 
+those holding superseded data are invalid pages. This write-once property is the root cause of many 
+of the secure deletion challenges discussed in this review.
+
+\subsection{Flash Translation Layer}
+To maintain compatibility with traditional block-based file systems (e.g., ext4, NTFS), SSDs 
+incorporate a Flash Translation Layer (FTL) that runs on the device controller \cite{aronsson2025secure}.
+The FTL maps logical block addresses (LBAs) issued by the operating system to physical flash 
+addresses. This abstraction hides the complexity of NAND flash from the host and enables the 
+SSD to manage internal operations transparently \cite{duplicateschen2022}.
+
+The FTL implements several critical management functions:
+
+\textbf{Wear leveling} distributes program/erase (P/E) cycles evenly across all blocks to extend 
+device lifespan. Each NAND flash block has a finite endurance typically 100,000 cycles for SLC 
+and 10,000 to 100,000 for MLC/TLC after which the block becomes unreliable. Dynamic wear leveling 
+distributes writes among free blocks, while static wear leveling periodically relocates infrequently 
+accessed (cold) data to prevent some blocks from remaining idle while others wear out \cite{homaidi2009data}.
+
+\textbf{Garbage collection} reclaims space occupied by invalid pages. When the number of free pages falls 
+below a threshold, the FTL selects a victim block with a high proportion of invalid pages, copies any 
+remaining valid pages to a free block, and then erases the victim block \cite{aronsson2025secure,duplicateschen2022}.
+This process introduces write amplification, where a single host write triggers multiple internal writes 
+due to data migration.
+
+\textbf{Bad block management} tracks blocks that have become defective through wear or manufacturing defects. 
+These blocks are recorded in a bad block table and excluded from further use, with any valid data relocated 
+to healthy blocks \cite{duplicateschen2022,homaidi2009data}.
+
+\textbf{Over-provisioning} reserves a portion of the total flash capacity as spare area to improve performance 
+and endurance. This over-provisioned space is used for wear leveling, garbage collection, and bad block management. 
+\cite{aronsson2025secure,ahn2021forensics}
+
+\textbf{Error correction} is essential because NAND flash cells are susceptible to read disturb, program disturb, 
+charge leakage, and retention errors. The FTL computes ECC data stored in each page's OOB area to detect and 
+correct bit errors\cite{zhang2018ensuring}.
+
+An SSD packages multiple NAND chips with a controller that manages the FTL, host interface, and error correction. 
+The storage architecture spans several layers: the host interface (e.g., SATA or NVMe) communicates with the FTL, 
+which translates LBAs to physical addresses and coordinates access across multiple channels, packages, and dies 
+in parallel to maximize throughput. To overcome the density scaling limits of planar (2D) NAND, manufacturers 
+have adopted 3D NAND technology, which stacks memory cells vertically in layers \cite{aronsson2025secure}. 
+3D NAND achieves higher storage density without shrinking individual cell geometries, which improves endurance 
+and reduces interference between adjacent cells. However, the vertical architecture introduces more complex 
+disturb characteristics and new challenges for secure deletion, as erasing data in one layer can disturb 
+adjacent layers \cite{ahn2021forensics}.
+
+\section{Implications for Secure Deletion}
+
+The architectural features described above create fundamental obstacles to secure deletion. Out-of-place updates 
+cause multiple copies of data to persist across the device as stale pages are left behind. Garbage collection 
+and wear leveling can relocate data transparently, making it impossible for host-level software to predict where 
+data physically resides. Over-provisioned areas are inaccessible to the operating system, yet may retain residual 
+copies of deleted data. These characteristics mean that a conventional delete command at the file-system level 
+does not remove the underlying data from the physical medium, and techniques that are effective on HDDs such as 
+overwriting are ineffective on NAND flash \cite{aronsson2025secure}.
+
+Achieving secure deletion in modern systems is fundamentally challenging because storage architectures are organized
+into multiple layers application, file system, block device, and physical medium each of which can retain residual 
+copies of data \cite{duplicateschen2022}. Performing deletion at the application layer, for example, only removes the 
+logical reference; the underlying data remains in the file system and may persist on the physical media indefinitely \cite{zhang2018ensuring}.
 
 % use [] to set name for ToC
 %\section[Goal]{Goal} % ok with fontsize=12pt

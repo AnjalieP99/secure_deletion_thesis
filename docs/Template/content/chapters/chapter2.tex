@@ -237,9 +237,213 @@ infection to accelerate scrubbing performance. Experimental results on a simulat
 NAND device demonstrate an 82\% reduction in scrubbing latency and a 78\% improvement in overall 
 system response time \cite{3dnandwang2018}.
 
+\section {Evaluation Challenges for Secure Deletion}
 
+The literature reveals several persistent challenges in evaluating secure deletion techniques, 
+particularly in modern storage environments.
+
+\textbf{Device Transparency} : SSDs function effectively as black boxes, with limited visibility 
+into their internal state. Empirical testing on commercial SSDs shows significant variability in 
+block-erase times even across similar devices, and the behavior of the FTL garbage collection, 
+wear leveling, and TRIM remains opaque to evaluators. \cite{aronsson2025secure}.
+
+
+\textbf{Verifiability} : Cryptographic erasure while fast and consistent (approximately 0.22 
+seconds regardless of device usage level), is practically unverifiable.  After cryptographic 
+erasure, SSDs may return zeroed data as an abstraction layer, but this does not confirm that the 
+underlying physical storage has been sanitized \cite{aronsson2025secure}. TPM-based key storage 
+compounds this problem, as TPMs are themselves black boxes with limited mechanisms to independently 
+confirm successful key deletion. \cite{aronsson2025secure}.
+
+\textbf{Performance-Security Trade-offs} : Erasure-based methods provide strong security guarantees 
+but introduce substantial performance overhead and device wear. Overwriting methods, while less 
+effective on SSDs, incur minimal performance cost. Encryption-based methods offer the best 
+performance but require trusting cryptographic assumptions and key management infrastructure \cite{aronsson2025secure}.
+
+\textbf{Duplication and metadata persistence} :  Multiple copies of deleted data can persist in 
+journaling file systems, log-structured file systems, and through SSD-internal operations such as 
+garbage collection and wear leveling. Chen and Chen show that a robust secure deletion approach 
+must also eliminate these duplicates \cite{duplicateschen2022}.
+
+\section{Empirical Evaluation Approaches in the Literature}
+Experimental evaluations in the literature vary widely in methodology. Reardon et al. conducted 
+controlled tests examining block-unaligned truncations and sparse files across multiple file 
+systems to evaluate practical secure deletion approaches \cite{reardon2013sok}. Aronsson and Lund 
+performed timing measurements of block erase and cryptographic erase on commercial SSDs (SN7100 
+and SN850X), revealing vendor-specific inconsistencies and the need for device-independent 
+verification methods \cite{aronsson2025secure}. Wang et al. compared encryption-based, 
+overwriting-based, and erasure-based methods across storage technologies, categorizing trade-offs 
+in security guarantees, performance overhead, and practical feasibility \cite{wang2020challenges}. 
+The scrubbing-aware design by Wang et al. (2018) used a flash-memory simulator to evaluate deletion 
+efficiency, achieving 82\% average response time reduction through optimized allocation of 
+sensitive data \cite{3dnandwang2018}.
+
+The key methodological gap across these studies is the absence of a standardized, reproducible 
+evaluation framework. Experiments are conducted on specific hardware with vendor-specific 
+firmware behavior, making cross-study comparisons unreliable. There is no agreed set of metrics 
+for measuring deletion effectiveness, performance impact, or verifiability.
 
 \section{Legal and Ethical Dimensions}
+
+\subsection{GDPR and the Right to Erasure}
+The General Data Protection Regulation (GDPR), effective May 2018, introduces the right to 
+erasure (Article 17) as a foundational data protection obligation that directly intersects with 
+secure deletion. Politou et al. (2018) provide a comprehensive analysis of these provisions, 
+noting that the right encompasses both the erasure of personal data and the broader right to be 
+forgotten, requiring deletion from all possible sources in which the data resides, including 
+third-party controllers to whom the data has been disseminated \cite{Politou2018}. The GDPR 
+introduces the withdrawal of consent as a trigger for erasure, a condition not present in prior 
+data protection frameworks, and obligates controllers to take reasonable steps, including technical 
+measures, to inform other controllers processing the data of the erasure request. Politou et al. 
+argue that enforcement is feasible provided that implementation guidelines and low-level business 
+specifications are put in place in a clear, cross-platform manner \cite{Politou2018}.
+
+Shastri et al. (2019) identify six GDPR anti-patterns arising from the design and operation of 
+modern cloud-scale systems: storing data without a clear timeline for deletion, reusing data 
+indiscriminately, creating walled gardens and black markets, risk-agnostic data processing, hiding 
+data breaches, and making unexplainable decisions \cite{Shastri2019gdpr}. They highlight that 
+Articles 5 and 13 of the GDPR require controllers to specify retention periods at the point of 
+collection and to ensure personal data is deleted when no longer necessary for the purpose for 
+which it was collected. In practice, large cloud providers describe deletion as an iterative 
+process that can take up to 180 days due to data replication and backup cycles far exceeding the 
+timeline implied by the regulation.
+
+The GDPR does not, however, define what constitutes full deletion or erasure at a technical level, 
+leaving a significant gap between legal requirements and technical implementation \cite{AlgorithmicDestruction}. 
+The regulation requires that controllers take reasonable steps to inform other controllers of erasure requests \cite{vanOoijen2019},
+creating an obligation without specifying the means by which compliance is to be achieved. Legal 
+analysis of the landmark Google Spain case further illustrates the territorial and procedural 
+complexity of deletion obligations, where search engine operators were held responsible as data 
+controllers for processing personal data linked through search results \cite{AlgorithmicDestruction}.
+
+\subsection{Technical Challenges to the Right to Be Forgotten}
+The tension between the right to be forgotten and technical system design is a recurring theme in 
+the literature. Visconti (2024) examines the Right to Be Forgotten (RtBF) through a cryptographic 
+lens, identifying challenges such as the avalanche effect, where removing a single piece of 
+personal data creates inconsistencies in correlated data stored on a digital platform \cite{Visconti2024zeroknowledge}.
+Traditional cryptographic tools are insufficient to enforce GDPR compliance, and the gap between 
+the language of the regulation and the technical specifications required by developers is wide 
+enough to introduce significant uncertainty. Visconti shows that zero-knowledge (ZK) proofs can 
+bridge this gap by allowing digital platforms to prove compliance with deletion requests without 
+revealing the underlying personal data, and proposes an assessment scheme applicable to use cases 
+including machine unlearning and redactable blockchains \cite{Visconti2024zeroknowledge}.
+
+At the standards level, Aronsson and Lund (2023) review NIST SP 800-88, IEEE 2883-2022, and NATO 
+AEDP-3, all of which structure deletion methods by security level. These standards categorize 
+sanitization into Clear and Purge levels, where Purge renders data infeasible to recover through 
+block erase or cryptographic erase, and Destruct covers physical destruction \cite{aronsson2025secure}.
+Overwriting methods such as scrubbing are not regulation-approved, which limits their practical 
+applicability despite promising performance and security characteristics.
+
+\subsection{Digital Evidence and Cross-Border Procedure}
+The handling of digital evidence across borders intersects directly with secure deletion obligations. 
+Casino et al. (2022), in their systematization of digital forensics research, identify that one of 
+the most reported challenges across the field is the lack of jurisdictional and legal requirements 
+for different investigation scenarios, particularly regarding ethics and data management of 
+confidential and personal data \cite{Casino2022Research}. Distributed systems such as cloud and 
+blockchain mean that software and data may reside in different countries, requiring specific 
+cross-border collaborations. A proper understanding between all actors involved, including 
+stakeholders, law enforcement agencies, and court members, is mandatory to ensure successful 
+prosecution, with the chain of custody remaining a persistent challenge \cite{Casino2022Research}.
+
+Ontanu (2023) examines the normative framework for electronic evidence in EU civil procedure, 
+finding that while regulations such as the GDPR, eIDAS, and the revised Taking of Evidence 
+Regulation address some aspects, there is little guidance on metadata, technical standards, or 
+requirements for electronic evidence \cite{Ontanu2023}. The evaluation of electronic evidence is 
+left to domestic legislation under principles of procedural autonomy, leaving significant 
+uncertainty about how deletion obligations apply to evidentiary materials across member states. 
+Allah Rakha (2024) addresses jurisdiction and governance in the global digital economy, arguing 
+that ambiguous jurisdiction enables large platforms to circumvent laws while prescriptive control 
+risks stifling innovation, and calls for cooperative solutions aligned to collective rights and 
+welfare \cite{AllahRakha2024}.
+
+
+\subsection{Comparative Regulatory Landscape}
+Birrell et al. (2024) provide the broadest cross-jurisdictional analysis, examining 25 Internet 
+privacy and data protection regulations from around the world and developing a taxonomy of rights 
+and obligations. Their work systematizes 270 technical research papers, finding that the 
+overwhelming majority study either the GDPR or the CCPA, laws protecting approximately 6.3\% of the 
+world's population, while other aspects such as the right to non-discrimination remain largely 
+unexplored \cite{Birrell2024SoK}. They identify significant technical challenges to implementing 
+the right to delete, including the difficulty of deleting all replicas of data across distributed 
+data centers, backups, and offline copies, with some systems taking months to complete deletion. 
+The right to erasure under GDPR is the most widely known of the self-management rights, yet users 
+are often not aware of or do not use deletion controls due to difficulties locating them or 
+encountering dark patterns \cite{Birrell2024SoK}.
+
+Beyond the GDPR, the California Consumer Privacy Act (CCPA) similarly confers a right to deletion, 
+and sectoral laws such as Sarbanes-Oxley mandate retention periods after which secure deletion 
+becomes necessary to limit liability \cite{AlgorithmicDestruction}. The technical literature 
+contextualizes these frameworks directly: the Holepunch system explicitly frames secure deletion 
+via cryptographic erasure as a promising mechanism for enforcing GDPR-style regulations, provided 
+that challenges involving key management, performance, and crash consistency can be solved \cite{holepunch}.
+
+\subsection*{Bridging Technical and Legal Perspectives}
+The literature reveals both alignment and tension between the technical capabilities of secure 
+deletion and the legal requirements imposed by data protection regulations.
+
+On the alignment side, cryptographic erasure offers a technically mature approach that maps well 
+to regulatory requirements. The ability to render data irrecoverable through key deletion, 
+independent of the underlying storage medium, provides a mechanism that can satisfy 
+right-to-erasure obligations across diverse technical environments \cite{reardon2013sok}. The key management 
+architectures developed in systems such as Eraser, DNEFS, and Holepunch demonstrate that 
+file-granularity deletion is achievable with acceptable performance overhead \cite{holepunch}.
+
+On the tension side, regulatory mandates require timely and demonstrable deletion, but technical 
+constraints often prevent this. Large cloud providers describe deletion as an iterative process 
+that can take up to 180 days due to data replication and backup cycles \cite{Birrell2024SoK}, far 
+exceeding the timelines implied by Article 17 of the GDPR. The six GDPR anti-patterns identified by 
+Shastri et al. (2019) in cloud-scale systems — storing data without clear deletion timelines, 
+reusing data indiscriminately, and risk-agnostic data processing, among others — suggest that 
+achieving regulatory compliance requires systemic architectural changes rather than point solutions \cite{Shastri2019gdpr}.
+
+The gap between legal language and technical specification remains a central challenge. Visconti 
+(2024) demonstrates that the gap between the language of the GDPR and the technical specifications 
+required by developers is wide enough to introduce significant uncertainty, and proposes 
+zero-knowledge proofs as a bridge \cite{Visconti2024zeroknowledge}. Cross-border procedure adds 
+further complexity, as Casino et al. (2022) note that distributed systems mean software and data 
+may reside in different countries, requiring specific cross-border collaborations that existing 
+deletion frameworks do not adequately address \cite{Casino2022Research}. Standardized evaluation 
+frameworks such as NIST SP 800-88 Rev. 1 and IEEE 2883-2022 provide operational definitions for 
+sanitization levels but remain limited by their focus on traditional storage media \cite{aronsson2025secure},
+leaving emerging contexts such as containers, cloud storage, and AI systems without clear compliance guidance.
+
 \section{Summary and Identified Research Gaps}
+
+Secure deletion in modern digital environments is a multi-layered problem spanning storage 
+architecture, cryptographic key management, regulatory compliance, and empirical verification. 
+The literature has produced a rich taxonomy of techniques overwriting, encryption-based, 
+erasure-based, and integrated approaches each with distinct trade-offs. However, the absence of 
+a standardized experimental framework for evaluating these techniques across diverse storage 
+platforms limits both academic progress and practical deployment. An experimental framework 
+that defines consistent metrics, covers a representative range of modern storage devices, 
+incorporates verification protocols, and aligns with regulatory standards would address a 
+critical gap in the current state of the art. 
+
+\subsection*{Gaps and Directions for an Experimental Framework}
+
+The literature consistently identifies several gaps that motivate an experimental framework for 
+evaluating secure deletion techniques.
+
+
+\textbf{Broader device coverage.} Existing studies test only a handful of SSD models and 
+manufacturers. Given the significant variability in FTL implementation across vendors, broader 
+testing is essential for generalizable conclusions \cite{aronsson2025secure}
+
+\textbf{Standardized metrics.} The absence of standardized evaluation criteria for deletion 
+effectiveness, performance overhead, and verifiability prevents meaningful comparisons between 
+techniques. A framework should define measurable outcomes including residual data recoverability, 
+deletion latency, write amplification, and device wear.
+
+\textbf{Verification protocols.} Cryptographic erasure requires protocols that can independently 
+verify key deletion rather than relying on opaque TPM or SSD controller attestations. Research 
+into verifiable deletion, including cell-count-based verification techniques, points toward 
+practical verification mechanisms \cite{ahn2021forensics}.
+
+\textbf{Alignment with regulatory standards.} Future frameworks should align experimental 
+evaluation with regulatory requirements NIST SP 800-88 Purge level, IEEE 2883-2022 to ensure 
+that laboratory testing directly demonstrates compliance readiness \cite{aronsson2025secure}.
+
+
 
 \vfill

@@ -233,7 +233,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{Cybersecurity}
       \field{number}{1}
-      \field{title}{Ensuring data confidentiality via plausibly deniable encryption and secure deletion – a survey}
+      \field{title}{Ensuring data confidentiality via plausibly deniable encryption and secure deletion - a survey}
       \field{volume}{1}
       \field{year}{2018}
       \field{pages}{1}
@@ -324,7 +324,7 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one’s way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.}
+      \field{abstract}{The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one's way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.}
       \field{issn}{2076-3417}
       \field{journaltitle}{Applied Sciences}
       \field{number}{12}
@@ -479,7 +479,7 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{2020 Indo – Taiwan 2nd International Conference on Computing, Analytics and Networks (Indo-Taiwan ICAN)}
+      \field{booktitle}{2020 Indo - Taiwan 2nd International Conference on Computing, Analytics and Networks (Indo-Taiwan ICAN)}
       \field{title}{Challenges and Designs for Secure Deletion in Storage Systems}
       \field{year}{2020}
       \field{pages}{181\bibrangedash 189}
@@ -542,7 +542,7 @@
       \endverb
       \keyw{Three-dimensional displays;Cryptography;Electronic mail;Computer science;Two dimensional displays;Bit error rate;Embedded systems;Nonvolatile memory;Security;Embedded systems;3-D nand flash;nonvolatile memory;scrubbing;secure deletion}
     \endentry
-    \entry{onarlioglu2018_3}{misc}{}{}
+    \entry{onarlioglu2018_3}{inproceedings}{}{}
       \name{author}{3}{}{%
         {{hash=a4096244160ce52432cbbc82b12f5f7b}{%
            family={Onarlioglu},
@@ -683,6 +683,433 @@
       \range{pages}{5}
       \verb{doi}
       \verb 10.1145/1363686.1364093
+      \endverb
+    \endentry
+    \entry{Politou2018}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=386c523b4742c05402bb12d090135e48}{%
+           family={Politou},
+           familyi={P\bibinitperiod},
+           given={Eugenia},
+           giveni={E\bibinitperiod}}}%
+        {{hash=213cde5fc52fcee806ffb7f02131b278}{%
+           family={Alepis},
+           familyi={A\bibinitperiod},
+           given={Efthimios},
+           giveni={E\bibinitperiod}}}%
+        {{hash=fb25a705ecb4db067d80a1f025858e97}{%
+           family={Patsakis},
+           familyi={P\bibinitperiod},
+           given={Constantinos},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{5b1476cb2844377aba914c8d51da9a4d}
+      \strng{fullhash}{570e4ebd67af2ca331655f67d0b2fa22}
+      \strng{fullhashraw}{570e4ebd67af2ca331655f67d0b2fa22}
+      \strng{bibnamehash}{570e4ebd67af2ca331655f67d0b2fa22}
+      \strng{authorbibnamehash}{570e4ebd67af2ca331655f67d0b2fa22}
+      \strng{authornamehash}{5b1476cb2844377aba914c8d51da9a4d}
+      \strng{authorfullhash}{570e4ebd67af2ca331655f67d0b2fa22}
+      \strng{authorfullhashraw}{570e4ebd67af2ca331655f67d0b2fa22}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Cybersecurity}
+      \field{number}{1}
+      \field{title}{Forgetting personal data and revoking consent under the GDPR: Challenges and proposed solutions}
+      \field{volume}{4}
+      \field{year}{2018}
+      \verb{doi}
+      \verb 10.1093/cybsec/tyy001
+      \endverb
+    \endentry
+    \entry{Shastri2019gdpr}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=62176d3518f9ab7dafae8275f4572b66}{%
+           family={Shastri},
+           familyi={S\bibinitperiod},
+           given={Supreeth},
+           giveni={S\bibinitperiod}}}%
+        {{hash=82a79376c520669c45b15e8b13ba18d7}{%
+           family={Wasserman},
+           familyi={W\bibinitperiod},
+           given={Melissa},
+           giveni={M\bibinitperiod}}}%
+        {{hash=33a514a6470c53b3e3d3c4b1b6ce9279}{%
+           family={Chidambaram},
+           familyi={C\bibinitperiod},
+           given={Vijay},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{ae9ee45e7b0bf92335f2b431b18dc82c}
+      \strng{fullhash}{e2126a8d4b2e662e82bf475ecdb4a2f9}
+      \strng{fullhashraw}{e2126a8d4b2e662e82bf475ecdb4a2f9}
+      \strng{bibnamehash}{e2126a8d4b2e662e82bf475ecdb4a2f9}
+      \strng{authorbibnamehash}{e2126a8d4b2e662e82bf475ecdb4a2f9}
+      \strng{authornamehash}{ae9ee45e7b0bf92335f2b431b18dc82c}
+      \strng{authorfullhash}{e2126a8d4b2e662e82bf475ecdb4a2f9}
+      \strng{authorfullhashraw}{e2126a8d4b2e662e82bf475ecdb4a2f9}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM SIGOPS Operating Systems Review}
+      \field{number}{2}
+      \field{title}{GDPR Anti-Patterns: How Design and Operation of Modern Cloud-Scale Systems Conflict with GDPR}
+      \field{volume}{54}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 7}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1145/3445039.3445040
+      \endverb
+    \endentry
+    \entry{AlgorithmicDestruction}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=9085bf3d5aad688c80f6e2e2378f43c2}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Tiffany\bibnamedelima C.},
+           giveni={T\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {SMU Scholar}%
+      }
+      \strng{namehash}{9085bf3d5aad688c80f6e2e2378f43c2}
+      \strng{fullhash}{9085bf3d5aad688c80f6e2e2378f43c2}
+      \strng{fullhashraw}{9085bf3d5aad688c80f6e2e2378f43c2}
+      \strng{bibnamehash}{9085bf3d5aad688c80f6e2e2378f43c2}
+      \strng{authorbibnamehash}{9085bf3d5aad688c80f6e2e2378f43c2}
+      \strng{authornamehash}{9085bf3d5aad688c80f6e2e2378f43c2}
+      \strng{authorfullhash}{9085bf3d5aad688c80f6e2e2378f43c2}
+      \strng{authorfullhashraw}{9085bf3d5aad688c80f6e2e2378f43c2}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{3}
+      \field{journaltitle}{SMU Law Review}
+      \field{title}{Algorithmic Destruction}
+      \field{volume}{75}
+      \field{year}{2022}
+      \field{pages}{479}
+      \range{pages}{1}
+      \verb{urlraw}
+      \verb https://scholar.smu.edu/smulr/vol75/iss3/7
+      \endverb
+      \verb{url}
+      \verb https://scholar.smu.edu/smulr/vol75/iss3/7
+      \endverb
+    \endentry
+    \entry{vanOoijen2019}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=b95c02d100b60bd0956442f57c280c13}{%
+           family={Ooijen},
+           familyi={O\bibinitperiod},
+           given={I.},
+           giveni={I\bibinitperiod},
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+        {{hash=51b04c006ec0b94b5d8bbf793c047e38}{%
+           family={Vrabec},
+           familyi={V\bibinitperiod},
+           given={Helena\bibnamedelima U.},
+           giveni={H\bibinitperiod\bibinitdelim U\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{c770c007455251476fddee0f0000f600}
+      \strng{fullhash}{c770c007455251476fddee0f0000f600}
+      \strng{fullhashraw}{c770c007455251476fddee0f0000f600}
+      \strng{bibnamehash}{c770c007455251476fddee0f0000f600}
+      \strng{authorbibnamehash}{c770c007455251476fddee0f0000f600}
+      \strng{authornamehash}{c770c007455251476fddee0f0000f600}
+      \strng{authorfullhash}{c770c007455251476fddee0f0000f600}
+      \strng{authorfullhashraw}{c770c007455251476fddee0f0000f600}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Consumer Policy}
+      \field{title}{Does the GDPR Enhance Consumers' Control over Personal Data? An Analysis from a Behavioural Perspective}
+      \field{volume}{42}
+      \field{year}{2019}
+      \field{pages}{91\bibrangedash 107}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1007/s10603-018-9399-7
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/s10603-018-9399-7
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/s10603-018-9399-7
+      \endverb
+    \endentry
+    \entry{Visconti2024zeroknowledge}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=4bdb09c710bf81b5ab7bf0f4f9b05df7}{%
+           family={Visconti},
+           familyi={V\bibinitperiod},
+           given={Ivan},
+           giveni={I\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Vienna, Austria}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
+      \strng{fullhash}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
+      \strng{fullhashraw}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
+      \strng{bibnamehash}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
+      \strng{authorbibnamehash}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
+      \strng{authornamehash}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
+      \strng{authorfullhash}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
+      \strng{authorfullhashraw}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The main goal of the EU GDPR is to protect personal data of individuals within the EU. This is expressed in several rights and, among them, in this work we focus on the Right to Erasure, more commonly known as the Right to Be Forgotten (RtBF). There is an intriguing debate about the affordable costs and the actual technical feasibility of satisfying the RtBF in digital platforms. We note that some digital platforms process personal data in order to derive and store correlated data raising two main issues: 1) removing personal data could create inconsistencies in the remaining correlated data; 2) correlated data could also be personal data. As such, in some cases, erasing personal data can trigger an avalanche on the remaining information stored in the platform. Addressing the above issues can be very challenging in particular when a digital platform has been originally built without embedding in its design specific methodologies to deal with the RtBF. This work aims at illustrating concrete scenarios where the RtBF is technically hard to guarantee with traditional techniques. On the positive side, we show how zero-knowledge (ZK) proofs can be leveraged to design affordable solutions in various use cases, especially when considered at design time. ZK proofs can be instrumental for compliance to the RtBF revolutionizing the current approaches to design compliant systems. Concretely, we show an assessment scheme allowing to check compliance with the RtBF leveraging the power of ZK proofs. We analyze the above assessment scheme considering specific hard-to-address use cases.}
+      \field{booktitle}{Proceedings of the 19th International Conference on Availability, Reliability and Security}
+      \field{isbn}{9798400717185}
+      \field{series}{ARES 24}
+      \field{title}{The Right to Be Zero-Knowledge Forgotten}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.1145/3664476.3669973
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3664476.3669973
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3664476.3669973
+      \endverb
+      \keyw{Right to Be Forgotten,Security By Design,Zero Knowledge Proofs}
+    \endentry
+    \entry{Casino2022Research}{article}{}{}
+      \name{author}{9}{}{%
+        {{hash=9c08bd6394eb497ea4f80889f9cd1580}{%
+           family={Casino},
+           familyi={C\bibinitperiod},
+           given={Fran},
+           giveni={F\bibinitperiod}}}%
+        {{hash=7839e1372a1f5081ba305b8b0b7e4330}{%
+           family={Dasaklis},
+           familyi={D\bibinitperiod},
+           given={Thomas\bibnamedelima K.},
+           giveni={T\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=fd62a10c14509b531fefc5124f6fa7bc}{%
+           family={Spathoulas},
+           familyi={S\bibinitperiod},
+           given={Georgios\bibnamedelima P.},
+           giveni={G\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=7c86f3b15d6d96c848ec1d2517d618b6}{%
+           family={Anagnostopoulos},
+           familyi={A\bibinitperiod},
+           given={Marios},
+           giveni={M\bibinitperiod}}}%
+        {{hash=5387a3fd92b374cdb6eaf70892b9573f}{%
+           family={Ghosal},
+           familyi={G\bibinitperiod},
+           given={Amrita},
+           giveni={A\bibinitperiod}}}%
+        {{hash=bbaae5ddbad679d4b0b5e35069155aeb}{%
+           family={Böröcz},
+           familyi={B\bibinitperiod},
+           given={István},
+           giveni={I\bibinitperiod}}}%
+        {{hash=47fa3698b8043a11a277ced70bf0529c}{%
+           family={Solanas},
+           familyi={S\bibinitperiod},
+           given={Agusti},
+           giveni={A\bibinitperiod}}}%
+        {{hash=c1c6cc37d38b38f6ff327e1eabebda0c}{%
+           family={Conti},
+           familyi={C\bibinitperiod},
+           given={Mauro},
+           giveni={M\bibinitperiod}}}%
+        {{hash=fb25a705ecb4db067d80a1f025858e97}{%
+           family={Patsakis},
+           familyi={P\bibinitperiod},
+           given={Constantinos},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{6fc5a2d14a123e1979df6c984c45f71a}
+      \strng{fullhash}{2aad35b520bf2ca8f5960def6342d3b7}
+      \strng{fullhashraw}{2aad35b520bf2ca8f5960def6342d3b7}
+      \strng{bibnamehash}{2aad35b520bf2ca8f5960def6342d3b7}
+      \strng{authorbibnamehash}{2aad35b520bf2ca8f5960def6342d3b7}
+      \strng{authornamehash}{6fc5a2d14a123e1979df6c984c45f71a}
+      \strng{authorfullhash}{2aad35b520bf2ca8f5960def6342d3b7}
+      \strng{authorfullhashraw}{2aad35b520bf2ca8f5960def6342d3b7}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Access}
+      \field{title}{Research Trends, Challenges, and Emerging Topics in Digital Forensics: A Review of Reviews}
+      \field{volume}{10}
+      \field{year}{2022}
+      \field{pages}{25464\bibrangedash 25493}
+      \range{pages}{30}
+      \verb{doi}
+      \verb 10.1109/ACCESS.2022.3154059
+      \endverb
+      \keyw{Digital forensics;Systematics;Forensics;Market research;Internet;Computer crime;Standards;Digital forensics;cybersecurity;review of reviews;forensic investigations;meta review}
+    \endentry
+    \entry{Ontanu2023}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=1afb0c907437f715d458ae076bcf6e83}{%
+           family={Ontanu},
+           familyi={O\bibinitperiod},
+           given={Elena\bibnamedelima Alina},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Queensland University of Technology}%
+      }
+      \strng{namehash}{1afb0c907437f715d458ae076bcf6e83}
+      \strng{fullhash}{1afb0c907437f715d458ae076bcf6e83}
+      \strng{fullhashraw}{1afb0c907437f715d458ae076bcf6e83}
+      \strng{bibnamehash}{1afb0c907437f715d458ae076bcf6e83}
+      \strng{authorbibnamehash}{1afb0c907437f715d458ae076bcf6e83}
+      \strng{authornamehash}{1afb0c907437f715d458ae076bcf6e83}
+      \strng{authorfullhash}{1afb0c907437f715d458ae076bcf6e83}
+      \strng{authorfullhashraw}{1afb0c907437f715d458ae076bcf6e83}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Law, Technology and Humans}
+      \field{number}{1}
+      \field{title}{The Digitalisation of European Union Procedures: A New Impetus Following a Time of Prolonged Crisis}
+      \field{volume}{5}
+      \field{year}{2023}
+      \field{pages}{93\bibrangedash 110}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.5204/lthj.2706
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.5204/lthj.2706
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.5204/lthj.2706
+      \endverb
+    \endentry
+    \entry{AllahRakha2024}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=7c900c4bd9b1021b9a4daf46a89f2ff9}{%
+           family={AllahRakha},
+           familyi={A\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IJLP}%
+      }
+      \strng{namehash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
+      \strng{fullhash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
+      \strng{fullhashraw}{7c900c4bd9b1021b9a4daf46a89f2ff9}
+      \strng{bibnamehash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
+      \strng{authorbibnamehash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
+      \strng{authornamehash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
+      \strng{authorfullhash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
+      \strng{authorfullhashraw}{7c900c4bd9b1021b9a4daf46a89f2ff9}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Law and Policy}
+      \field{number}{1}
+      \field{title}{Rethinking Digital Borders to Address Jurisdiction and Governance in the Global Digital Economy}
+      \field{volume}{2}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.59022/ijlp.124
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.59022/ijlp.124
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.59022/ijlp.124
+      \endverb
+    \endentry
+    \entry{Birrell2024SoK}{inproceedings}{}{}
+      \name{author}{7}{}{%
+        {{hash=77042d9bb7925bba89859ce6a1c37e74}{%
+           family={Birrell},
+           familyi={B\bibinitperiod},
+           given={Eleanor},
+           giveni={E\bibinitperiod}}}%
+        {{hash=3884f59a79a2a98e4b6eb379492c90ad}{%
+           family={Rodolitz},
+           familyi={R\bibinitperiod},
+           given={Jay},
+           giveni={J\bibinitperiod}}}%
+        {{hash=7fd81f5db7113d1223a3134d1fd61953}{%
+           family={Ding},
+           familyi={D\bibinitperiod},
+           given={Angel},
+           giveni={A\bibinitperiod}}}%
+        {{hash=878f97ca521e7500a5f9d4c97623caff}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Jenna},
+           giveni={J\bibinitperiod}}}%
+        {{hash=0eb03c7c1046191a601cd49405a6a883}{%
+           family={McReynolds},
+           familyi={M\bibinitperiod},
+           given={Emily},
+           giveni={E\bibinitperiod}}}%
+        {{hash=82acef5129fe4998ccb90a747e29a942}{%
+           family={Hutson},
+           familyi={H\bibinitperiod},
+           given={Jevan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=983c5d961f7cdc5d841d347a810dc001}{%
+           family={Lerner},
+           familyi={L\bibinitperiod},
+           given={Ada},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{namehash}{ef7e76ab2e0f91cc2dcba0bd52f58729}
+      \strng{fullhash}{feb7db173f160a2441c3e348f156373f}
+      \strng{fullhashraw}{feb7db173f160a2441c3e348f156373f}
+      \strng{bibnamehash}{feb7db173f160a2441c3e348f156373f}
+      \strng{authorbibnamehash}{feb7db173f160a2441c3e348f156373f}
+      \strng{authornamehash}{ef7e76ab2e0f91cc2dcba0bd52f58729}
+      \strng{authorfullhash}{feb7db173f160a2441c3e348f156373f}
+      \strng{authorfullhashraw}{feb7db173f160a2441c3e348f156373f}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2024 IEEE Symposium on Security and Privacy (SP)}
+      \field{title}{SoK: Technical Implementation and Human Impact of Internet Privacy Regulations}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.1109/SP54263.2024.00182
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.ieeecomputersociety.org/10.1109/SP54263.2024.00182
+      \endverb
+      \verb{url}
+      \verb https://doi.ieeecomputersociety.org/10.1109/SP54263.2024.00182
       \endverb
     \endentry
   \enddatalist

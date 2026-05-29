@@ -29,10 +29,11 @@
 \addbibresource{bibliography.bib}
 
 % to load the glossaries, not needed if using bib2gls
-\input{glossaries.tex}
-\makeglossaries
+%\input{glossaries.tex}
+%\makeglossaries
 
 \begin{document}
+
 
 \input{common/config}
 
@@ -112,7 +113,7 @@
 \input{content/chapters/chapter4}
 \input{content/chapters/chapter5}
 \input{content/chapters/chapter6}
-\input{content/chapters/chapter7}
+
 
 % \paginavuota % it works even without stile=classica
 
@@ -123,6 +124,7 @@
 
 \phantom{0}
 \cleardoublepage
+
 \printbibliography[heading=bibintoc] % heading required to show it in ToC
 
 \end{document}

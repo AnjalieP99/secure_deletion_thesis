@@ -8,7 +8,7 @@
 % % IEEE publications:
 
 @article{SystematicReview,
-AUTHOR = {González Arias, Rafael and Bermejo Higuera, Javier and Rainer Granados, J. Javier and Bermejo Higuera, Juan Ramón and Sicilia Montalvo, Juan Antonio},
+AUTHOR = {Gonz{\'a}lez Arias, Rafael and Bermejo Higuera, Javier and Rainer Granados, J. Javier and Bermejo Higuera, Juan Ram{\'o}n and Sicilia Montalvo, Juan Antonio},
 TITLE = {Systematic Review: Anti-Forensic Computer Techniques},
 JOURNAL = {Applied Sciences},
 VOLUME = {14},
@@ -17,7 +17,7 @@ NUMBER = {12},
 ARTICLEno = {5302},
 URL = {https://www.mdpi.com/2076-3417/14/12/5302},
 ISSN = {2076-3417},
-ABSTRACT = {The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one’s way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.},
+ABSTRACT = {The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one's way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.},
 DOI = {10.3390/app14125302}
 };
 
@@ -67,7 +67,7 @@ url = {https://doi.org/10.1145/1179559.1179571},
 doi = {10.1145/1179559.1179571},
 abstract = {This paper has three goals. (1) We try to debunk several held misconceptions about secure deletion: that encryption is an ideal solution for everybody, that existing data-overwriting tools work well, and that securely deleted files must be overwritten many times. (2) We discuss new and important issues that are often neglected: secure deletion consistency in case of power failures, handling versioning and journalling file systems, and metadata overwriting. (3) We present two solutions for on-demand secure deletion. First, we have created a highly portable and flexible system that performs only the minimal amount of work in kernel mode. Second, we present two in-kernel solutions in the form of Ext3 file system patches that can perform comprehensive data and metadata overwriting. We evaluated our proposed solutions and discuss the trade-offs involved.},
 booktitle = {Proceedings of the Second ACM Workshop on Storage Security and Survivability},
-pages = {61–66},
+pages = {61-66},
 numpages = {6},
 keywords = {unintended data recovery, security, secure deletion, file systems},
 location = {Alexandria, Virginia, USA},
@@ -81,7 +81,7 @@ author       = {Lee, Jongmoo and Heo, Jihong and Cho, Youngjae and Hong, Joonwon
 booktitle    = {Proceedings of the 2008 ACM Symposium on Applied Computing (SAC'08)},
 year         = {2008},
 pages        = {1710--1714},
-address      = {Fortaleza, Ceará, Brazil},
+address      = {Fortaleza, Cear{\'a}, Brazil},
 publisher    = {ACM},
 doi          = {10.1145/1363686.1364093},
 isbn         = {978-1-59593-753-7},
@@ -120,7 +120,7 @@ url = {https://doi.org/10.1145/3488932.3523255},
 doi = {10.1145/3488932.3523255},
 abstract = {Flash memory has been used extensively as external storage of smartphones, tablets, IoT devices, laptops, etc. Therefore, more and more sensitive or even mission critical data are stored in flash and, once the data turn obsolete, securely deleting them is necessary for both regulation compliance and privacy protection. Traditional secure deletion on flash memory mainly focuses on sanitizing data. However, unique nature of flash memory may cause various data ''remnants'' and, even though the data are removed, the remnants may be utilized by the adversary to recover the deleted data, compromising the secure deletion guarantee.Based on both theoretic analysis and experiments using real-world workloads, we have identified one common type of remnants in the flash memory, namely duplicates, which are caused by unique internal functions of flash storage media including garbage collection, wear leveling, bad block management. We propose RedFlash, a novel secure deletion scheme which can efficiently Remove both the data and the corresponding duplicates towards secure deletion on Flash memory. Security analysis and experimental evaluation show that RedFlash can ensure the secure deletion guarantee, at the cost of a small performance degradation, compared to a regular (non-secure) flash controller.},
 booktitle = {Proceedings of the 2022 ACM on Asia Conference on Computer and Communications Security},
-pages = {54–66},
+pages = {54-66},
 numpages = {13},
 keywords = {duplicates, flash memory, ftl, secure deletion, snapshot adversary},
 location = {Nagasaki, Japan},
@@ -129,7 +129,7 @@ series = {ASIA CCS '22}
 
 @article{zhang2018ensuring,
   author    = {Zhang, Qi and Jia, Siqi and Chang, Bo and Chen, Yan and Liu, Zheli},
-  title     = {Ensuring data confidentiality via plausibly deniable encryption and secure deletion – a survey},
+  title     = {Ensuring data confidentiality via plausibly deniable encryption and secure deletion - a survey},
   journal   = {Cybersecurity},
   volume    = {1},
   number    = {1},
@@ -173,7 +173,7 @@ series = {ASIA CCS '22}
 
 @INPROCEEDINGS{wang2020challenges,
   author={Wang, Wei-Chen and Ho, Chien-Chung and Chang, Yu-Ming and Chang, Yuan-Hao},
-  booktitle={2020 Indo – Taiwan 2nd International Conference on Computing, Analytics and Networks (Indo-Taiwan ICAN)}, 
+  booktitle={2020 Indo - Taiwan 2nd International Conference on Computing, Analytics and Networks (Indo-Taiwan ICAN)}, 
   title={Challenges and Designs for Secure Deletion in Storage Systems}, 
   year={2020},
   volume={},
@@ -196,10 +196,125 @@ series = {ASIA CCS '22}
   };
 
 
-@misc{onarlioglu2018_3,
+@INPROCEEDINGS{onarlioglu2018_3,
   title     = {Eraser: Your Data Won't Be Back},
   author    = {Kaan Onarlioglu and William Robertson and Engin Kirda},
   year      = {2018},
   doi       = {10.1109/EuroSP.2018.00019}
+};
+
+ %Legal Framework References
+@article{Politou2018,
+  author = {Politou, Eugenia and Alepis, Efthimios and Patsakis, Constantinos},
+  title = {Forgetting personal data and revoking consent under the GDPR: Challenges and proposed solutions},
+  journal = {Journal of Cybersecurity},
+  volume = {4},
+  number = {1},
+  year = {2018},
+  article-number = {tyy001},
+  doi = {10.1093/cybsec/tyy001}
+};
+
+@article{Shastri2019gdpr,
+  author = {Shastri, Supreeth and Wasserman, Melissa and Chidambaram, Vijay},
+  title = {GDPR Anti-Patterns: How Design and Operation of Modern Cloud-Scale Systems Conflict with GDPR},
+  journal = {ACM SIGOPS Operating Systems Review},
+  volume = {54},
+  number = {2},
+  pages = {1--7},
+  year = {2020},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  doi = {10.1145/3445039.3445040}
+};
+
+@article{AlgorithmicDestruction,
+  author = {Li, Tiffany C.},
+  title = {Algorithmic Destruction},
+  journal = {SMU Law Review},
+  volume = {75},
+  issue = {3},
+  pages = {479},
+  year = {2022},
+  publisher = {SMU Scholar},
+  url = {https://scholar.smu.edu/smulr/vol75/iss3/7},
+  orcid = {https://orcid.org/0000-0001-5015-0726}
+};
+
+@article{vanOoijen2019,
+  author = {van Ooijen, I. and Vrabec, Helena U.},
+  title = {Does the GDPR Enhance Consumers' Control over Personal Data? An Analysis from a Behavioural Perspective},
+  journal = {Journal of Consumer Policy},
+  volume = {42},
+  pages = {91--107},
+  year = {2019},
+  publisher = {Springer},
+  doi = {10.1007/s10603-018-9399-7},
+  url = {https://doi.org/10.1007/s10603-018-9399-7}
+};
+
+@inproceedings{Visconti2024zeroknowledge,
+author = {Visconti, Ivan},
+title = {The Right to Be Zero-Knowledge Forgotten},
+year = {2024},
+isbn = {9798400717185},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3664476.3669973},
+doi = {10.1145/3664476.3669973},
+abstract = {The main goal of the EU GDPR is to protect personal data of individuals within the EU. This is expressed in several rights and, among them, in this work we focus on the Right to Erasure, more commonly known as the Right to Be Forgotten (RtBF). There is an intriguing debate about the affordable costs and the actual technical feasibility of satisfying the RtBF in digital platforms. We note that some digital platforms process personal data in order to derive and store correlated data raising two main issues: 1) removing personal data could create inconsistencies in the remaining correlated data; 2) correlated data could also be personal data. As such, in some cases, erasing personal data can trigger an avalanche on the remaining information stored in the platform. Addressing the above issues can be very challenging in particular when a digital platform has been originally built without embedding in its design specific methodologies to deal with the RtBF. This work aims at illustrating concrete scenarios where the RtBF is technically hard to guarantee with traditional techniques. On the positive side, we show how zero-knowledge (ZK) proofs can be leveraged to design affordable solutions in various use cases, especially when considered at design time. ZK proofs can be instrumental for compliance to the RtBF revolutionizing the current approaches to design compliant systems. Concretely, we show an assessment scheme allowing to check compliance with the RtBF leveraging the power of ZK proofs. We analyze the above assessment scheme considering specific hard-to-address use cases.},
+booktitle = {Proceedings of the 19th International Conference on Availability, Reliability and Security},
+articleno = {110},
+numpages = {9},
+keywords = {Right to Be Forgotten, Security By Design, Zero Knowledge Proofs},
+location = {Vienna, Austria},
+series = {ARES 24}
+};
+
+@ARTICLE{Casino2022Research,
+  author={Casino, Fran and Dasaklis, Thomas K. and Spathoulas, Georgios P. and Anagnostopoulos, Marios and Ghosal, Amrita and B{\"o}r{\"o}cz, Istv{\'a}n and Solanas, Agusti and Conti, Mauro and Patsakis, Constantinos},
+  journal={IEEE Access}, 
+  title={Research Trends, Challenges, and Emerging Topics in Digital Forensics: A Review of Reviews}, 
+  year={2022},
+  volume={10},
+  number={},
+  pages={25464-25493},
+  keywords={Digital forensics;Systematics;Forensics;Market research;Internet;Computer crime;Standards;Digital forensics;cybersecurity;review of reviews;forensic investigations;meta review},
+  doi={10.1109/ACCESS.2022.3154059}
+  };
+
+@article{Ontanu2023,
+  author = {Ontanu, Elena Alina},
+  title = {The Digitalisation of European Union Procedures: A New Impetus Following a Time of Prolonged Crisis},
+  journal = {Law, Technology and Humans},
+  volume = {5},
+  number = {1},
+  pages = {93--110},
+  year = {2023},
+  publisher = {Queensland University of Technology},
+  doi = {10.5204/lthj.2706},
+  url = {https://doi.org/10.5204/lthj.2706}
+};
+
+@article{AllahRakha2024,
+  author = {AllahRakha, N.},
+  title = {Rethinking Digital Borders to Address Jurisdiction and Governance in the Global Digital Economy},
+  journal = {International Journal of Law and Policy},
+  volume = {2},
+  number = {1},
+  year = {2024},
+  publisher = {IJLP},
+  doi = {10.59022/ijlp.124},
+  url = {https://doi.org/10.59022/ijlp.124}
+};
+
+@inproceedings{Birrell2024SoK,
+  author    = {Eleanor Birrell and Jay Rodolitz and Angel Ding and Jenna Lee and Emily McReynolds and Jevan Hutson and Ada Lerner},
+  title     = {SoK: Technical Implementation and Human Impact of Internet Privacy Regulations},
+  booktitle = {Proceedings of the 2024 IEEE Symposium on Security and Privacy (SP)},
+  year      = {2024},
+  publisher = {IEEE Computer Society},
+  doi       = {10.1109/SP54263.2024.00182},
+  url       = {https://doi.ieeecomputersociety.org/10.1109/SP54263.2024.00182}
 }
 

@@ -320,8 +320,8 @@
       \strng{authornamehash}{4f0067382df307ae9363fc954e6a1037}
       \strng{authorfullhash}{158797a21a720e109238b4edce9a8aae}
       \strng{authorfullhashraw}{158797a21a720e109238b4edce9a8aae}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one’s way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.}
@@ -395,6 +395,295 @@
       \verb https://doi.org/10.1145/1179559.1179571
       \endverb
       \keyw{unintended data recovery,security,secure deletion,file systems}
+    \endentry
+    \entry{peterson2005secure}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=bf64d8adf3d01bfa7175a079a5d6e0ee}{%
+           family={Peterson},
+           familyi={P\bibinitperiod},
+           given={Zachary\bibnamedelimb N.\bibnamedelimi J.},
+           giveni={Z\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=e4052db41a87cae56addb18d98501100}{%
+           family={Burns},
+           familyi={B\bibinitperiod},
+           given={Randal},
+           giveni={R\bibinitperiod}}}%
+        {{hash=52a62232610b3a335c79c67b9ff43c20}{%
+           family={Herring},
+           familyi={H\bibinitperiod},
+           given={Joe},
+           giveni={J\bibinitperiod}}}%
+        {{hash=affe62342f6e9a3da8fa30b04b6137e5}{%
+           family={Stubblefield},
+           familyi={S\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+        {{hash=965642065f2b3bc3ffcbcb6a2dea0f92}{%
+           family={Rubin},
+           familyi={R\bibinitperiod},
+           given={Aviel\bibnamedelima D.},
+           giveni={A\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Francisco, CA}%
+      }
+      \strng{namehash}{7b6bb1ba3bacb3e3647db8169fdb5681}
+      \strng{fullhash}{ac8cb372ecad80ddeeef97a0cc5f3993}
+      \strng{fullhashraw}{ac8cb372ecad80ddeeef97a0cc5f3993}
+      \strng{bibnamehash}{ac8cb372ecad80ddeeef97a0cc5f3993}
+      \strng{authorbibnamehash}{ac8cb372ecad80ddeeef97a0cc5f3993}
+      \strng{authornamehash}{7b6bb1ba3bacb3e3647db8169fdb5681}
+      \strng{authorfullhash}{ac8cb372ecad80ddeeef97a0cc5f3993}
+      \strng{authorfullhashraw}{ac8cb372ecad80ddeeef97a0cc5f3993}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 4th USENIX Conference on File and Storage Technologies (FAST '05)}
+      \field{title}{Secure Deletion for a Versioning File System}
+      \field{year}{2005}
+    \endentry
+    \entry{wang2020challenges}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=40ba2e89c56f2485296a2475f31cd7d2}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Wei-Chen},
+           giveni={W\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=595536f3d5cb136facb2c94bb0f56e62}{%
+           family={Ho},
+           familyi={H\bibinitperiod},
+           given={Chien-Chung},
+           giveni={C\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=f73736934e303edaba569fb742031372}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Yu-Ming},
+           giveni={Y\bibinithyphendelim M\bibinitperiod}}}%
+        {{hash=b534164af816ec79a9ee6b1b3e73d28a}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Yuan-Hao},
+           giveni={Y\bibinithyphendelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{aab03cc8dfac2234170c281b2ab2ba43}
+      \strng{fullhash}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{fullhashraw}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{bibnamehash}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{authorbibnamehash}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{authornamehash}{aab03cc8dfac2234170c281b2ab2ba43}
+      \strng{authorfullhash}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{authorfullhashraw}{7c3a6dc1064f4220774c22a10e1abd06}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2020 Indo – Taiwan 2nd International Conference on Computing, Analytics and Networks (Indo-Taiwan ICAN)}
+      \field{title}{Challenges and Designs for Secure Deletion in Storage Systems}
+      \field{year}{2020}
+      \field{pages}{181\bibrangedash 189}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1109/Indo-TaiwanICAN48429.2020.9181335
+      \endverb
+      \keyw{Magnetic recording;Encryption;Hard disks;Law;secure deletion;data sanitization;data scrubbing;programming strategy;encryption}
+    \endentry
+    \entry{3dnandwang2018}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=40ba2e89c56f2485296a2475f31cd7d2}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Wei-Chen},
+           giveni={W\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=595536f3d5cb136facb2c94bb0f56e62}{%
+           family={Ho},
+           familyi={H\bibinitperiod},
+           given={Chien-Chung},
+           giveni={C\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=b534164af816ec79a9ee6b1b3e73d28a}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Yuan-Hao},
+           giveni={Y\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=edbbad7c28c43e98957a46ecc2bf0814}{%
+           family={Kuo},
+           familyi={K\bibinitperiod},
+           given={Tei-Wei},
+           giveni={T\bibinithyphendelim W\bibinitperiod}}}%
+        {{hash=b198e5c43e37f158b4375321d0d26f52}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Ping-Hsien},
+           giveni={P\bibinithyphendelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{aab03cc8dfac2234170c281b2ab2ba43}
+      \strng{fullhash}{97850818b82fc7055f81da8fc63e291d}
+      \strng{fullhashraw}{97850818b82fc7055f81da8fc63e291d}
+      \strng{bibnamehash}{97850818b82fc7055f81da8fc63e291d}
+      \strng{authorbibnamehash}{97850818b82fc7055f81da8fc63e291d}
+      \strng{authornamehash}{aab03cc8dfac2234170c281b2ab2ba43}
+      \strng{authorfullhash}{97850818b82fc7055f81da8fc63e291d}
+      \strng{authorfullhashraw}{97850818b82fc7055f81da8fc63e291d}
+      \field{extraname}{2}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}
+      \field{number}{11}
+      \field{title}{Scrubbing-Aware Secure Deletion for 3-D NAND Flash}
+      \field{volume}{37}
+      \field{year}{2018}
+      \field{pages}{2790\bibrangedash 2801}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/TCAD.2018.2857260
+      \endverb
+      \keyw{Three-dimensional displays;Cryptography;Electronic mail;Computer science;Two dimensional displays;Bit error rate;Embedded systems;Nonvolatile memory;Security;Embedded systems;3-D nand flash;nonvolatile memory;scrubbing;secure deletion}
+    \endentry
+    \entry{onarlioglu2018_3}{misc}{}{}
+      \name{author}{3}{}{%
+        {{hash=a4096244160ce52432cbbc82b12f5f7b}{%
+           family={Onarlioglu},
+           familyi={O\bibinitperiod},
+           given={Kaan},
+           giveni={K\bibinitperiod}}}%
+        {{hash=4dd6cad5e867fba4c649bf2e50123e03}{%
+           family={Robertson},
+           familyi={R\bibinitperiod},
+           given={William},
+           giveni={W\bibinitperiod}}}%
+        {{hash=006bb466de86f839b385996132de44b0}{%
+           family={Kirda},
+           familyi={K\bibinitperiod},
+           given={Engin},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{352474dc0839ac8c7fd9f2a2fed99c0f}
+      \strng{fullhash}{e023b5e37bb919f12c6111aa4dc6f425}
+      \strng{fullhashraw}{e023b5e37bb919f12c6111aa4dc6f425}
+      \strng{bibnamehash}{e023b5e37bb919f12c6111aa4dc6f425}
+      \strng{authorbibnamehash}{e023b5e37bb919f12c6111aa4dc6f425}
+      \strng{authornamehash}{352474dc0839ac8c7fd9f2a2fed99c0f}
+      \strng{authorfullhash}{e023b5e37bb919f12c6111aa4dc6f425}
+      \strng{authorfullhashraw}{e023b5e37bb919f12c6111aa4dc6f425}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Eraser: Your Data Won't Be Back}
+      \field{year}{2018}
+      \verb{doi}
+      \verb 10.1109/EuroSP.2018.00019
+      \endverb
+    \endentry
+    \entry{holepunch}{misc}{}{}
+      \name{author}{5}{}{%
+        {{hash=f78b3357a7ee6a70325de152645a7ed0}{%
+           family={Ratliff},
+           familyi={R\bibinitperiod},
+           given={Zachary},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=c84988e84e44edfc04c3401c72cb6dd4}{%
+           family={Goh},
+           familyi={G\bibinitperiod},
+           given={Wittmann},
+           giveni={W\bibinitperiod}}}%
+        {{hash=ed530a85ba8db27057b9a2d16d89e8e9}{%
+           family={Wieland},
+           familyi={W\bibinitperiod},
+           given={Abe},
+           giveni={A\bibinitperiod}}}%
+        {{hash=fa4d85910e42efadddbb88651cdaf4b1}{%
+           family={Mickens},
+           familyi={M\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=fae3fd8ed553265acb8288519a5a1f55}{%
+           family={Williams},
+           familyi={W\bibinitperiod},
+           given={Ryan},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{c07c12901432a0e9122e5cb42b94359e}
+      \strng{fullhash}{83f01fdcd5747e881a8f9236590b9dff}
+      \strng{fullhashraw}{83f01fdcd5747e881a8f9236590b9dff}
+      \strng{bibnamehash}{83f01fdcd5747e881a8f9236590b9dff}
+      \strng{authorbibnamehash}{83f01fdcd5747e881a8f9236590b9dff}
+      \strng{authornamehash}{c07c12901432a0e9122e5cb42b94359e}
+      \strng{authorfullhash}{83f01fdcd5747e881a8f9236590b9dff}
+      \strng{authorfullhashraw}{83f01fdcd5747e881a8f9236590b9dff}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Cryptology {ePrint} Archive, Paper 2023/1927}
+      \field{title}{Holepunch: Fast, Secure File Deletion with Crash Consistency}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://eprint.iacr.org/2023/1927
+      \endverb
+      \verb{url}
+      \verb https://eprint.iacr.org/2023/1927
+      \endverb
+    \endentry
+    \entry{NANDSecureDeletion}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=b816e1c836c172190c717574cd9dc372}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Jongmoo},
+           giveni={J\bibinitperiod}}}%
+        {{hash=a84a2041599ef432142119432d9bae83}{%
+           family={Heo},
+           familyi={H\bibinitperiod},
+           given={Jihong},
+           giveni={J\bibinitperiod}}}%
+        {{hash=37ab46b3264233e3128385df47fc4091}{%
+           family={Cho},
+           familyi={C\bibinitperiod},
+           given={Youngjae},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=5db37bb53bcb9b213e25734bdb9007f7}{%
+           family={Hong},
+           familyi={H\bibinitperiod},
+           given={Joonwon},
+           giveni={J\bibinitperiod}}}%
+        {{hash=826bd79d006e8d5a41ef0e3dbf761ddd}{%
+           family={Shin},
+           familyi={S\bibinitperiod},
+           given={Seungyong},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Fortaleza, Ceará, Brazil}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{847acf5b431521f5e140eccaaee3920b}
+      \strng{fullhash}{46346a4e1873d66a5ed1978b593b90b3}
+      \strng{fullhashraw}{46346a4e1873d66a5ed1978b593b90b3}
+      \strng{bibnamehash}{46346a4e1873d66a5ed1978b593b90b3}
+      \strng{authorbibnamehash}{46346a4e1873d66a5ed1978b593b90b3}
+      \strng{authornamehash}{847acf5b431521f5e140eccaaee3920b}
+      \strng{authorfullhash}{46346a4e1873d66a5ed1978b593b90b3}
+      \strng{authorfullhashraw}{46346a4e1873d66a5ed1978b593b90b3}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This work proposes a secure deletion mechanism for NAND flash file systems by ensuring that all encryption keys and metadata of a file are stored within the same block, allowing a single erase operation to securely delete the file.}
+      \field{booktitle}{Proceedings of the 2008 ACM Symposium on Applied Computing (SAC'08)}
+      \field{isbn}{978-1-59593-753-7}
+      \field{title}{Secure Deletion for NAND Flash File System}
+      \field{year}{2008}
+      \field{pages}{1710\bibrangedash 1714}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1145/1363686.1364093
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

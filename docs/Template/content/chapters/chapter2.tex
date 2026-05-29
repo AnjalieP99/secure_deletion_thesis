@@ -1,116 +1,242 @@
-\chapter { Background and Related Work } % ok with fontsize=12pt
+\chapter { Systematic Review of Existing Literature } % ok with fontsize=12pt
 
 \label{sec:literature_review}
 
-The growing dependence on digital systems for both personal and professional activities has resulted in an unprecedented accumulation of sensitive information. As organizations and individuals 
-increasingly store confidential data on a wide range of digital media—ranging from traditional hard drives to solid-state drives and cloud environments—the need for reliable and verifiable data 
-deletion mechanisms has become critical. Failure to ensure proper data sanitization can expose users to privacy breaches, corporate espionage, and regulatory non-compliance.
-
-From a cybersecurity perspective, secure deletion plays a dual role. On one hand, it is an essential component of data protection and privacy preservation, ensuring that information is irretrievably 
-removed when no longer needed. On the other hand, it can also be employed as part of anti-forensic strategies, deliberately obstructing digital investigations by erasing potential evidence. 
-Understanding this duality is fundamental to appreciating the technical and ethical challenges that surround secure deletion.
-
-The following sections provide an overview of the conceptual and technical foundations that inform this research. First, a taxonomy of anti-forensic techniques is presented to situate secure deletion
- within the broader context of digital obfuscation strategies. Then, the principles of data deletion and persistence are examined, followed by an analysis of traditional and modern deletion approaches 
- across different storage technologies and virtualized environments. Finally, the legal and ethical implications of secure deletion are discussed, highlighting the complex balance between privacy 
- rights and forensic accountability.
-
-This background establishes the theoretical basis for the experimental framework proposed in this thesis, which aims to evaluate and compare the effectiveness of secure deletion methods across 
-contemporary computing infrastructures.
+The growing dependence on digital systems for both personal and professional activities has 
+resulted in an unprecedented accumulation of sensitive information. As organizations and 
+individuals increasingly store confidential data on a wide range of digital media—ranging 
+from traditional hard drives to solid-state drives and cloud environments—the need for reliable 
+and verifiable data deletion mechanisms has become critical. Failure to ensure proper data 
+sanitization can expose users to privacy breaches, corporate espionage, and regulatory 
+non-compliance. From a cybersecurity perspective, secure deletion plays a dual role. On one hand, 
+it is an essential component of data protection and privacy preservation, ensuring that 
+information is irretrievably removed when no longer needed. On the other hand, it can also be 
+employed as part of anti-forensic strategies, deliberately obstructing digital investigations by 
+erasing potential evidence. Understanding this duality is fundamental to appreciating the 
+technical and ethical challenges that surround secure deletion.
 
 % use [] to set name for ToC
 \section {A Taxonomy of Anti-Forensic Techniques} % ok with fontsize=12pt
 
-The field of digital forensics is founded on the assumption that traces of user activity persist within digital systems and can be extracted for analysis and attribution.
-Anti-Forensics challenges this assumption by allowing the deliberate use of various techniques, procedures, tools and stratergies to obstruct the collection of digital 
-evidences from a computer system. The main objective of these methodologies are to hinder Data Collection and impede Forensic investigations. These techniques aim to obscure, 
-alter, or destroy digital evidence in ways that reduce the likelihood of recovery or interpretation. González Arias, et al. \cite{SystematicReview} provide one of the most 
-comprehensive systematic reviews of this domain, analyzing 220 studies spanning from 2006 to 2022. Their taxonomy identifies four overarching categories of anti-forensic 
-activity: \textbf{data destruction, artefact deletion, obfuscation, and attacks on forensic tools and methods.}
+The field of digital forensics is founded on the assumption that traces of user activity persist 
+within digital systems and can be extracted for analysis and attribution. Anti-Forensics 
+challenges this assumption by allowing the deliberate use of various techniques, procedures, 
+tools and stratergies to obstruct the collection of digital evidences from a computer system. The 
+main objective of these methodologies are to hinder Data Collection and impede Forensic 
+investigations. These techniques aim to obscure, alter, or destroy digital evidence in ways that 
+reduce the likelihood of recovery or interpretation. González Arias, et al. \cite{SystematicReview} 
+provide one of the most comprehensive systematic reviews of this domain, analyzing 220 studies 
+spanning from 2006 to 2022. Their taxonomy identifies four overarching categories of anti-forensic 
+activity: \textbf{data hiding, artefact deletion, obfuscation of traces, and attacks on forensic tools and methods.}
+
+\begin{table}[htbp]
+\centering
+\caption{Summary of Anti-Forensic Techniques}
+\label{tab:antiforensic}
+\begin{tabular}{|p{3cm}|p{5.5cm}|p{6cm}|}
+\hline
+\textbf{Category} & \textbf{What it does} & \textbf{Examples} \\
+\hline
+Data Hiding & Conceals data so it's difficult to find, while keeping it accessible to the adversary & Encryption, steganography, filesystem manipulation, Host Protected Area modification \\
+\hline
+Artifact Deletion & Permanently destroys or overwrites data to eliminate recoverable traces & Secure file deletion, disk wiping utilities, degaussing, physical destruction \\
+\hline
+Obfuscation of traces & Confuses or misdirects the forensic process & Log cleaners, timestamp alteration, spoofing, backbone hopping \\
+\hline
+Attacks Against Tools/Methods & Directly targets forensic software or procedures & Compression bombs, hash collision attacks, anti-reverse engineering \\
+\hline
+\end{tabular}
+\end{table}
+
+Secure deletion falls under the \textbf{artifact deletion} category, as it focuses on the permanent 
+destruction of data to prevent recovery. 
+
+\section {Technical Foundations of Secure Deletion}
+\subsection{Core Concepts and Systematization}
+The secure deletion literature has produced a rich taxonomy of approaches operating at different 
+system layers. Reardon et al. (2013) provide the most comprehensive systematization in their SoK 
+paper, classifying secure deletion approaches by their interface to the physical medium — from 
+user-level applications down to device drivers — and presenting a taxonomy of adversaries with 
+varying capabilities \cite{reardon2013sok}. They identify key behavioral properties that 
+discriminate approaches: deletion latency, physical wear, and environmental assumptions about how 
+the interfaces use affects the physical medium.
+
+Joukov et al. (2006) address several persistent misconceptions about secure deletion. They argue 
+that encryption is not an ideal solution for all contexts, that existing data-overwriting tools 
+do not work as well as commonly believed, and that securely deleted files do not require many 
+overwrite passes in most realistic scenarios \cite{SecureDeletionMyths}. Their work introduces 
+important but often neglected issues such as secure deletion consistency during power failures, 
+the challenges posed by versioning and journaling file systems, and the necessity of overwriting 
+metadata.
+
+Peterson et al. present algorithms and an architecture for secure deletion of individual file 
+versions in versioning file systems, motivated by federally compliant storage that must eliminate 
+data after a mandatory retention period \cite{peterson2005secure}. Their approach combines 
+authenticated encryption with selective overwriting and demonstrates order-of-magnitude 
+performance improvements over prior methods. 
+
+Wang et al. (2020) provide a comprehensive survey of secure deletion techniques for both HDDs and 
+SSDs, with particular attention to emerging storage technologies such as shingled magnetic 
+recording (SMR) and interlaced magnetic recording (IMR) HDDs \cite{wang2020challenges}. Their 
+work categorizes deletion approaches into encryption-based, erasure-based, and overwriting-based 
+categories, and evaluates the pros and cons of implementing secure deletion at different system 
+layers from FTL firmware modifications to file-system-level approaches. They observe that SMR and 
+IMR HDDs impose sequential write constraints due to overlapping track structures, requiring new 
+deletion techniques beyond traditional overwriting approaches designed for conventional magnetic 
+recording (CMR) HDDs.
+
+\subsection{Secure Deletion Techniques}
+Aronsson et al. (2018) categorizes secure deletion methods into three primary approaches: 
+\textbf{overwriting-based}, \textbf{encryption-based}, and \textbf{erasure-based}. Each approach operates at a different 
+system layer and offers distinct trade-offs among security, performance, and device longevity \cite{aronsson2025secure}.
+
+\subsubsection*{Overwriting-Based Approaches}
+Overwriting-based methods replace existing data with new patterns (zeros, ones, or random data) 
+to prevent recovery. On HDDs, techniques such as Gutmann's 35-pass overwriting have been widely 
+adopted \cite{peterson2005secure}.  However, on SSDs, overwriting is fundamentally ineffective 
+because the FTL maps overwritten logical blocks to new physical pages, leaving the original data 
+intact on the old pages \cite{aronsson2025secure}. Scrubbing a technique that reprograms individual 
+flash pages to destroy their data state attempts to address this at the physical level but 
+introduces disturbance effects on adjacent cells and data errors, particularly in 3D NAND flash \cite{3dnandwang2018}.
+Empirical studies confirm that even after multiple overwrite passes, a significant portion of 
+deleted data remains recoverable on SSDs \cite{aronsson2025secure}.
+
+\subsubsection*{Erasure-Based Approaches}
+Erasure-based methods physically remove data from the storage medium, typically by issuing 
+block-erase commands or triggering garbage collection \cite{duplicateschen2022}. The primary 
+advantage of erasure-based deletion is that it provides physical removal of data without relying 
+on cryptographic assumptions. However, these methods suffer from high performance costs because 
+the basic deletion unit is a flash block, which requires migrating valid data from the target 
+block before erasure \cite{reardon2013sok}. The resulting write amplification reduces SSD 
+lifespan. Advanced erasure-based designs include scrubbing-aware schemes that combine secure 
+deletion operations with scrubbing to optimize performance by exploiting disturbance properties, 
+achieving significant reductions in average deletion time \cite{3dnandwang2018}.
 
 
-\begin{itemize}
-    \item \textbf{Data destruction} refers to the deliberate and irreversible removal of information, often achieved through overwriting, encryption, or physical destruction.
+\subsubsection*{Cryptographic Erasure Approaches}
 
-    \item \textbf{Artifact deletion} refers to the deliberate deletion of data to remove traces of activity—this is where \textit{secure deletion} techniques become highly relevant.
+Encryption-based secure deletion, or cryptographic erasure, treats the storage medium as a black 
+box. Data is encrypted before storage and rendered irrecoverable by securely deleting the 
+encryption key, making the approach independent of the underlying hardware characteristics \cite{onarlioglu2018_3}.
 
-    \item  \textbf{Obfuscation} aims to mislead investigators disguising the nature, structure, or location of data to hinder recognition and analysis (e.g., steganography or data fragmentation).
-    
-    \item \textbf{Attacks of Forensic Tools and Methods} exploit vulnerabilities in forensic software or hardware to corrupt or mislead analysis.
-\end{itemize} 
+Onarlioglu et al. (2018) present Eraser, a system providing secure deletion guarantees at file 
+granularity \cite{onarlioglu2018_3}. Eraser encrypts every file on an insecure medium with a 
+unique key that can later be discarded. To make the approach scalable on commodity systems, keys 
+are organized in an efficient tree structure where a single master key is confined to a secure 
+store, implemented as a TPM. Eraser is deployed as a file-aware stackable block device — a 
+standalone Linux kernel module requiring no modifications to the operating system — and 
+demonstrates comparable overhead to existing full-disk encryption implementations.
 
-This review highlights that while forensic techniques continue to evolve, so too do the methods employed to counteract them. But anti-forensic strategies remains a neglected 
-research field, lacking standardized terminology, empirical testing, and benchmark datasets which makes it difficult to compare results across studies or build systematic defenses.   
-Understanding these categories provides context for why secure deletion is often used for privacy or compliance, and also as an anti-forensic tool. However, this dual use 
-highlights the ethical balance between data protection and evidence preservation that this research seeks to explore. Secure deletion has an unclear place in this classification.  
-If it is used to hide criminal conduct, it could be considered a purposeful anti-forensic act, although it could fulfill lawful privacy or regulatory compliance aims, such as the EU's \textit{right to erasure.}
-Context and intent make the difference, as Arias et al note, \cite{SystematicReview} “the same technique that safeguards confidentiality can, in adversarial hands, obstruct justice.”  
-Therefore, any balanced cybersecurity framework must take both forensic countermeasures and privacy-preserving computing into account when studying secure deletion.
+Zhang et al. (2018) survey the combination of plausibly deniable encryption with secure deletion 
+for end-to-end data confidentiality \cite{zhang2018ensuring}. Their work frames the dual 
+requirement: data must be protected during its lifetime (via encryption) and rendered 
+irrecoverable after its lifetime (via secure deletion). The survey covers encryption-based 
+deletion mechanisms across different system layers and storage media, identifying the trade-offs 
+between security guarantees and performance overhead.
 
-\section {Secure Deletion; Challenges and Limitations} % ok with fontsize=12pt
+The evolution of key management architectures for cryptographic erasure has progressed through 
+several generations. DNEFS (Data Node Encrypted File System) encrypts each data block with a 
+unique key and colocates keys in a dedicated storage area, achieving secure deletion by 
+propagating only the relevant keys \cite{reardon2013sok}. Eraser improved scalability by 
+organizing keys in a tree structure where a single master key stored in a TPM protects all file 
+keys, enabling deletion through key revocation \cite{onarlioglu2018_3}. However, Eraser does not 
+provide crash consistency, and post-crash experiments have shown that up to 64 files may be lost 
+when a TPM master key rotation desynchronizes from the on-disk file key table \cite{holepunch}.
 
-Data deletion in digital systems is far more complex than its terminology suggests. Deleting a file from an operating system interface rarely removes its physical presence from the storage medium. 
-Instead, the system merely updates metadata; marking sectors as available for reuse while leaving the original data intact until overwritten. Joukov, Papaxenopoulos, and Zadok \cite{SecureDeletionMyths}
-famously identified several pervasive misconceptions about secure deletion that persist even among professionals. Chief among these is the assumption that encryption alone guarantees data 
-destruction, or that multiple overwrites are necessary for secure erasure.
-Their research demonstrated that a single, atomic overwrite operation is generally sufficient for magnetic storage, provided it is executed consistently and covers all data replicas, including 
-journaling and metadata. However, the authors also highlighted the challenge of maintaining crash consistency — ensuring that deletion operations complete even in the event of system interruptions 
-or power loss. This observation remains crucial in the context of modern SSDs, where caches and mapping tables may retain data even after deletion is logically completed. \\
+Holepunch, proposed by Ratliff Wittmann et al., addresses this gap by providing memory-efficient, 
+crash-consistent secure deletion using puncturable pseudorandom functions (PPRFs). \cite{holepunch}.
+Holepunch treats the storage device as a black box and uses per-file keys to transparently 
+encrypt outgoing writes and decrypt incoming reads, ensuring that all physical data on the device 
+is always encrypted. To delete a file, Holepunch performs a puncture operation on the PPRF key, 
+causing the pseudorandom function to permanently "forget" how to generate the associated file key.
+This approach eliminates the need to store or explicitly erase individual file keys, reducing 
+both memory pressure and disk I/O compared to prior tree-based key management schemes. Holepunch 
+stores its master key in TPM secure storage and uses a novel journaling scheme to provide crash 
+consistency between TPM state and on-disk structures, ensuring that the file system remains 
+usable after a power failure or software crash. Performance evaluations show that Holepunch 
+provides similar I/O performance to Eraser (within negligible margins for small-file workloads) 
+while consuming significantly less RAM as disk size grows, making it particularly suitable for 
+large-capacity drives.
 
-Reardon, Basin, and Čapkun \cite{reardon2013sok} contributed a foundational Systematization of Knowledge (SoK) on secure data deletion, bridging the gap between disparate methods and definitions.
-They proposed a layered taxonomy consisting of the user layer, file system, device driver, controller, and physical hardware. Each layer offers varying trade-offs between identifiability (the precision 
-with which data can be targeted for deletion) and irrecoverability (the assurance that deleted data cannot be restored).
+\subsubsection*{Integrated Approaches}
+Recognizing the limitations of individual methods, several works propose hybrid approaches that 
+dynamically select deletion strategies. ErasuCrypto, proposed by Liu et al., integrates 
+erasure-based and encryption-based methods by formulating deletion as a cost-minimization problem, 
+dynamically choosing the most cost-effective technique based on the percentage of invalid pages 
+in a block \cite{wang2020challenges} The goal is to minimize data migrations and block erasures, 
+thereby reducing performance degradation and extending SSD lifetime. Experimental results show 
+that ErasuCrypto can smartly select between erasure and encryption approaches to reduce energy 
+consumption and write amplification.
 
-Their analysis revealed that higher layers (e.g., application or file system) possess semantic understanding of what to delete but lack physical control over the underlying media. Conversely, lower
-layers (e.g., hardware controllers) can permanently erase data but cannot discern its logical context. The tension between these layers defines the central challenge of secure deletion: achieving both
-semantic correctness and physical assurance.
+Building on ErasuCrypto, Li et al. propose a temperature-aware scheme that classifies data by 
+hot/cold degree and allocates them to separate blocks \cite{wang2020challenges}. Blocks with 
+hot data can be deleted via erasure-based methods with minimal migration overhead, while 
+cold-data blocks use the ErasuCrypto approach, effectively reducing secure deletion costs.
 
-Moreover, Reardon et al. \cite{reardon2013sok} emphasized the importance of considering adversary models — differentiating between threats such as casual software recovery, forensic examination, or physical 
-chip-level analysis. A deletion method effective against software recovery may still be vulnerable to forensic or hardware attacks. Thus, any secure deletion solution must be context-aware, calibrated to 
-the adversary’s capabilities and the sensitivity of the stored data.
+SAFE (Scramble and Finally Erase) takes a different approach, combining encryption with erasure 
+to provide near-instantaneous secure deletion with verifiability at the controller level. SAFE 
+encrypts all data with a controller-managed key. To sanitize the device, the controller key is 
+erased, all blocks are erased, overwritten with a specific pattern, erased again, and then the 
+device is re-initialized with a new key. This approach is simple, fast, and easy to verify 
+because it exploits the advantages of both encryption-based and erasure-based approaches \cite{wang2020challenges}.
 
-\section{Traditional Secure Deletion Techniques}
-
-Historically, secure deletion relied on \textit{overwriting} — writing random or fixed patterns over the data to prevent recovery. Tools like shred, srm, and dd were widely used for this purpose. Standards 
-such as the \textbf{U.S. Department of Defense (DoD 5220.22-M)} specified multiple overwrite passes to ensure data erasure on magnetic media.
-
-However, as storage technologies evolved, it became clear that overwriting is not always reliable:
-\begin{itemize}
-    \item Logical and physical mapping layers (e.g., in SSDs) can redirect writes, leaving original data intact.
-    
-    \item Wear leveling mechanisms in flash memory complicate direct access to physical storage locations.
-    
-    \item Modern drives may maintain hidden or reserved areas inaccessible to user-level commands.
-
-\end{itemize}
-
-While traditional techniques remain relevant for certain media, they no longer guarantee complete data sanitization on modern hardware.
-
-
-\section{The Flash Memory Challenge}
-
-Flash-based storage, including SSDs and USB drives, introduces unique challenges for secure deletion due to its internal \textbf{wear-leveling algorithms and block-based architecture}. Unlike magnetic disks, 
-flash memory cannot overwrite data directly; instead, it must erase entire blocks before writing new data. This results in copies of deleted information potentially persisting in unaddressed cells.
-
-Additional complications arise from:
-
-\begin{itemize}
-    \item \textbf{Over-provisioning:} Manufacturers reserve hidden blocks for performance, inaccessible to standard overwriting commands.
-    
-    \item \textbf{Garbage collection:} Automated internal processes may relocate or temporarily preserve deleted data.
-    
-    \item \textbf{TRIM command behavior:} While intended to improve SSD performance, TRIM’s effect on secure deletion is inconsistent across devices and operating systems.
-
-\end{itemize}
-
-These characteristics make flash memory a critical focus area for experimental evaluation frameworks like the one proposed in this thesis.
+Additionally, erasure-based techniques such as purging and ballooning attempt to force garbage 
+collection to delete invalid data: purging fills the storage with junk files to trigger garbage 
+collection, while ballooning constrains free space to invoke garbage collection more frequently \cite{wang2020challenges}.
+The Fine-grained Overwriting-based Techniques approach, such as Lin et al.'s one-shot sanitization 
+for MLC NAND, exploits the one-shot programming mechanism to sanitize pages at very low latency 
+(less than 1\% overhead) by carefully controlling threshold voltage distributions.
 
 
-\section{Secure Deletion in Virtualized and Containerized Environments}
+\subsection{Flash Memory and SSD Challenges}
+SSDs compound the secure deletion problem through their flash translation layer (FTL), which maps 
+logical block addresses to physical pages. Due to the erase-before-write property of NAND flash, 
+the FTL performs out-of-place updates, leaving old physical pages containing stale data until 
+garbage collection reclaims them. Wear leveling further disperses data across the device to 
+distribute program-erase cycles, making it impossible for host-level software to predict where 
+data physically resides \cite{onarlioglu2018_3}. 
 
-While secure deletion has been extensively studied in classical filesystems, flash storage, cloud storage, and virtual machines, there is virtually no focused research evaluating secure deletion inside 
-containerized environments (e.g., Docker, containerd, Kubernetes ephemeral storage). This absence highlights the need for foundational work in defining threat models, measuring residual artifacts, and 
-establishing deletion guarantees in layered container storage systems.
+Lee et al. design a NAND flash file system with secure deletion functionality, modifying YAFFS to 
+support it \cite{NANDSecureDeletion}. Their method uses encryption and forces all keys of a 
+specific file to be stored in the same block, requiring only one erase operation to securely 
+delete a file along with all of its metadata. Results show low amortized block erasure counts 
+compared to simple encryption methods.
+
+Wang et al. (2020) survey secure deletion techniques designed for higher efficiency, verifiability, 
+and portability across HDDs and flash-based SSDs \cite{wang2020challenges}. They discuss the pros 
+and cons of implementing secure deletion at different system layers — from FTL firmware 
+modifications to file-system-level approaches — providing guidance for future storage system 
+designs.
+
+Chen and Chen (2022) identify a critical gap in flash-based secure deletion: duplicate data \cite{duplicateschen2022}.
+Even when the primary copy of a file is securely deleted, duplicate copies generated by FTL 
+operations, garbage collection, and flash-friendly file systems may persist. They propose an 
+approach that explicitly removes these duplicates, demonstrating that comprehensive deletion 
+must account for the copy proliferation inherent in flash storage.
+
+Aronsson and Lund conduct a survey of data erasure methods with a focus on SSDs and their unique 
+challenges compared to HDDs. Their empirical measurements on commercial SSDs reveal inconsistencies 
+in deletion times across vendors and device models. They find that combining cryptographic 
+erasure with block erase is necessary for sufficient security, and that most existing deletion 
+standards cover similar ground but lack specificity for SSD internals \cite{aronsson2025secure}.
+
+Homaidi (2009) provides an early framing of data remanence in SSDs, documenting how the physical 
+characteristics of flash memory create persistent residual data risks that earlier deletion 
+methods designed for magnetic media fail to address \cite{homaidi2009data}.
+
+The challenges are further amplified by the transition to 3D NAND technology, which stacks memory 
+cells vertically in multiple layers to increase storage density. Wang et al. (2018) propose a 
+scrubbing-aware secure (SAS) deletion design for 3D NAND flash that exploits scrubbing 
+disturbance properties to improve deletion efficiency \cite{3dnandwang2018}. Scrubbing reprograms 
+a flash page to destroy its original data state, providing page-granularity deletion finer than 
+block erasure, but introduces disturbance effects on adjacent cells that become more severe in 
+vertically stacked architectures \cite{3dnandwang2018}. The SAS design formulates overhead 
+calculations for both scrubbing and erase operations, organizes sensitive data into 
+scrubbing-friendly patterns via a grouping-based write strategy (GBWS), and exploits disturbance 
+infection to accelerate scrubbing performance. Experimental results on a simulated 128 Gbit 3D 
+NAND device demonstrate an 82\% reduction in scrubbing latency and a 78\% improvement in overall 
+system response time \cite{3dnandwang2018}.
+
 
 
 \section{Legal and Ethical Dimensions}

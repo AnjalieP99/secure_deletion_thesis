@@ -17,20 +17,56 @@ regulatory frameworks including GDPR right to erasure, NIST SP 800-88 Rev. 1, an
 sanitization levels; Clear, Purge and Destroy, with specific assurance against data recovery. 
 Next, the mainstream transition from the usage of Hard Disk Drives (HDDs) to Solid-State 
 Drives (SSDs) has led to a fundamental alteration of the storage landscape resulting in 
-decades of secure deletion practices being inadequate.\cite{aronsson2025secure}
-
-In contrast to HDDs, newer SSDs use a Flash Translation Layer (FTL) that maps logical block 
-addresses to physical flash pages. The FTL performs out-of-place updates due to the 
-erase-before-write property of NAND flash memory: modified data is written to a new physical 
-location, and the old page containing the original data is marked as invalid. Furthermore, 
-wear-leveling algorithms disperse data across the device to distribute program/erase cycles, 
-and invalid pages are reclaimed by garbage-collection mechanisms only when free blocks run 
-low, freeing them for new write operations. \cite{aronsson2025secure}
-
-The problem of secure deletion not only occurs in the technical domain but also spans into
+decades of secure deletion practices being inadequate.\cite{aronsson2025secure} The 
+problem of secure deletion not only occurs in the technical domain but also spans into
 the legal and ethical domains. On the legal front, regulations such as the GDPR, the 
 California Consumer Privacy Act (CCPA), and emerging AI governance frameworks impose 
 obligations for data erasure that existing technical mechanisms struggle to satisfy.
+
+Taking into account the criticality of the problem, a Study conducted by two MIT graduate 
+students in 2003 by purchasing 158 used hard drives from eBay found that 117 (74\%) drives 
+contained recoverable data, 28 (17\%) had fully installed operating systems with user data 
+requiring no special effort to recover, only 12 drives (8\%) had been properly sanitized. 
+Recovered data included medical records, love letters, corporate financial records, and 
+over 5,000 credit card numbers \cite{MITstudy2003}. A near-identical experiment was conducted
+by Blancco Technology Group in 2018 with 159 used drives across the U.S., U.K., Germany, and 
+Finland. Every seller insisted the drives had been "wiped." Researchers recovered passport 
+scans, spreadsheets full of customer data, and intimate photographs. \cite{NetGuardia2026}.
+
+As per the 2024 Verizon Data Breach Investigations Report, 68\% of data breaches involve 
+non-malicious human error—including failure to properly delete sensitive information from 
+decommissioned devices \cite{Verizon2024DBIR}. Separately, Blancco Technology Group's annual 
+data sanitization report found that 42\% of used drives sold on secondary markets contain 
+recoverable personally identifiable information (PII), with 15\% containing corporate financial 
+data \cite{Blancco2026}. The public sector contributes some of the earlist cases, In 2002, the 
+Pennsylvania Department of Labor and Industry sold computers to local resellers without 
+sanitizing the drives. The machines contained "thousands of files of information about state 
+employees" that had never been removed \cite{MITstudy2003}. More recently, in 2026, Cornwall 
+Council in the UK suffered a redaction failure when it sent PDF documents that appeared redacted 
+but revealed the full personal details of 10 complainants—names, home addresses, emails, and 
+phone numbers—when opened. The failure mechanism was using visual overlays, a redaction approach
+that does not securely delete the underlying data instead of applying permanent redaction with 
+sanitization \cite{ComplianceHub2026}.
+
+Within the financial Sector, Between 2015 and 2022, Morgan Stanley Smith Barney (MSSB) committed 
+a series of secure deletion failures that became one of the most expensive examples of improper 
+data disposal on record. In 2015, MSSB decommissioned thousands of hard drives and servers by hiring
+a company which had no prior experience or expertise in proper data destruction. These hard drives
+and server were later resold on an internet auction site while containing the PII of 15 million 
+customers. \cite{Goodin2022}. In a separate incident, 42 servers went missing during a hardware 
+refresh program. All potentially contained unencrypted customer data. The servers had encryption 
+capability, but the firm never activated the encryption software. Recovered drives contained at 
+least 140,000 pieces of customer PII on 13 out of 14 hard drives examined forensically. The SEC 
+stated the "vast majority" of devices were never recovered \cite{SEC2022}. The company ended up 
+paying over \$155 million in fines and settlements related to these incidents \cite{CybersecurityDive2022}. 
+
+The common thread across every case is the same: standard deletion does not remove data. Operating 
+systems typically only remove file system pointers, leaving the underlying data intact on the 
+storage medium. On SSDs, the problem compounds because the Flash Translation Layer performs 
+out-of-place updates, wear leveling, and garbage collection that can silently preserve copies 
+even after overwrite attempts. Whether the mechanism is a visual redaction overlay, a missing 
+encryption activation, an unverified third-party promise, or a simple failure to wipe before 
+resale, the result is identical: data thought to be gone remains recoverable.
 
 The literature review below surveys state-of-the-art techniques in secure deletion, 
 identifies methodological gaps, and motivates the need for a systematic framework that can 
@@ -38,11 +74,11 @@ reliably assess deletion effectiveness across diverse modern storage environment
 remainder of this thesis is organized as follows. The next section reviews the background of NAND 
 flash storage architecture and the secure deletion problem in detail. Chapter 2 presents a 
 systematic review of existing secure deletion techniques and their empirical evaluations along 
-with a review on the Legal and Ethical Aspects. 
-Chapter 4 describes the proposed experimental framework, including its metric system, test 
-methodology, and verification protocols. Chapter 5 presents the results of applying the 
-framework across a diverse set of storage devices and deletion techniques. Chapter 6 
-discusses the implications of the findings and Chapter 7 concludes with directions for future work.
+with a review on the Legal and Ethical Aspects. Chapter 3 describes the proposed experimental 
+framework, including its metric system, test methodology, and verification protocols. Chapter 4
+ presents the results of applying the framework across a diverse set of storage devices and 
+ deletion techniques. Chapter 5 discusses the implications of the findings and Chapter 6 
+ concludes with directions for future work.
 
 \section {NAND flash storage architecture}
 NAND flash memory which was introduced by Toshiba in 1988, is a type of non-volatile 

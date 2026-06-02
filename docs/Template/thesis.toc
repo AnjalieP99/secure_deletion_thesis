@@ -5,12 +5,12 @@
 \contentsline {chapter}{List of Tables}{vi}{section*.1}%
 \contentsline {chapter}{List of Figures}{vii}{section*.2}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}NAND flash storage architecture}{2}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Cell Structure and Memory Organization}{2}{subsection.1.1.1}%
-\contentsline {subsection}{\numberline {1.1.2}Basic Operations and Timing}{3}{subsection.1.1.2}%
-\contentsline {subsection}{\numberline {1.1.3}Write-Once Property and Out-of-Place Updates}{3}{subsection.1.1.3}%
-\contentsline {subsection}{\numberline {1.1.4}Flash Translation Layer}{3}{subsection.1.1.4}%
-\contentsline {section}{\numberline {1.2}Implications for Secure Deletion}{4}{section.1.2}%
+\contentsline {section}{\numberline {1.1}NAND flash storage architecture}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Cell Structure and Memory Organization}{3}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Basic Operations and Timing}{4}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Write-Once Property and Out-of-Place Updates}{4}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.1.4}Flash Translation Layer}{4}{subsection.1.1.4}%
+\contentsline {section}{\numberline {1.2}Implications for Secure Deletion}{5}{section.1.2}%
 \contentsline {chapter}{\numberline {2} Systematic Review of Existing Literature }{6}{chapter.2}%
 \contentsline {section}{\numberline {2.1}A Taxonomy of Anti-Forensic Techniques}{6}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Technical Foundations of Secure Deletion}{7}{section.2.2}%
@@ -30,4 +30,4 @@
 \contentsline {chapter}{\numberline {5}Interpretation of Findings and Implications}{20}{chapter.5}%
 \contentsline {chapter}{\numberline {6}Conclusions and Future Work}{21}{chapter.6}%
 \contentsline {chapter}{\numberline {A}Appendix A}{22}{appendix.A}%
-\contentsline {chapter}{Bibliography}{23}{lstnumber.-1.1}%
+\contentsline {chapter}{Bibliography}{23}{appendix.A}%

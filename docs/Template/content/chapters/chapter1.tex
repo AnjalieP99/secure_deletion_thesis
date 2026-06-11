@@ -93,10 +93,11 @@ At the physical level, each NAND flash memory cell is a floating-gate transistor
 stored by injecting electrical charge into the floating gate, which is electrically isolated 
 and can retain charge without power. A charged floating gate (programmed state) represents a 
 logical "0," while an uncharged gate (erased state) represents a logical "1" \cite{homaidi2009data}.
-Single-level cell (SLC) flash stores one bit per cell, whereas multi-level cell (MLC) stores two 
-bits, triple-level cell (TLC) stores three bits, and quad-level cell (QLC) stores four bits. 
-Each increase in bit density reduces cost per gigabyte at the expense of reduced endurance and 
-lower performance \cite{aronsson2025secure}.
+The amount of charge determines the cell's threshold voltage (Vt), which is read and interpreted as 
+one or more bits depending on the cell type:Single-level cell (SLC) flash stores one bit per cell, 
+whereas multi-level cell (MLC) stores two bits, triple-level cell (TLC) stores three bits, and 
+quad-level cell (QLC) stores four bits. Each increase in bit density reduces cost per gigabyte at 
+the expense of reduced endurance and lower performance \cite{aronsson2025secure}.
 
 Memory cells are arranged hierarchically. Cells connected to the same word line form a page, 
 which is the smallest unit for read and program (write) operations. Pages are grouped into 
@@ -104,13 +105,24 @@ blocks, the smallest unit for erase operations. Blocks are organized into planes
 planes reside on a single die, and multiple dies are packaged into a NAND chip. Typical page 
 sizes range from 2 KB to 16 KB, and blocks typically contain 64 to 256 pages\cite{aronsson2025secure}.
 Each page also includes a spare or out-of-band (OOB) area used to store error-correcting codes 
-(ECC) and metadata \cite{duplicateschen2022}.
+(ECC) and metadata \cite{duplicateschen2022}. During a normal program operation, charge is 
+injected into the floating gate using Fowler-Nordheim tunneling, shifting the Vt to a target 
+distribution window. A read operation applies a reference voltage and senses whether current 
+flows, revealing the cell's programmed state. The erase operation removes charge by applying a 
+high voltage across the transistor, returning the cell to its erased (lowest Vt) state.
 
 \subsection{Basic Operations and Timing}
 The three fundamental operations on NAND flash are read, program, and erase. Read and program 
 operate at page granularity, while erase operates at block granularity. Their latencies differ 
-by orders of magnitude: a page read takes approximately 20 to 60 $\mu$s, a page program takes 200 to 500 $\mu$s
-$\mu$s, and a block erase takes 1.5 to 5 ms \cite{aronsson2025secure,duplicateschen2022}
+by orders of magnitude: a page read takes approximately 20 to 60 $\mu$s, a page program takes 200 
+to 500 $\mu$s, and a block erase takes 1.5 to 5 ms \cite{aronsson2025secure,duplicateschen2022}. An 
+erase-before-write architecture means that updating even a single byte requires eventually 
+erasing an entire block, which the Flash Translation Layer (FTL) works around using out-of-place 
+updates. The FTL abstracts these physical details behind a standard block-device interface, 
+mapping logical block addresses (LBAs) to physical NAND pages \cite{onarlioglu2018_3}. This 
+abstraction allows traditional file systems (ext4, NTFS, HFS+) to remain compatible, but it also 
+hides the true physical state of the data from the host \cite{aronsson2025secure}.
+
 
 \subsection{Write-Once Property and Out-of-Place Updates}
 NAND flash has a fundamental constraint: a page cannot be overwritten in place. To write new data to a 
@@ -165,6 +177,107 @@ and reduces interference between adjacent cells. However, the vertical architect
 disturb characteristics and new challenges for secure deletion, as erasing data in one layer can disturb 
 adjacent layers \cite{ahn2021forensics}.
 
+\subsection{Scrubbing: Overwriting at the Page Level}
+Since page-level erase is physically impossible, scrubbing was proposed by Wei et al. in 2011 as a 
+way to destroy data on individual programmed pages without block erasure. Scrubbing works by 
+re-programming all remaining 1 bits on a page to 0, effectively overwriting the entire page with 
+zeros. This is possible because NAND flash does allow programming individual bits from 1 to 0; the 
+reverse transition (0 to 1) is what requires a block erase. The mechanism uses incremental step 
+pulse programming (ISPP), which iteratively applies programming pulses and verifies the cell Vt 
+until it reaches the target state \cite{aronsson2025secure,3dnandwang2018}.
+
+Scrubbing comes with a serious reliability cost called cell disturbance. The act of reprogramming 
+one cell unintentionally shifts the Vt of neighboring cells due to parasitic coupling through the 
+word lines and bit lines. In 2D NAND, programming a page disturbs the two immediately adjacent 
+pages. In 3D NAND, where flash cells are stacked vertically, as many as four adjacent pages can be 
+disturbed, and the problem grows more severe with each additional layer. The increased bit error 
+rate (BER) from scrubbing disturbance may trigger error correction failures, requiring the data on 
+affected adjacent pages to be migrated before scrubbing can safely proceed.
+
+The concept of a scrub budget was introduced to limit how many times a given block can be scrubbed 
+before exhibiting significant data error risk. Once the budget is exceeded, secure deletion for 
+that block must fall back to a full block erase or garbage collection. Determining the correct 
+budget requires experimental BER analysis and is pattern-dependent and wear-cycle-dependent, making 
+it difficult to set a universal safe threshold\cite{antiforensics2016,zhang2018ensuring}.
+
+A full scrubbed page is uniformly zeros, which itself signals to a forensic examiner that a 
+deletion occurred at that location. Partial scrubbing addresses this by modifying only a subset of 
+bits in the page or block, avoiding the tell-tale all-zero pattern. This is a form of anti-forensic 
+deletion that blends sanitized data with the appearance of normal programmed content.
+
+More critically, Hasan and Ray demonstrated in 2020 that scrubbing is partially reversible\cite{Fukami2023}. By 
+performing analog reads that measure the precise threshold voltage distribution (rather than a 
+single binary interpretation), an attacker can distinguish between a cell that was programmed to a 
+1 and then scrubbed to 0, and a cell that was originally programmed to 0. The residual Vt 
+difference, though small, is detectable with precision sense amplifiers. Analog sanitization was 
+proposed as a remediation: instead of a single binary scrubbing pass, the page is reprogrammed to a 
+Vt distribution that is statistically indistinguishable from a native 0-programmed page\cite{ahn2022security}.
+
+\subsection{Partial Overwriting and Down-Bit Programming}
+Multiple finer-grained overwriting schemes operate at sub-page granularity by exploiting the fact 
+that MLC and TLC cells have multiple threshold voltage states. Partial overwriting programs random 
+data into only some of the Vt states of a multi-bit cell, destroying the original data without fully 
+programming the cell to the highest state. Down-bit programming takes this further by programming a 
+page originally stored in a 3-bit-per-cell (TLC) mode into a 1-bit-per-cell (SLC) mode, effectively 
+compacting and destroying the original data in a single operation. The deletion pulse application 
+scheme applies a series of erase-like pulses to a programmed page, shifting its Vt distribution 
+without performing a full block erase. These schemes cause lower program disturbance than 
+conventional scrubbing because they do not push cells to the highest Vt state, but they also provide 
+less security assurance since some Vt residue may remain \cite{ahn2019schemes,ahn2022security}. 
+
+\subsection{The Communication Path}
+The operating system does not have direct knowledge of the physical flash layout. After a file is 
+deleted, the file system deallocates the logical blocks by removing their entries from the file 
+system index (inode table, MFT, etc.), but the actual data remains intact on the NAND cells. The host 
+cannot simply overwrite the physical location because the FTL may have remapped those logical 
+addresses to any physical page on the drive. There are three main channels through which the OS 
+conveys block-deallocation information to the storage device
+
+\textbf{TRIM} : The TRIM command is an ATA command that allows the file system to inform the SSD 
+controller about which LBAs no longer store valid data. When a file is deleted, the OS issues a TRIM 
+command for the LBAs covered by that file, and the controller adds those blocks to an internal queue 
+of blocks to be blanked. The TRIM command was not designed for secure deletion but rather as an 
+efficiency optimization for flash: without it, the FTL cannot distinguish logically discarded blocks 
+from valid data and must assume that the only deletable block on the physical medium is the one being 
+overwritten, eventually causing a thrashing effect. TRIM operates through the ATA DATA SET MANAGEMENT 
+command and is supported by most modern operating systems (Windows 7+, Linux 2.6.28+, macOS) and file 
+systems (NTFS, ext4, HFS+). Importantly, the TRIM command provides no false negatives: it indicates 
+every time a block is discarded. However, it is an asynchronous notification: the controller is free 
+to schedule the actual physical erasure at its own discretion, and the OS receives no confirmation of 
+when or whether the erasure happened. TRIM is a suitable command for deleting specific files, but the 
+FTL only uses the information to mark address mappings as invalid \cite{reardon2013sok,trimwearlevelling2019}.
+
+\textbf{TrueErase} : Diesburg et al. proposed TrueErase as a refinement that provides similar 
+information to TRIM but only for blocks belonging to files specifically marked as sensitive. 
+TrueErase adds a new communication channel between the file system and the device driver that 
+forwards deallocation information selectively. Device drivers are modified to implement immediate 
+secure deletion when provided with this notification, avoiding the performance cost of blanket TRIM 
+for all deleted blocks \cite{reardon2013sok}.
+
+\textbf{Out-of-place updates as implicit notification} : When the host writes new data to an LBA that 
+already has a physical mapping, the FTL performs an out-of-place update: it allocates a new physical 
+page, writes the new data there, and marks the old physical page as invalid. This gives the FTL 
+indirect evidence that the old data at that LBA is no longer needed. However, this mechanism only 
+works for blocks that are explicitly overwritten, not for blocks that are simply deallocated by file 
+deletion or truncation \cite{antiforensics2016}.
+
+The FTL performs the address mapping function that translates the logical addresses used by the host 
+into the physical addresses on the NAND flash memory. When the host issues a deletion or overwrite 
+request, the FTL invalidates the address mapping information linking the logical address to the 
+previous physical address. For deletion, the FTL receives the file's LBA range through the TRIM 
+command and marks the corresponding address mappings as invalid \cite{antiforensics2016}.
+
+
+Crucially, the invalidation step is purely a metadata operation. The FTL terminates the host's 
+request immediately after updating the mapping table, and the actual data on the NAND cells is left 
+entirely untouched. The flash controller does not erase, overwrite, or otherwise modify the physical 
+pages at this point. The data persists in an undamaged state on the NAND cells, fully recoverable 
+through low-level access techniques. The only change is that the FTL will never again return that 
+physical page in response to a read of that LBA. This design is intentional: erasing a block is 
+time-consuming (on the order of milliseconds per block), and performing it eagerly on every 
+deallocation would destroy performance\cite{duplicateschen2022}. 
+
+
 \section{Implications for Secure Deletion}
 
 The architectural features described above create fundamental obstacles to secure deletion. Out-of-place updates 
@@ -175,10 +288,307 @@ copies of deleted data. These characteristics mean that a conventional delete co
 does not remove the underlying data from the physical medium, and techniques that are effective on HDDs such as 
 overwriting are ineffective on NAND flash \cite{aronsson2025secure}.
 
+\subsection*{Garbage Collection and the Zombie Time}
+Garbage collection is the FTL process that physically reclaims NAND blocks containing invalid pages. 
+Its canonical procedure has three steps: selecting a victim block with the largest number of 
+invalid pages, copying any remaining valid pages from the victim block to a free block, and then 
+erasing the victim block \cite{duplicateschen2022}. The erase operation makes the block available 
+for future writes. Free blocks are managed from a pool, and modern SSDs are typically 
+over-provisioned with 25\% or more spare NAND capacity to absorb write pressure and give garbage 
+collection time to keep up \cite{onarlioglu2018_3}. 
+
+The zombie time is defined as the interval between the point when the FTL invalidates the address 
+mapping of a file's pages and the point when garbage collection physically erases those pages from 
+the NAND cells \cite{antiforensics2016}. During this window, the data remains fully intact and 
+recoverable, even though the file system and the host consider it deleted. The zombie time has no 
+fixed duration: it depends on the storage usage pattern, the prevalence of free blocks in the 
+over-provisioning pool, the FTL's victim selection policy, and whether TRIM commands were issued for 
+the deallocated blocks.
+
+The fundamental cause of the zombie time is that the FTL is designed to minimize garbage collection 
+frequency, since garbage collection degrades I/O response by introducing read-copy-erase cycles 
+that add latency. The FTL only triggers garbage collection under two conditions. In the foreground 
+(normal garbage collection), garbage collection is triggered when the free-block pool drops below a threshold, 
+meaning the device has no clean blocks available to service incoming writes. n the background, some 
+FTL implementations opportunistically erase stale blocks during idle time. The foreground garbage collection event 
+is driven entirely by write pressure: if the host is mostly reading and the free-block pool is 
+adequate, garbage collection may not occur for long periods. There is a compounding factor: even 
+when normal garbage collection is triggered, the zombie time for a specific file depends on whether the blocks 
+containing its pages are selected as victim blocks. The FTL selects the victim with the highest 
+count of invalid pages \cite{antiforensics2016}, so a block containing only a few invalid pages is 
+unlikely to be chosen until many pages in that block have accumulated. If a block contains mostly 
+valid pages plus one or two invalidated pages from a deleted file, that block will sit untouched 
+indefinitely while the deleted data remains recoverable. 
+
+The Zombie-Kill (ZK) TRIM scheme, proposed by Kwak et al., introduces a compulsory garbage 
+collection mechanism that directly limits the zombie time, it operates in three modes that trade 
+deletion speed against I/O performance \cite{antiforensics2016}. \textit{Normal mode} defers all physical 
+erasure to the FTL's standard garbage collection policy (normal garbage collection). The TRIM handling process is 
+the same as standard file deletion: the address mapping is invalidated, and the target pages are 
+erased only when the free-block pool runs low and the blocks happen to be selected as victims. This 
+mode has the longest zombie time, and in workloads with sufficient free blocks, the zombie time 
+becomes effectively unbounded: deleted data may persist indefinitely because garbage collection is 
+never triggered. \textit{Immediate mode} erases the data using the compulsory garbage collection upon receiving the 
+TRIM command. As soon as the TRIM command arrives, the FTL invalidates the address mappings and 
+then immediately performs compulsory garbage collection on the blocks containing the target pages. This mode limits 
+the zombie time to the execution time of the compulsory garbage collection itself, which is determined by the 
+number of blocks containing target pages and the number of valid pages that must be copied out of 
+each victim block. In the experiments by Kwak et al., immediate mode achieved the smallest zombie 
+time in all cases, but the I/O response time was 68 times larger on average than normal mode because 
+the compulsory garbage collection introduces processing delays even when free blocks are abundant. \textit{Suspension 
+mode} balances the trade-off. After receiving the TRIM command, the FTL saves the invalidation time 
+of each deleted file's pages to a TRIM command table. The FTL then monitors the suspension time of 
+each file by comparing the current time against the invalidation time. Until the suspension time 
+exceeds a configurable maximum, target pages can only be erased by the normal garbage collection 
+policy. If target pages remain unerased after the maximum suspension time, the blocks containing 
+them are erased by the compulsory garbage collection. This mode limits the zombie time to the sum of the maximum 
+suspension time and the compulsory garbage collection execution time, while producing a smaller I/O penalty than 
+immediate mode. Fewer compulsory garbage collection events occur because target pages accumulate during the 
+suspension window, and blocks with a higher proportion of invalid pages are selected, making each 
+garbage collection event more efficient \cite{antiforensics2016}.
+
+The zombie time is workload-dependent with significant forensic implications. In write-heavy 
+workloads, the free-block pool drains quickly and normal garbage collection is triggered frequently, reducing the 
+zombie time. In read-heavy workloads, the free-block pool remains ample, and normal garbage collection may never 
+activate the blocks containing deleted pages. Under these conditions, the zombie time can be 
+effectively infinite: the deleted data persists until the device is eventually subjected to a write-
+intensive workload that forces garbage collection. Compounding this, the distribution of invalid 
+pages across blocks affects whether a given deleted file's pages are reclaimed. The FTL selects the 
+victim with the largest number of invalid pages, so blocks where the deleted file's pages are 
+scattered across many blocks (each containing few invalid pages) experience longer zombie times 
+than blocks with concentrated invalid pages.
+
+\subsection*{TRIM Implementation Variance Across Drives}: 
+Black-box testing has revealed significant variation in how different SSDs implement TRIM and 
+garbage collection. On the Corsair F60, TRIM triggered within 1-10 seconds of a deletion. On other 
+drives, TRIM behavior depended on the percentage of allocated space. Some drives did not erase all 
+TRIM-marked blocks but rather a subset based on internal drive policies, meaning that even after 
+TRIM and GC, some deleted blocks remained unerased. Importantly, garbage collection can operate 
+independently of the host: it can be triggered whenever the disk is powered on, even if no write 
+commands are issued, rendering write blockers and other forensic precautions useless. This means 
+the forensic examiner cannot assume that data persists in a known state across reboots. Most modern 
+operating systems and their default file systems have built-in support for the ATA TRIM command, 
+but the implementation of TRIM varies from controllers in SSDs to kernels in operating systems. \cite{Bonetti2014,trimwearlevelling2019}
+
+\subsection*{FTL Internals and its Forensic Impact}
+Wear leveling distributes program-erase (P/E) cycles evenly across all blocks to prevent premature 
+wear-out of frequently written blocks. Dynamic wear leveling operates on newly allocated blocks, 
+while static wear leveling also moves cold (infrequently rewritten) data to ensure even wear on 
+otherwise idle blocks. Every data migration performed by wear leveling creates opportunities for 
+data duplication: a page may be copied to a new physical location while the old location is not 
+immediately erased, leaving recoverable copies that neither the file system nor the OS is aware of. 
+The write amplification factor (WAF) measures the ratio of physical writes to logical writes. A WAF 
+of 3 means that every logical write from the host causes 3 physical writes due to garbage 
+collection and wear leveling overhead. Each extra write represents a potential duplicate of the 
+original data, and each duplicate must be separately sanitized for secure deletion to be effective.
+\cite{duplicateschen2022,onarlioglu2018_3}
+
+The copy-back program operation is an internal NAND flash operation that moves data from one page to
+another without transferring data to the controller. It is used by FTLs during garbage collection 
+and wear leveling to reduce latency. Ahn and Lee revealed that the copy-back program operation 
+leaves unmanaged original data in the source page, which becomes a major forensic target. The 
+source page may contain the original data even after the copy-back completes, and because the 
+copy-back is a low-level operation invisible to the host, no higher-layer deletion mechanism can 
+target it. Secure copy-back programming adds an enhanced secure program operation after the 
+conventional copy-back. This can take two forms: programming random data into the source page 
+(destroying the stored data) or applying a series of deletion pulses to the source page to shift 
+its Vt distribution. To minimize disturbance to adjacent victim cells, the controller can first 
+read victim cell group information from the adjacent word line and selectively inhibit programming 
+on cells that would cause errors. \cite{ahn2021forensics}
+
+FTL operations systematically create multiple copies of data that persist after the primary copy is 
+deleted. Garbage collection copies valid pages from victim blocks to free blocks before erasing, 
+leaving the original data in unerased cells that may remain in the free block pool. Wear leveling 
+similarly migrates data, and the old physical location is not always erased immediately. Bad block 
+management copies data away from failing blocks, creating yet another duplicate. The RedFlash 
+scheme addresses this by maintaining a duplicate chain in the out-of-band (OOB) area of each flash 
+page. The OOB area is typically reserved for ECC parity and bad block markers, the RedFlash was 
+repurposed to store metadata linking each page to all other pages that contain copies of the same 
+logical data. When a deletion command is issued, the OOB chain enables backtracking so that every 
+duplicate is located and erased, not just the primary copy \cite{duplicateschen2022}.
+
+Encryption-based deletion alone does not eliminate structural artifacts. Chen and Chen showed that 
+the physical location of data on flash storage can itself leak information even when the data 
+content is encrypted or destroyed. For example, knowing that certain blocks are allocated to 
+specific applications or user profiles reveals usage patterns. When a block is sanitized while 
+surrounding blocks remain intact, the spatial pattern of erasures implicitly confirms which data 
+the user considered sensitive. Sanitizing data content without addressing structural context leaves 
+a recoverable forensic profile \cite{aronsson2025secure}.
+
+\subsection{Verification of Secure Deletion}
+
+A persistent gap in secure deletion is the inability to independently confirm that data has been 
+physically destroyed. Ahn and Lee proposed an in-band verification technique based on cell count 
+information. After a secure deletion operation, the NAND cells in the sanitized area exhibit a 
+characteristic Vt distribution that differs from normal programmed data. Under normal program 
+conditions, the number of cells in each Vt state is approximately uniformly distributed. After a 
+scrubbing or block erase, the distribution shifts to a non-uniform pattern. A simple read operation 
+can count cells per distribution and compare against a reference threshold, determining pass or 
+fail without comparing personal data directly. This verification can be performed in real time 
+immediately after secure deletion and requires no structural changes to existing NAND flash memory.
+For higher assurance, the verification scheme can use XOR operations between the data sensed from 
+the sanitized area and the original personal data, with pass/fail determination accounting for the 
+ECC correction capability. If the residual data is within the correctable bit error range, deletion 
+is considered successful. \cite{ahn2021forensics}
+
+Modern SSDs can vary the size of the over-provisioning (OP) area in real time to optimize 
+performance, with OP areas reaching up to 50\% of total NAND capacity. Changing the OP area size 
+generates an invalid data region: when OP shrinks, blocks that were previously reserved become 
+accessible as user space, and the data they contain has never been sanitized. A forensic attacker 
+can exploit this by manipulating the OP area allocation to expose blocks that still hold residual 
+data. Even if the user data is encrypted, an attacker with sufficient resources could read the 
+encrypted data from the invalidated area and attempt decryption offline. This makes deletion 
+verification for dynamically allocated OP areas an essential but largely unaddressed requirement. 
+Some proposed solutions include pseudo-erase operations that combine partial programming with 
+lightweight verification, trading full sanitization for real-time performance \cite{ahn2021forensics}.
+
 Achieving secure deletion in modern systems is fundamentally challenging because storage architectures are organized
 into multiple layers application, file system, block device, and physical medium each of which can retain residual 
 copies of data \cite{duplicateschen2022}. Performing deletion at the application layer, for example, only removes the 
 logical reference; the underlying data remains in the file system and may persist on the physical media indefinitely \cite{zhang2018ensuring}.
+
+
+\section{Native Drive-Level Sanitization}
+
+Native drive-level sanitization refers to built-in hardware/firmware commands defined by storage 
+interface standards (ATA, NVMe, SCSI) that instruct a drive's controller to erase all user data on 
+the physical medium. Unlike software-based overwriting tools that operate through the file system, 
+these commands execute inside the drive's controller and can potentially reach areas the OS cannot 
+access — including over-provisioned zones and retired blocks \cite{antiforensics2016}. 
+
+The three major standrds; NIST SP 800-88 Rev. 1 (2014), IEEE 2883-2022, and NATO AEDP-3 use a three 
+tier classification of sanitization methods: Clear, Purge, and Destruct. \cite{aronsson2025secure}.
+
+\begin{table}[H]
+    \centering
+    \caption{Comparison of NIST SP 800-88 Sanitization Levels}
+    \label{tab:sanitization-levels}
+    \begin{tabularx}{\textwidth}{lXXl}
+        \toprule
+        \textbf{Level} & \textbf{Description} & \textbf{Effectiveness} & \textbf{Reusability} \\
+        \midrule
+        Clear & Logical sanitization that removes user-accessible data only. Example: ATA Secure Erase, NVMe Format without CRYPTO flag. & Low — residual data may remain in hidden areas & Storage can be reused \\
+        \midrule
+        Purge & Advanced sanitization making recovery infeasible even under lab conditions. Example: ATA Enhanced Secure Erase, NVMe Secure Erase (CRYPTO flag enabled), Cryptographic Erase. & High & Storage can be reused \\
+        \midrule
+        Destruct & Physical destruction of the media. & Complete & Device cannot be reused \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\subsection{Key Native Commands by Interface}
+
+\textbf{ATA/ATAPI} 
+\begin{itemize}
+    \item \texttt{SECURITY ERASE PREPARE} : prerequisite that unlocks the drive for erasure.
+    \item \texttt{SECURITY ERASE UNIT} : overwrites every NAND cell with zeros or ones. Operates at the factory-reset level and covers reserved areas (over-provision and retired blocks) that the host cannot normally address.
+    \item \texttt{ENHANCED SECURITY ERASE} : vendor-defined extension that may erase more thoroughly (e.g., SanDisk calls this "sanitize").
+    \item \texttt{SANITIZE DEVICE} : a newer, more flexible command supporting three modes: crypto scramble, overwrite, and block erase.
+    \item \texttt{DATA SET MANAGEMENT} : not a sanitization command, but marks logical blocks as free so the controller's garbage collection can reclaim them over time.
+\end{itemize}
+
+\textbf{NVMe}
+\begin{itemize}
+    \item \texttt{Format NVM} : reformats the namespace. Without the CRYPTO flag it is a Clear-level operation; with the CRYPTO flag enabled it reaches Purge level.
+    \item \texttt{Sanitize} : supports Block Erase, Overwrite, and Crypto Erase modes. The \texttt{nvme sanitize-log} command reports progress and completion status.
+\end{itemize}
+
+\textbf{SCSI}
+\begin{itemize}
+    \item \texttt{SANITIZE} : functionally similar to the ATA SANITIZE DEVICE command, supporting block erase, overwrite, and cryptographic erase options.
+\end{itemize}
+
+As stated above there are two principle purge mechanisms: block erase and cryptographic erase. 
+
+\textbf{Block Erase} : The controller issues the NAND flash erase command for every block on the 
+device, forcing each block to its unprogrammed (erased) state. This is inherently slow — a 900 GB 
+NVMe drive can take significant time — and the time estimates reported by tools are often 
+inaccurate. Critically, block erase behavior is governed by usage-aware controller logic that may 
+compromise the guarantee of full sanitization; studies found that the controller sometimes returns 
+all-zero data during verification without having physically erased every cell, suggesting internal 
+masking rather than true physical deletion. \cite{aronsson2025secure}
+
+\textbf{Cryptographic Erase} : On self-encrypting drives (those supporting TCG Opal SSC or similar), 
+all user data is encrypted by a media encryption key stored in the controller. Cryptographic erase 
+works by scrambling or deleting that key, making the ciphertext on the medium permanently 
+undecryptable. This is nearly instantaneous and does not wear the NAND cells. The flip side: 
+security rests entirely on the vendor's key management. If the key is not fully destroyed, if a 
+copy persists in a controller cache, or if there is a backdoor, the protection fails. \cite{aronsson2025secure}
+
+As stated above,NVMe's Sanitize command supports Cryptographic Erase as one of its three modes. Cryptographic 
+erasure renders data irrecoverable by destroying the media encryption key (MEK) rather than overwriting 
+physical cells and n a self-encrypting drive, all user data is encrypted by a MEK that never leaves the 
+controller's secure boundary. An NVMe self-encrypting drive complying with TCG Opal 2.0 maintains 
+multiple keys at different privilege levels and the MEK is the root of every data confidentiality guarantee. 
+All user data written to the NAND medium is ciphertext under this single key, encrypted and decrypted 
+transparently by the hardware encryption engine in the drive controller \cite{aronsson2025secure}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{The Key Hierarchy Within an NVMe SED}
+    \label{tab:opal-keys}
+    \begin{tabularx}{\textwidth}{lXX}
+        \toprule
+        \textbf{Key} & \textbf{Role} & \textbf{Storage Location} \\
+        \midrule
+        Authentication Key (AK) & Proves the user/host is authorized to issue commands & Derived from user password, never stored in plaintext \\
+        \midrule
+        Band Master Key (BMTK) & Protects individual locking ranges (bands) on the drive & Encrypted under the AK, stored on the NAND medium \\
+        \midrule
+        Media Encryption Key (MEK) & The actual AES cipher key that encrypts/decrypts all user data on the NAND flash & Inside the controller's dedicated key memory — never leaves the controller die \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\subsection{What is MEK Rotation}
+
+MEK rotation is the act of replacing the current Media Encryption Key with a new one and securely 
+discarding the old key. Within the TCG Opal framework, this is accomplished through the RevertSP and 
+Revert methods, which are the Opal equivalents of the NVMe Sanitize (Crypto Scramble) command \cite{aronsson2025secure}.
+
+The procedure, as implemented by Opal-compliant drives, works as follows:
+\begin{enumerate}
+    \item  The host issues a RevertSP (or Revert) command to the drive's TCG Storage Interface.
+
+    \item The controller generates a new random AES-128 or AES-256 key.
+
+    \item The controller overwrites its internal MEK register with the new key — this is a purely volatile operation within the controller logic.
+
+    \item The old MEK is destroyed as the register is overwritten. Since the MEK never leaves the controller in plaintext, and the controller has no mechanism to export it, the old key becomes unrecoverable.
+
+    \item All ciphertext on the NAND medium is now permanently undecryptable. The data has not been physically erased — every bit pattern remains exactly where it was — but it can never be recovered because the cryptographic secret that produced the plaintext is gone.
+
+    \item Optionally, per the NATO AEDP-3 standard, a block erase can follow the cryptographic erase to physically scrub the NAND cells, adding defense in depth \cite{aronsson2025secure}.
+\end{enumerate}
+
+
+
+A full block erase on a large NVMe drive (e.g. 1 TB) can take tens of minutes because it must cycle 
+through every NAND block's erase operation sequentially, with verification \cite{aronsson2025secure}
+while MEK rotation completes in approximately 0.22 seconds regardless of drive capacity or how much data 
+is stored
+
+But still, these approaches has their practical limitations. Firstly, vendors can be inconsistent in 
+supporting and implementing these commands, with some drives ignoring them or providing false assuarances 
+of completion \cite{wang2020challenges}. Further, Native commands are all-or-nothing where they sanitize 
+the entire device which makes them suitable for decommissioning but useless in routine per-file deletions.
+And the controller's internal logic is not transparent, making it difficult to verify that the intended 
+sanitization has actually occurred, all-zero reads may reflect the controller lying rather than physical 
+erasure \cite{aronsson2025secure}. Finally, wear-leveling mechanisms spreads data across cells, garbage collection 
+creates copies in unexpected locations, and over-provisioning hides blocks from the host, all of which mean that 
+even a correctly executed sanitize command may leave data remnants in retired or remapped blocks \cite{aronsson2025secure}.
+A verifiable alternative method SAFE (Scramble and Finally Erase) was proposed to overcome these limitations. 
+SAFE encrypts all data with a key held only in the controller's volatile memory, then on receiving a 
+sanitize command: (1) erases the controller key memory, (2) erases every NAND block, (3) writes a known 
+verification pattern, (4) erases again, and (5) reinitializes with a new key. This provides 
+controller-level verifiability but, like the other native commands, offers no selective deletion 
+capability \cite{reardon2013sok}.
+
+SAFE (Scramble and Finally Erase) essentially performs an MEK rotation combined with a follow-up block 
+erase and verification pattern — a verified MEK rotation plus physical scrub \cite{zhang2018ensuring}. The 
+Eraser and Holepunch schemes operate at a higher layer, using host-level master key rotation with tree-based 
+or PPRF-based file key derivation to achieve the equivalent of selective "mini-MEK rotations" at file 
+granularity, solving the all-or-nothing limitation of native NVMe MEK rotation \cite{aronsson2025secure,holepunch}.
 
 % use [] to set name for ToC
 %\section[Goal]{Goal} % ok with fontsize=12pt

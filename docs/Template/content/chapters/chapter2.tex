@@ -1,4 +1,4 @@
-\chapter { Systematic Review of Existing Literature } % ok with fontsize=12pt
+\chapter {Comparative Analysis of Existing Literature } % ok with fontsize=12pt
 
 \label{sec:literature_review}
 
@@ -24,246 +24,609 @@ challenges this assumption by allowing the deliberate use of various techniques,
 tools and stratergies to obstruct the collection of digital evidences from a computer system. The 
 main objective of these methodologies are to hinder Data Collection and impede Forensic 
 investigations. These techniques aim to obscure, alter, or destroy digital evidence in ways that 
-reduce the likelihood of recovery or interpretation. González Arias, et al. \cite{SystematicReview} 
-provide one of the most comprehensive systematic reviews of this domain, analyzing 220 studies 
-spanning from 2006 to 2022. Their taxonomy identifies four overarching categories of anti-forensic 
-activity: \textbf{data hiding, artefact deletion, obfuscation of traces, and attacks on forensic tools and methods.}
+reduce the likelihood of recovery or interpretation. Anti-Forensics Techniques can be categorized 
+into four distinct categories based on their approach: \textbf{data hiding, artefact deletion, obfuscation of traces, and attacks on forensic tools and methods.} \cite{SystematicReview} 
 
 \begin{table}[htbp]
-\centering
-\caption{Summary of Anti-Forensic Techniques}
-\label{tab:antiforensic}
-\begin{tabular}{|p{3cm}|p{5.5cm}|p{6cm}|}
-\hline
-\textbf{Category} & \textbf{What it does} & \textbf{Examples} \\
-\hline
-Data Hiding & Conceals data so it's difficult to find, while keeping it accessible to the adversary & Encryption, steganography, filesystem manipulation, Host Protected Area modification \\
-\hline
-Artifact Deletion & Permanently destroys or overwrites data to eliminate recoverable traces & Secure file deletion, disk wiping utilities, degaussing, physical destruction \\
-\hline
-Obfuscation of traces & Confuses or misdirects the forensic process & Log cleaners, timestamp alteration, spoofing, backbone hopping \\
-\hline
-Attacks Against Tools/Methods & Directly targets forensic software or procedures & Compression bombs, hash collision attacks, anti-reverse engineering \\
-\hline
-\end{tabular}
+    \centering
+    \caption{Summary of Anti-Forensic Techniques}
+    \label{tab:antiforensic}
+    \begin{tabularx}{\textwidth}{lXX}
+        \toprule
+        \textbf{Category} & \textbf{What it does} & \textbf{Examples} \\
+        \midrule
+        Data Hiding & Conceals data so it's difficult to find, while keeping it accessible to the adversary & Encryption, steganography, filesystem manipulation, Host Protected Area modification \\
+        \midrule
+        Artifact Deletion & Permanently destroys or overwrites data to eliminate recoverable traces & Secure file deletion, disk wiping utilities, degaussing, physical destruction \\
+        \midrule
+        Obfuscation of traces & Confuses or misdirects the forensic process & Log cleaners, timestamp alteration, spoofing, backbone hopping \\
+        \midrule
+        Attacks Against Tools/Methods & Directly targets forensic software or procedures & Compression bombs, hash collision attacks, anti-reverse engineering \\
+        \bottomrule
+    \end{tabularx}
 \end{table}
 
 Secure deletion falls under the \textbf{artifact deletion} category, as it focuses on the permanent 
 destruction of data to prevent recovery. 
 
-\section {Technical Foundations of Secure Deletion}
-\subsection{Core Concepts and Systematization}
-The secure deletion literature has produced a rich taxonomy of approaches operating at different 
-system layers. Reardon et al. (2013) provide the most comprehensive systematization in their SoK 
-paper, classifying secure deletion approaches by their interface to the physical medium — from 
-user-level applications down to device drivers — and presenting a taxonomy of adversaries with 
-varying capabilities \cite{reardon2013sok}. They identify key behavioral properties that 
-discriminate approaches: deletion latency, physical wear, and environmental assumptions about how 
-the interfaces use affects the physical medium.
+\section {A Comparative Analysis of Secure Deletion Techniques}
+\subsection{A Layer-Based Taxonomy of Secure Deletion}
+Secure deletion techniques can be organized into a layered taxonomy based on the layer of the storage 
+stack at which they operate. Each layer offers a different interface to the physical medium, and the 
+choice of layer involves a fundamental trade-off: lower layers give stronger irrecoverability 
+guarantees, while higher layers make it easier to identify which data objects to delete \cite{reardon2013sok}.
+Below is the taxonomy, ordered from the lowest (physical) to the highest (application) layer, 
+followed by cross-layer approaches that bridge multiple layers.
 
-Joukov et al. (2006) address several persistent misconceptions about secure deletion. They argue 
-that encryption is not an ideal solution for all contexts, that existing data-overwriting tools 
-do not work as well as commonly believed, and that securely deleted files do not require many 
-overwrite passes in most realistic scenarios \cite{SecureDeletionMyths}. Their work introduces 
-important but often neglected issues such as secure deletion consistency during power failures, 
-the challenges posed by versioning and journaling file systems, and the necessity of overwriting 
-metadata.
+\subsubsection{Physical Layer}
+The interface at this layer is the set of physical actions one can perform on the medium. Secure 
+deletion here entails physical destruction: shredding, incineration, or use of an NSA/CSS-approved 
+degausser. Magnetic media are securely deleted by degaussing; flash memory, optical discs, and 
+punched cards are not — they require incineration or mechanical destruction. This layer achieves the 
+strongest guarantee of irrecoverability but operates at full-device granularity only; no individual 
+data object can be singled out.
 
-Peterson et al. present algorithms and an architecture for secure deletion of individual file 
-versions in versioning file systems, motivated by federally compliant storage that must eliminate 
-data after a mandatory retention period \cite{peterson2005secure}. Their approach combines 
-authenticated encryption with selective overwriting and demonstrates order-of-magnitude 
-performance improvements over prior methods. 
+\subsubsection{Controller Layer}
+Controllers translate between the analog physical medium and the binary format used by higher layers. 
+They expose standardized hardware interfaces such as SCSI or ATA, which offer reading and writing of 
+fixed-size logical blocks \cite{reardon2013sok}. Secure deletion at this layer takes these forms:
+\begin{itemize}
+    \item \textbf{Full-device sanitization.} Both SCSI and ATA offer secure-erase or security-initialize 
+    commands that exhaustively overwrite every block. NIST recommends these as the non-destructive 
+    way to sanitize magnetic hard drives.
+    
+    \item \textbf{Block overwriting.} A single block can be overwritten to displace its old content, 
+    but without knowledge of which blocks constitute a particular data object, the controller cannot 
+    target individual files — it must sanitize every block to guarantee deletion of any one object.
 
-Wang et al. (2020) provide a comprehensive survey of secure deletion techniques for both HDDs and 
-SSDs, with particular attention to emerging storage technologies such as shingled magnetic 
-recording (SMR) and interlaced magnetic recording (IMR) HDDs \cite{wang2020challenges}. Their 
-work categorizes deletion approaches into encryption-based, erasure-based, and overwriting-based 
-categories, and evaluates the pros and cons of implementing secure deletion at different system 
-layers from FTL firmware modifications to file-system-level approaches. They observe that SMR and 
-IMR HDDs impose sequential write constraints due to overlapping track structures, requiring new 
-deletion techniques beyond traditional overwriting approaches designed for conventional magnetic 
-recording (CMR) HDDs.
+    \item \textbf{Analog remnants} Gutmann demonstrated that on magnetic media, the precise analog 
+    voltage of an overwritten bit can reveal its prior value, motivating multi-pass overwriting 
+    schemes.
 
-\subsection{Secure Deletion Techniques}
-Aronsson et al. (2018) categorizes secure deletion methods into three primary approaches: 
-\textbf{overwriting-based}, \textbf{encryption-based}, and \textbf{erasure-based}. Each approach operates at a different 
-system layer and offers distinct trade-offs among security, performance, and device longevity \cite{aronsson2025secure}.
+    \item \textbf{Flash controller caveats} Implementation of secure erase on SSDs is not always 
+    correct — some devices report success while the data remains accessible. Swanson et al. propose 
+    encrypting all data with a controller-stored key, then erasing that key before performing a 
+    three-pass sanitization.
 
-\subsubsection*{Overwriting-Based Approaches}
-Overwriting-based methods replace existing data with new patterns (zeros, ones, or random data) 
-to prevent recovery. On HDDs, techniques such as Gutmann's 35-pass overwriting have been widely 
-adopted \cite{peterson2005secure}.  However, on SSDs, overwriting is fundamentally ineffective 
-because the FTL maps overwritten logical blocks to new physical pages, leaving the original data 
-intact on the old pages \cite{aronsson2025secure}. Scrubbing a technique that reprograms individual 
-flash pages to destroy their data state attempts to address this at the physical level but 
-introduces disturbance effects on adjacent cells and data errors, particularly in 3D NAND flash \cite{3dnandwang2018}.
-Empirical studies confirm that even after multiple overwrite passes, a significant portion of 
-deleted data remains recoverable on SSDs \cite{aronsson2025secure}.
+\end{itemize}
 
-\subsubsection*{Erasure-Based Approaches}
-Erasure-based methods physically remove data from the storage medium, typically by issuing 
-block-erase commands or triggering garbage collection \cite{duplicateschen2022}. The primary 
-advantage of erasure-based deletion is that it provides physical removal of data without relying 
-on cryptographic assumptions. However, these methods suffer from high performance costs because 
-the basic deletion unit is a flash block, which requires migrating valid data from the target 
-block before erasure \cite{reardon2013sok}. The resulting write amplification reduces SSD 
-lifespan. Advanced erasure-based designs include scrubbing-aware schemes that combine secure 
-deletion operations with scrubbing to optimize performance by exploiting disturbance properties, 
-achieving significant reductions in average deletion time \cite{3dnandwang2018}.
+\subsubsection{Block Device / Device-Driver Layer}
+Device drivers are software abstractions that consolidate hardware access behind a common interface. 
+Two distinct interfaces are relevant:
 
+\begin{itemize}
+    \item \textbf{Block device driver} :  Permits reading and writing of logically addressed blocks; 
+    used for magnetic hard drives and SSDs fronted by an FTL.
 
-\subsubsection*{Cryptographic Erasure Approaches}
+    \item \textbf{Memory Technology Device (MTD)} : Accesses raw flash memory directly. MTD permits 
+    reading and writing, but blocks must be erased before being written, and erasure occurs at a much 
+    coarser granularity than reads and writes. Unsorted Block Images (UBI) builds on MTD to simplify 
+    raw-flash access.
+\end{itemize}
 
-Encryption-based secure deletion, or cryptographic erasure, treats the storage medium as a black 
-box. Data is encrypted before storage and rendered irrecoverable by securely deleting the 
-encryption key, making the approach independent of the underlying hardware characteristics \cite{onarlioglu2018_3}.
+At this layer, the device driver cannot distinguish between valid data and deleted data without 
+guidance from higher layers — a limitation that motivates the cross-layer approaches described in 
+latter section.
 
-Onarlioglu et al. (2018) present Eraser, a system providing secure deletion guarantees at file 
-granularity \cite{onarlioglu2018_3}. Eraser encrypts every file on an insecure medium with a 
-unique key that can later be discarded. To make the approach scalable on commodity systems, keys 
-are organized in an efficient tree structure where a single master key is confined to a secure 
-store, implemented as a TPM. Eraser is deployed as a file-aware stackable block device — a 
-standalone Linux kernel module requiring no modifications to the operating system — and 
-demonstrates comparable overhead to existing full-disk encryption implementations.
+\subsubsection{File System Layer: In-Place Updates}
+For physical media whose device driver supports in-place updates (primarily magnetic hard drives), 
+secure deletion can be integrated directly into the file system:
 
-Zhang et al. (2018) survey the combination of plausibly deniable encryption with secure deletion 
-for end-to-end data confidentiality \cite{zhang2018ensuring}. Their work frames the dual 
-requirement: data must be protected during its lifetime (via encryption) and rendered 
-irrecoverable after its lifetime (via secure deletion). The survey covers encryption-based 
-deletion mechanisms across different system layers and storage media, identifying the trade-offs 
-between security guarantees and performance overhead.
+\begin{itemize}
+    \item \textbf{ext2 secure-deletion patch} : Adds a sensitive attribute for files. When a 
+    sensitive file is deleted, the freed blocks are passed to a kernel daemon that overwrites them 
+    asynchronously, sorted by disk seek position for efficiency.
 
-The evolution of key management architectures for cryptographic erasure has progressed through 
-several generations. DNEFS (Data Node Encrypted File System) encrypts each data block with a 
-unique key and colocates keys in a dedicated storage area, achieving secure deletion by 
-propagating only the relevant keys \cite{reardon2013sok}. Eraser improved scalability by 
-organizing keys in a tree structure where a single master key stored in a TPM protects all file 
-keys, enabling deletion through key revocation \cite{onarlioglu2018_3}. However, Eraser does not 
-provide crash consistency, and post-crash experiments have shown that up to 64 files may be lost 
-when a TPM master key rotation desynchronizes from the on-disk file key table \cite{holepunch}.
+    \item \textbf{ext3 secure deletion} : Two variants: a basic mode that overwrites file data once, 
+    and a comprehensive mode that overwrites both data and metadata using a configurable scheme such 
+    as Gutmann's 35-pass pattern. Both can be restricted to files with a sensitive extended attribute.
 
-Holepunch, proposed by Ratliff Wittmann et al., addresses this gap by providing memory-efficient, 
-crash-consistent secure deletion using puncturable pseudorandom functions (PPRFs). \cite{holepunch}.
-Holepunch treats the storage device as a black box and uses per-file keys to transparently 
-encrypt outgoing writes and decrypt incoming reads, ensuring that all physical data on the device 
-is always encrypted. To delete a file, Holepunch performs a puncture operation on the PPRF key, 
-causing the pseudorandom function to permanently "forget" how to generate the associated file key.
-This approach eliminates the need to store or explicitly erase individual file keys, reducing 
-both memory pressure and disk I/O compared to prior tree-based key management schemes. Holepunch 
-stores its master key in TPM secure storage and uses a novel journaling scheme to provide crash 
-consistency between TPM state and on-disk structures, ensuring that the file system remains 
-usable after a power failure or software crash. Performance evaluations show that Holepunch 
-provides similar I/O performance to Eraser (within negligible margins for small-file workloads) 
-while consuming significantly less RAM as disk size grows, making it particularly suitable for 
-large-capacity drives.
+    \item \textbf{Secure deletion via renaming} : Intercepts unlink and truncate events, moving 
+    affected files into a special secure-deletion directory where a background process (e.g., shred) 
+    sanitizes them.
 
-\subsubsection*{Integrated Approaches}
-Recognizing the limitations of individual methods, several works propose hybrid approaches that 
-dynamically select deletion strategies. ErasuCrypto, proposed by Liu et al., integrates 
-erasure-based and encryption-based methods by formulating deletion as a cost-minimization problem, 
-dynamically choosing the most cost-effective technique based on the percentage of invalid pages 
-in a block \cite{wang2020challenges} The goal is to minimize data migrations and block erasures, 
-thereby reducing performance degradation and extending SSD lifetime. Experimental results show 
-that ErasuCrypto can smartly select between erasure and encryption approaches to reduce energy 
-consumption and write amplification.
+    \item \textbf{Purgefs} : A file-system extension for any block-based file system that overwrites 
+    blocks when they are returned to the free list, supporting per-file sensitivity flags.
 
-Building on ErasuCrypto, Li et al. propose a temperature-aware scheme that classifies data by 
-hot/cold degree and allocates them to separate blocks \cite{wang2020challenges}. Blocks with 
-hot data can be deleted via erasure-based methods with minimal migration overhead, while 
-cold-data blocks use the ErasuCrypto approach, effectively reducing secure deletion costs.
+    \item \textbf{Versioning file systems} : Uses all-or-nothing cryptographic transforms: each data 
+    block is expanded into an encrypted block plus a key-sized tag. Deleting a file version requires 
+    overwriting only the version's tags, leaving the shared encrypted data block intact but 
+    undecipherable.
 
-SAFE (Scramble and Finally Erase) takes a different approach, combining encryption with erasure 
-to provide near-instantaneous secure deletion with verifiability at the controller level. SAFE 
-encrypts all data with a controller-managed key. To sanitize the device, the controller key is 
-erased, all blocks are erased, overwritten with a specific pattern, erased again, and then the 
-device is re-initialized with a new key. This approach is simple, fast, and easy to verify 
-because it exploits the advantages of both encryption-based and erasure-based approaches \cite{wang2020challenges}.
+\end{itemize}
 
-Additionally, erasure-based techniques such as purging and ballooning attempt to force garbage 
-collection to delete invalid data: purging fills the storage with junk files to trigger garbage 
-collection, while ballooning constrains free space to invoke garbage collection more frequently \cite{wang2020challenges}.
-The Fine-grained Overwriting-based Techniques approach, such as Lin et al.'s one-shot sanitization 
-for MLC NAND, exploits the one-shot programming mechanism to sanitize pages at very low latency 
-(less than 1\% overhead) by carefully controlling threshold voltage distributions.
+\subsubsection{File System Layer: No In-Place Updates}
+For flash memory and other media that do not permit in-place updates, overwriting is not a viable 
+strategy. These approaches instead work within the constraint that data can only be destroyed by 
+erasing an entire erase unit:
+
+\begin{itemize}
+    \item \textbf{Compaction (immediate)} : Copy all valid data out of the erase unit containing the 
+    deleted data, then erase the unit. This is costly: one erasure per deletion, plus the read-copy 
+    overhead.
+
+    \item \textbf{Batched compaction} : Accumulate deletions and compact all affected erase units 
+    intermittently, amortizing the erasure cost. Log-structured file systems already perform a 
+    similar technique (garbage collection), but prioritize space reclamation over deletion latency.
+
+    \item \textbf{Per-file encryption} : Encrypts each file with a unique key stored in 
+    the file header. By colocating all header versions on the same erase unit, deleting a file 
+    requires compacting only one erase unit — the one holding the key — under computational 
+    assumptions.
+
+    \item \textbf{DNEFS} : Encrypts every data block with a unique key and colocates 
+    keys in a dedicated key-storage area. Secure deletion is performed intermittently by replacing 
+    the key-storage area with a new version, omitting keys for deleted blocks. This achieves 
+    many-block deletion with few erasures.
+
+    \item \textbf{Scrubbing} : Reprograms all 1 bits on a programmed page to 0 without 
+    erasing the block. Scrubbing destroys data without requiring compaction, but carries a 
+    reliability cost: cell disturbance shifts the threshold voltage of adjacent cells, increasing bit 
+    error rates. In 3-D NAND, as many as four adjacent pages can be disturbed\cite{3dnandwang2018}.
+    
+    \item \textbf{Partial scrubbing and down-bit programming} Partial scrubbing modifies a subset of 
+    bits to avoid the tell-tale all-zero pattern. Down-bit programming rewrites a TLC page in SLC 
+    mode, compacting the data into a single-bit representation and destroying the original multi-bit 
+    content\cite{ahn2019schemes}.
+\end{itemize}
 
 
-\subsection{Flash Memory and SSD Challenges}
-SSDs compound the secure deletion problem through their flash translation layer (FTL), which maps 
-logical block addresses to physical pages. Due to the erase-before-write property of NAND flash, 
-the FTL performs out-of-place updates, leaving old physical pages containing stale data until 
-garbage collection reclaims them. Wear leveling further disperses data across the device to 
-distribute program-erase cycles, making it impossible for host-level software to predict where 
-data physically resides \cite{onarlioglu2018_3}. 
+\subsubsection{Application Layer}
+User-level approaches interact only through a POSIX-compliant file-system interface. They are easy to 
+deploy but have the least control over the physical medium:
+\begin{itemize}
+    \item \textbf{Secure Erase utility (UCSD)} : A user-level application that invokes the hardware 
+    controller's secure-erase command, propagating a lower-layer capability to the user interface. 
+    Erases the entire device.
 
-Lee et al. design a NAND flash file system with secure deletion functionality, modifying YAFFS to 
-support it \cite{NANDSecureDeletion}. Their method uses encryption and forces all keys of a 
-specific file to be stored in the same block, requiring only one erase operation to securely 
-delete a file along with all of its metadata. Results show low amortized block erasure counts 
-compared to simple encryption methods.
+    \item \textbf{File-overwriting tools (srm, wipe, shred)}: Open the file from user space, overwrite 
+    its contents multiple times with insensitive data (zeros, random patterns), then unlink. These tools 
+    fail silently on file systems that do not perform in-place updates, such as journaling or 
+    log-structured file systems.
 
-Wang et al. (2020) survey secure deletion techniques designed for higher efficiency, verifiability, 
-and portability across HDDs and flash-based SSDs \cite{wang2020challenges}. They discuss the pros 
-and cons of implementing secure deletion at different system layers — from FTL firmware 
-modifications to file-system-level approaches — providing guidance for future storage system 
-designs.
+    \item \textbf{Free-space filling tools} Fill all unused blocks of the file system, thereby 
+    overwriting any deleted data that still resides in free blocks. Cost is proportional to free space; 
+    on flash media, the high wear from filling can be mitigated by perpetually maintaining free space 
+    within a target range.
 
-Chen and Chen (2022) identify a critical gap in flash-based secure deletion: duplicate data \cite{duplicateschen2022}.
-Even when the primary copy of a file is securely deleted, duplicate copies generated by FTL 
-operations, garbage collection, and flash-friendly file systems may persist. They propose an 
-approach that explicitly removes these duplicates, demonstrating that comprehensive deletion 
-must account for the copy proliferation inherent in flash storage.
+    \item \textbf{Database secure deletion} MySQL and SQLite offer compile-time or run-time options to 
+    overwrite deleted records with zeros. However, this relies on the underlying file system to ensure 
+    that overwritten data is actually replaced at the physical level — an assumption that does not always 
+    hold.
 
-Aronsson and Lund conduct a survey of data erasure methods with a focus on SSDs and their unique 
-challenges compared to HDDs. Their empirical measurements on commercial SSDs reveal inconsistencies 
-in deletion times across vendors and device models. They find that combining cryptographic 
-erasure with block erase is necessary for sufficient security, and that most existing deletion 
-standards cover similar ground but lack specificity for SSD internals \cite{aronsson2025secure}.
+    \item \textbf{Revocable backup system} Encrypts each backup with a unique key, then re-encrypts keys 
+    under a temporal master key hierarchy. Backups are deleted by not re-encrypting the corresponding 
+    key in the next time interval — the first cryptographic secure-deletion scheme.
+\end{itemize}
+\subsubsection{Cross-Layer Approaches}
+These approaches, as described in Chapter 1, bridge the file system and device-driver layers by passing 
+information about deleted blocks downward, enabling efficient sanitization at layers that otherwise 
+lack the semantics to identify deleted data:
+\begin{itemize}
+    \item \textbf{ TRIM (ATA DATA SET MANAGEMENT)} : The file system notifies the SSD controller about 
+    logical blocks that no longer store valid data. Originally designed as a performance optimization 
+    (to prevent flash thrashing), TRIM gives the controller knowledge of which blocks are discardable. 
+    However, TRIM is asynchronous — the OS receives no confirmation of physical erasure — and it provides 
+    no mechanism to restrict notification to sensitive blocks only.
 
-Homaidi (2009) provides an early framing of data remanence in SSDs, documenting how the physical 
-characteristics of flash memory create persistent residual data risks that earlier deletion 
-methods designed for magnetic media fail to address \cite{homaidi2009data}.
+    \item \textbf{TrueErase}: Adds a dedicated communication channel between the file system and the device 
+driver. Unlike TRIM, TrueErase only notifies the driver about blocks belonging to files explicitly marked 
+as sensitive, and it triggers immediate sanitization rather than deferring to the controller's scheduler.
 
-The challenges are further amplified by the transition to 3D NAND technology, which stacks memory 
-cells vertically in multiple layers to increase storage density. Wang et al. (2018) propose a 
-scrubbing-aware secure (SAS) deletion design for 3D NAND flash that exploits scrubbing 
-disturbance properties to improve deletion efficiency \cite{3dnandwang2018}. Scrubbing reprograms 
-a flash page to destroy its original data state, providing page-granularity deletion finer than 
-block erasure, but introduces disturbance effects on adjacent cells that become more severe in 
-vertically stacked architectures \cite{3dnandwang2018}. The SAS design formulates overhead 
-calculations for both scrubbing and erase operations, organizes sensitive data into 
-scrubbing-friendly patterns via a grouping-based write strategy (GBWS), and exploits disturbance 
-infection to accelerate scrubbing performance. Experimental results on a simulated 128 Gbit 3D 
-NAND device demonstrate an 82\% reduction in scrubbing latency and a 78\% improvement in overall 
-system response time \cite{3dnandwang2018}.
+    \item \textbf{ZK TRIM (Zombie-Kill)}: Extends TRIM with three modes — normal (defer to garbage 
+    collection), immediate (trigger compulsory GC on the TRIM'd blocks), and suspension (delay 
+    compulsory GC by a configurable threshold, then enforce it). Immediate mode limits the zombie time 
+    but incurs up to 68x higher I/O response latency.
 
-\section {Evaluation Challenges for Secure Deletion}
+\end{itemize}
 
-The literature reveals several persistent challenges in evaluating secure deletion techniques, 
-particularly in modern storage environments.
+\begin{longtable}{
+    >{\raggedright\arraybackslash}p{2.2cm}|
+    >{\raggedright\arraybackslash}p{3.2cm}|
+    >{\raggedright\arraybackslash}p{3.8cm}|
+    >{\raggedright\arraybackslash}p{3.8cm}|
+}
+\caption{Secure Deletion Approaches by System Layer}
+\label{tab:layers-comparison}\\
+\toprule
+\textbf{Layer} & \textbf{Approaches} & \textbf{Strengths} & \textbf{Limitations} \\
+\midrule
+\endfirsthead
 
-\textbf{Device Transparency} : SSDs function effectively as black boxes, with limited visibility 
-into their internal state. Empirical testing on commercial SSDs shows significant variability in 
-block-erase times even across similar devices, and the behavior of the FTL garbage collection, 
-wear leveling, and TRIM remains opaque to evaluators. \cite{aronsson2025secure}.
+\caption[]{Secure Deletion Approaches by System Layer (continued)}\\
+\toprule
+\textbf{Layer} & \textbf{Approaches} & \textbf{Strengths} & \textbf{Limitations} \\
+\midrule
+\endhead
+
+\bottomrule
+\multicolumn{4}{r}{\textit{Continued on next page}} \\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+% Row 1
+Physical & Shredding, incineration, degaussing & Unconditional irrecoverability & Full-device only; destroys medium \\
+\midrule
+% Row 2
+Controller & ATA/SCSI Secure Erase, block overwriting, multi-pass (Gutmann) & Well-defined hardware interface; works on any block device & No file-level granularity; FTL remapping may foil overwrites \\
+\midrule
+% Row 3
+Driver / Block Device & Block device driver, MTD, UBI & Software abstraction; MTD exposes raw flash & No visibility into which blocks hold deleted data \\
+\midrule
+% Row 4
+FS (In-Place) & ext2/3 secure deletion, Purgefs, versioning FS crypto (Peterson) & File-aware; balances granularity and control & Requires in-place-update device driver; journaling may preserve data \\
+\midrule
+% Row 5
+FS (No In-Place) & Compaction, batched compaction, DNEFS, scrubbing, per-file encryption (Lee) & Works under erase-before-write constraint; encryption amortizes erasures & High cost for compaction; scrubbing causes cell disturbance \\
+\midrule
+% Row 6
+User / Application & Secure Erase utility, srm/wipe/shred, free-space filling, DB secure deletion & Easy to deploy; no kernel modification & Silently fails on log-structured / journaling FS; least physical control \\
+\midrule
+% Row 7
+Cross-Layer & TRIM, TrueErase, ZK TRIM (Zombie-Kill) & Bridges FS semantics with driver-level sanitization; per-file sensitivity possible & TRIM is asynchronous \& unverifiable; ZK TRIM imposes I/O latency \\
+
+\end{longtable}
+
+\subsection{Comparative Evaluation of Secure Deletion Techniques}
+To compare methods across different layers, a consistent set of evaluation dimensions is required. The 
+following dimensions are derived from the literature and from the technical constraints established in 
+Chapter 1. Each dimension captures a distinct trade-off that system designers and compliance officers 
+must consider.
+
+\subsubsection{Layer of Implementation}
+The layer at which a secure deletion technique operates fundamentally shapes its capabilities, each 
+abstraction layer between the user and the physical medium complicates secure deletion in a different 
+way: the controller may remap LBAs to hide bad blocks, the FTL performs out-of-place updates 
+that preserve old versions, the file system may journal writes that retain stale copies, and the OS 
+cache may hold sensitive data in memory long after the file is unlinked. The choice of layer embodies 
+a fundamental trade-off — lower layers provide the strongest irrecoverability guarantee because no 
+abstraction stands between the deletion action and the storage cells, but they operate at full-device 
+granularity only and cannot identify individual files. Higher layers can pinpoint exactly which data 
+object to remove, but they have the least control over whether the deletion actually reaches the 
+physical medium, making them vulnerable to FTL remapping, journaling, and copy-on-write semantics that 
+silently preserve old data. Understanding the layer at which a given approach operates is therefore the 
+first and most critical step in evaluating whether it can meet a given security requirement.
+
+\subsubsection{Deletion Latency}
+The deletion latency refers to the time from deletion command issuance to data being unrecoverable. 
+Approaches divide broadly into immediate and delayed categories: an immediate approach offers a 
+negligibly small latency,  while a delayed approach defers physical erasure to a later garbage 
+collection or compaction cycle. On flash-based storage, this distinction is most visible in the zombie 
+time — the interval between when the FTL marks address mappings as invalid and when garbage collection 
+physically erases the NAND cells. During the zombie time, the data remains fully intact and recoverable 
+through low-level access, even though the file system and the OS consider it deleted.4 The duration of 
+the zombie time is highly workload-dependent: under read-heavy workloads, the free-block pool remains 
+ample and garbage collection may never activate the blocks containing deleted pages, making the zombie 
+time effectively unbounded. Latency is therefore not a fixed property of a deletion mechanism but 
+emerges from the interaction between the mechanism and the device's internal state and workload pattern.
+
+\subsubsection{Write Amplification Factor}
+Write Amplification Factor (WAF) represents the additional writes caused by deletion operations that 
+also reduces the SSD lifespan. NAND flash has a limited program-erase (P/E) cycle budget per block — 
+typically 1,000-10,000 cycles for TLC — and every deletion operation that triggers an erase consumes 
+part of that budget. Three FTL-internal processes compound this: garbage collection copies valid pages 
+from a victim block to a free block before erasing, wear leveling migrates cold data to balance P/E 
+cycles across blocks, and bad-block management relocates data away from failing regions — each migration 
+creates an extra physical write that must be separately sanitized for deletion to be complete. The write 
+amplification factor (WAF) captures this overhead as the ratio of physical writes to logical writes; a 
+WAF of 3 means every logical write causes 3 physical writes on the NAND medium. Aggressive secure 
+deletion policies such as immediate-mode ZK TRIM can increase I/O response latency by 68x on average by 
+forcing compulsory garbage collection on every deletion, though suspension-mode ZK TRIM reduces this 
+penalty by batching deletions within a configurable time window. For scrubbing-based approaches, the 
+disturbance to adjacent cells from each reprogramming pass increases the bit error rate, potentially 
+triggering further read-copy-erase cycles that amplify wear still more.
+
+\subsubsection{Crash Consistency}
+Whether deletion guarantees survive power loss or system crash. In cryptographic secure-deletion schemes, 
+the key state (master key, key-encryption-key hierarchy, or PPRF state) and the on-disk data it protects 
+must remain in sync at all times: if a crash occurs after a key is rotated but before the on-disk key 
+table is updated, the file system is left with encrypted data whose decryption key is permanently lost 
+or, worse, with stale keys that still grant access to supposedly deleted files. ERASER, the prior 
+state-of-the-art, suffers from precisely this problem — after a crash during master-key rotation, 
+laboratory experiments show that up to 64 files may become irrevocably lost or recoverable due to 
+desynchronization between the TPM-hosted key store and the on-disk file-key table. Holepunch resolves 
+this by embedding a journaling scheme in the key-management path: before any puncture or rotation 
+operation, the intended change is written to a dedicated journal region on disk, and if a crash 
+interrupts the operation, the journal is replayed on recovery to bring the key state back to a 
+consistent point. For physical-erasure approaches, crash consistency is less fragile — an interrupted 
+erase leaves the NAND cells in a partially erased state that is at least as secure as before the command 
+— but the metadata describing which blocks were meant to be erased may be lost on power cycle, meaning 
+the system cannot confirm post-crash whether the deletion was completed.
+
+\subsubsection{Granularity of Deletion}
+The size of the smallest data unit that a secure deletion approach can independently target. The SoK 
+taxonomy divides granularity into three categories: per-physical-medium (sanitizes the entire device — 
+useful only for decommissioning, not routine operation), per-file (targets individual files as the 
+deletion unit), and per-data-block (sanitizes at the smallest unit the physical medium offers, such as a 
+sector or NAND page).1 Per-file granularity is the most intuitive for users, but it can be deceptive: 
+long-lived files such as databases or virtual machine images store many distinct data objects within a 
+single file, so deleting the file means deleting everything inside it — an extraordinary measure that is 
+impractical as a routine defense against a disclosure-timing adversary. Conversely, per-data-block 
+granularity provides fine-grained control but introduces its own complications: scrubbing disturbs 
+adjacent cells, the sanitized all-zero pattern is itself detectable by forensic analysis, and approaches 
+that work at the block or erase-unit level must migrate valid colocated data before erasing, incurring 
+write amplification proportional to the valid-data density of the victim block. A related dimension is 
+scope — whether an approach is untargeted (sanitizes all deleted data, guaranteeing no false negatives) 
+or targeted (only sanitizes files explicitly marked as sensitive). Targeted approaches are more 
+efficient but introduce usability risk: users must correctly classify every sensitive file, and a single 
+false negative can leak confidential data. The choice of granularity therefore has cascading effects on 
+performance, wear, forensic detectability, and user error tolerance.
+
+\subsubsection{Verifiability Level}
+Ability to independently confirm that deletion actually occurred. Most deployed schemes provide no 
+verification at all — the host simply trusts the controller's completion signal (e.g., the return value 
+of an ATA Secure Erase command), even though studies have found controllers that report success while 
+leaving the data fully intact. Cryptographic erase is inherently unverifiable at the physical level: 
+discarding a key makes data computationally inaccessible but does not alter the stored ciphertext, so a 
+laboratory adversary with physical access can still recover the encrypted bits and may decrypt them in 
+the future if the encryption is broken or the key is later reconstructed. Ahn and Lee proposed an 
+in-band verification technique for NAND flash that exploits the threshold-voltage distribution of 
+sanitized cells: under normal program conditions, the number of cells in each Vt state is approximately 
+uniform, but after a successful block erase or scrubbing, the distribution shifts to a characteristic 
+non-uniform pattern. A simple read operation can count cells per Vt distribution and compare the 
+result against a manufacturer-set threshold, determining pass or fail without exposing the original 
+personal data. This check requires no changes to existing NAND flash hardware and can be performed 
+immediately after any deletion operation.17 A higher-assurance variant uses an XOR between known data 
+and the sensed residual from the sanitized area, passing only if the residual falls within the 
+ECC-correctable range — confirming physical destruction to within a small, quantifiable error margin.
+
+\subsubsection{Regulatory Alignment}
+Whether the method meets NIST Purge level or GDPR Article 17 requirements. NIST SP 800-88 Rev. 1 and the 
+newer IEEE 2883-2022 define three sanitization tiers: Clear, Purge and Destroy. Overwriting-based 
+methods on flash are currently categorized as Clear rather than Purge because they are not standardized 
+or vendor-validated for that purpose, while erasure-based methods and cryptographic erase qualify as 
+Purge when implemented correctly.20 GDPR Article 17 does not prescribe specific technical mechanisms but 
+requires that data be rendered irrecoverable across all storage locations, including backups and caches. 
+In practice, this means deletion mechanisms must survive device decommissioning, outsourced cloud 
+storage, and unexpected data duplication by the storage stack — a bar that standard file deletion or 
+TRIM alone cannot meet because neither physically destroys the data nor confirms its destruction. The 
+practical implication is that regulatory compliance demands multi-layer strategies: cryptographic erase 
+for at-rest data, verifiable physical erasure for decommissioned devices, and auditable deletion logs to 
+demonstrate compliance to regulators.
 
 
-\textbf{Verifiability} : Cryptographic erasure while fast and consistent (approximately 0.22 
-seconds regardless of device usage level), is practically unverifiable.  After cryptographic 
-erasure, SSDs may return zeroed data as an abstraction layer, but this does not confirm that the 
-underlying physical storage has been sanitized \cite{aronsson2025secure}. TPM-based key storage 
-compounds this problem, as TPMs are themselves black boxes with limited mechanisms to independently 
-confirm successful key deletion. \cite{aronsson2025secure}.
+\subsection{Comparison Matrix}
+{\small
+\begin{landscape}
+\begin{longtable}{
+    >{\raggedright\arraybackslash}p{1.9cm}|
+    >{\raggedright\arraybackslash}p{1.3cm}|
+    >{\raggedright\arraybackslash}p{2.2cm}|
+    >{\raggedright\arraybackslash}p{1.8cm}|
+    >{\raggedright\arraybackslash}p{2.4cm}|
+    >{\raggedright\arraybackslash}p{1.8cm}|
+    >{\raggedright\arraybackslash}p{2.4cm}|
+    >{\raggedright\arraybackslash}p{2.2cm}|
+}
+\caption{Comprehensive Comparison of Secure Deletion Approaches for Flash Storage}
+\label{tab:secure-deletion-comparison}\\
+\toprule
+\textbf{Approach} & 
+\textbf{Layer} & 
+\textbf{Granularity} & 
+\textbf{Deletion Latency} & 
+\textbf{WAF} & 
+\textbf{Crash Consistency} & 
+\textbf{Verifiability} & 
+\textbf{Regulatory Alignment} \\
+\midrule
+\endfirsthead
 
-\textbf{Performance-Security Trade-offs} : Erasure-based methods provide strong security guarantees 
-but introduce substantial performance overhead and device wear. Overwriting methods, while less 
-effective on SSDs, incur minimal performance cost. Encryption-based methods offer the best 
-performance but require trusting cryptographic assumptions and key management infrastructure \cite{aronsson2025secure}.
+\caption[]{Comprehensive Comparison of Secure Deletion Approaches (continued)}\\
+\toprule
+\textbf{Approach} & 
+\textbf{Layer} & 
+\textbf{Granularity} & 
+\textbf{Deletion Latency} & 
+\textbf{WAF} & 
+\textbf{Crash Consistency} & 
+\textbf{Verifiability} & 
+\textbf{Regulatory Alignment} \\
+\midrule
+\endhead
 
-\textbf{Duplication and metadata persistence} :  Multiple copies of deleted data can persist in 
-journaling file systems, log-structured file systems, and through SSD-internal operations such as 
-garbage collection and wear leveling. Chen and Chen show that a robust secure deletion approach 
-must also eliminate these duplicates \cite{duplicateschen2022}.
+\bottomrule
+\multicolumn{8}{r}{\textit{Continued on next page}} \\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+% Row 1
+Overwrite (user-level, shred/dd) & User / OS & File & Seconds to minutes (depends on file size) & High: Full file rewrite + FTL out-of-place update creates additional physical writes & None: No guarantees; power loss during overwrite leaves partial data & Host cannot confirm physical overwrite occurred; FTL may have mapped writes elsewhere & Does not meet NIST Clear, Purge, or Destroy for SSDs \\
+\midrule
+% Row 2
+Scrubbing (page overwrite) & Device / FTL & Page & ~390 $\mu$s per page & High:Cell disturbance forces valid page migration from adjacent pages; each scrub consumes part of scrub budget; increased BER triggers ECC correction overhead & None: Power loss during scrubbing leaves page in indeterminate Vt state; adjacent cells may be corrupted & Partial: Vt distribution analysis can distinguish scrubbed cells from native zeros ; requires special equipment &  No: Not approved by NIST SP 800-88 or IEEE 2883-2022 \\
+\midrule
+% Row 3
+Analog sanitization & Device / FTL & Page & ~390 $\mu$s to ~1 ms per page & Low: Reprograms to Vt distribution indistinguishable from native zero; less cell disturbance than scrubbing & None: Power loss during multi-step Vt programming leaves intermediate state & High: Vt distribution statistically indistinguishable from native 0-programmed page; forensic recovery infeasible &  No: Not standard-approved; research only \\
+\midrule
+% Row 4
+Down-bit programming & Device / FTL & Page (MLC/TLC) & <500 $\mu$s per page (single operation) & Very low: TLC→SLC conversion requires one program operation; no erase needed & None: Power loss during mode conversion leaves page in undefined state & Low: Residual Vt distribution may still reveal original data pattern; forensic detection possible &  No: Not standard-approved; research only \\
+\midrule
+% Row 5
+TRIM (standard) & OS → FTL & LBA range (block) & Unbounded (seconds to indefinite – zombie time) & None : TRIM itself adds no writes; GC adds WAF 1.1–3× depending on workload & None: TRIM commands are asynchronous; power loss erases pending TRIM queue; data remains on NAND & None: Host receives no confirmation; controller may ignore TRIM entirely; no way to verify physical erasure &  No: Clear level only (NIST SP 800-88); does not guarantee physical removal \\
+\midrule
+% Row 6
+ZK-TRIM Immediate & FTL & Block & Bounded by GC execution time (I/O penalty: 68× normal operation)  & High: Compulsory garbage collection on every TRIM; forces valid page migration even when free blocks available  & None: Power loss during compulsory GC leaves victim block in partially erased state & None: Same as standard TRIM – no confirmation of physical erasure &  No: Research only; not deployed in commercial drives \\
+\midrule
+% Row 7
+ZK-TRIM Suspension & FTL & Block & Bounded  & Medium: ~60× I/O penalty compared to normal operation; fewer GC events than Immediate mode  & None: Power loss during suspension window or GC leaves data recoverable & None: Same as standard TRIM – no confirmation &  No: Research only; not deployed \\
+\midrule
+% Row 8
+Secure Erase (ATA/ eMMC) & Controller & Block / Device & 2.5–8 seconds (device-level)  & Medium: Full block erase of every block; no valid page migration needed; one erase cycle per block  & None: Power loss during erase leaves some blocks erased, others untouched – inconsistent state & Low: Vendor-dependent; some drives return all-zero reads without physical erase (controller masking) ; no independent verification &  Partial: Clear level only (NIST SP 800-88); not Purge\\
+\midrule
+% Row 9
+NVMe Sanitize Block Erase & Controller & Device & 5–8 seconds (small drive) to tens of minutes (1 TB+)  & Medium: One erase cycle per block; no valid page migration needed & None: Power loss during erase leaves device in inconsistent state; NVMe spec defines no recovery semantics & Low: Controller may report success without physical erase (masking); returns all-zero reads as abstraction layer lie  &  Yes: Purge level (NIST SP 800-88, IEEE 2883-2022) \\
+\midrule
+% Row 10
+NVMe Sanitize Crypto Erase (key discard) & Controller & Device & ~0.22 seconds (capacity-independent)  & None: No NAND write operations; only key register overwritten  & Vulnerable: Power loss during key register write leaves old key partially overwritten; undefined behavior; no recovery spec  & None: Host receives completion status but cannot confirm key was destroyed; controller may preserve key in debug area or retired key table  &  Yes: Purge level (NIST SP 800-88, IEEE 2883-2022)  \\
+\midrule
+% Row 11
+NVMe Sanitize Crypto Erase (full re-encryption) & Controller & Device & Minutes to hours (capacity-dependent)  & High: Rewrites every user block (decrypt with old MEK, encrypt with new MEK, write back) & Vulnerable: Power loss during re-encryption leaves some blocks with old key, some with new key – data may be partially unrecoverable or corrupt  & Low: Host sees completion but cannot verify each block was re-encrypted; controller may skip blocks  &  Yes: Purge level (vendor-dependent implementation) \\
+\midrule
+% Row 12
+Cryptographic Erasure (per-block key) & OS / FS & Block / File & Milliseconds (key deletion only) & None: Key deletion only; no NAND writes & None: Power loss during key table update leaves key references inconsistent & None: No mechanism to confirm key was destroyed; key may remain in memory or swap  &  Yes: Purge level if key destruction is verifiable (assumption only)  \\
+\midrule
+% Row 13
+Eraser (tree-based CE) & Block device / Kernel & File & <1 second (branch revocation)  & None: Key operations only; no additional NAND writes beyond metadata  & Weak: TPM desync on crash; post-crash experiments show up to 64 files lost when master key rotation desynchronizes from on-disk file key table  & None: TPM black box; host cannot confirm master key was revoked; no audit trail  &  Partial: Meets Purge cryptographically but crash vulnerability creates compliance risk under GDPR Article 17  \\
+\midrule
+% Row 14
+Holepunch (PPRF-based CE) & Block device / Kernel & File & ~0.22 seconds (puncture operation)  & None: No per-file key storage; puncture modifies only master PPRF key; no additional writes beyond journal  & Strong: Journaled puncture scheme; crash-consistent – on recovery, journal replays pending punctures; no file loss or undeleted files  & None: Same as Eraser – host cannot verify puncture occurred; TPM black box  &  Yes: Purge level + crash safe; strongest regulatory alignment among file-level CE \\
+\midrule
+% Row 15
+TrueErase (cross-layer) & FS + Driver & File & Fast (immediate at driver notification)  & Low: Selective notification; only sensitive files trigger immediate actions; no blanket TRIM  & None: Power loss during driver notification leaves file in indeterminate state & None: No verification mechanism proposed  &  Partial: No standard approval; cross-layer approach not recognized by NIST  \\
+\midrule
+% Row 16
+SAFE (controller-level) & Controller & Device & Slow (multi-step: key erase + block erase + pattern write + re-erase)  & High: Triple erase  & Limited: Power loss during multi-step sequence leaves device inconsistent; verification pattern may be partially written  & Medium: Verification pattern written and checked; controller can attest completion; host can read pattern to confirm  &  Yes: Purge level + verifiable; but device-only \\
+\midrule
+% Row 17
+RedFlash (OOB duplicate chain) & FTL / Controller & Page / Block & Medium (chain traversal + erase; no specific benchmark)  & Medium: Additional OOB writes to maintain duplicate chain; each write adds metadata  & None: Power loss during chain update leaves duplicates untracked; OOB metadata may be corrupted  & None: No verification mechanism; depends on correct chain traversal  &  No: Research only; not deployed  \\
+\midrule
+% Row 18
+Secure Copy-Back & FTL / Controller & Page & Low (single program operation)  & Low: No extra erase; programs source page with random data or deletion pulses  & None: Power loss during source page programming leaves partial destruction & None: No verification that source page was actually sanitized  &  No: Research only; not deployed  \\
+\midrule
+% Row 19
+SAS Deletion (scrub-aware) & FTL / Controller & Page / Block & Optimized: 82\% reduction in scrubbing latency (~70 µs per page)  & Controlled: Scrub budget limits total scrubs per block; valid page migration when budget exceeded  & None: Same as scrubbing – power loss leaves indeterminate state & Medium: Cell-count verification possible; Vt distribution analysis  &  No: Research only; not standard-approved  \\
+\midrule
+% Row 19
+Physical destruction & Physical & Device & Permanent (seconds to minutes, irreversible) & N/A: Device destroyed; no further writes possible & N/A: Device non-operational after destruction & High: Physical inspection can confirm destruction (e.g., crushed, shredded, incinerated) &  Yes: Destroy level (NIST SP 800-88, IEEE 2883-2022)  \\
+
+\end{longtable}
+\end{landscape}
+}
+
+
+
+
+
+\section {Synthesized Observations from the Literature}
+
+The secure deletion literature spans a wide range of approaches and evaluation methods, reading 
+across the literature reveals patterns and several persistent challenges in secure deletion 
+techniques, particularly in modern storage environments. 
+
+\textbf{Layer Seperation Problem} : 
+
+Secure deletion in a modern storage system is fundamentally 
+complicated by the layered architecture through which data passes. Each layer - application, file 
+system, block device, controller (FTL), and physical medium -- provides its own interface to the 
+layer above and introduces its own abstraction over the layer below. At the physical layer one can 
+ensure true irrecoverability, but at the user layer one can easily identify which data object to 
+delete. The two capabilities never coincide at the same layer. The FTL abstracts NAND flash behind 
+a standard block-device interface so that traditional file systems remain compatible, but this 
+same abstraction hides the physical state of data from the host. When raw flash is accessed 
+directly, a different controller interface is exposed; when accessed through an FTL, overwriting a 
+logical block does not replace its physical content -- it creates two versions, one of which 
+persists.
+
+Secure deletion implemented at any single layer is systematically incomplete. Performing secure 
+deletion in one layer cannot eliminate data because leakage may persist in the other layers. There 
+is no one ideal layer for secure deletion because the criteria are in tension. Low-layer approaches 
+(controller-level block erasure) require fewer assumptions about the interface's behavior and 
+provide physical irrecoverability, but cannot select individual data objects for deletion. 
+High-layer approaches (file-system-level or cryptographic erasure) let users clearly mark which 
+data to delete, but must trust that the layers beneath faithfully execute the instruction. This is 
+not an implementation bug; it is a structural property of layered storage architectures, and no 
+single-layer solution can close it.
+
+
+\textbf{Verifiability Crisis} : 
+
+After performing a secure deletion operation, there is currently 
+no reliable, independent, and non-destructive way to confirm that the data has been physically 
+destroyed. This is the verifiability crisis, and it cuts across every approach category. 
+Cryptographic erasure is inherently opaque. When a key is deleted from a TPM or key store, the 
+storage device may return zeroed data at the abstraction layer, but this does not confirm that the 
+underlying physical cells have been sanitized or even that the key has actually been removed. TPMs 
+are themselves black boxes with limited externally accessible mechanisms to confirm key deletion 
+independently. Because the binding between key revocation and physical inaccessibility is mediated 
+entirely by the encryption scheme, verification collapses to trusting that the key was truly erased, 
+no copies of the key exist elsewhere, and no side-channel or future cryptanalytic advance can 
+recover the plaintext. None of these are independently verifiable after the fact. 
+
+Physical erasure has the opposite profile. A block-erase command physically removes charge from 
+NAND cells. In principle this is verifiable through electrical inspection of Vt distributions, but 
+practical verification at scale remains expensive, destructive, and vendor-dependent. Scrubbing 
+provides page-level erasure but introduces disturbance effects that complicate assessment of 
+whether complete data removal was achieved. The irony is that the approaches with the strongest 
+physical guarantees have the weakest practical verification paths.
+
+Standards such as NIST SP 800-88 Rev. 1 and IEEE 2883-2022 define sanitization levels - Clear, 
+Purge, and Destroy - that require "demonstrable and verifiable data removal evidence" at each level.
+Yet no deployed technique today can independently demonstrate that a Purge-level operation on an 
+SSD has succeeded without destructive physical inspection. The crisis is not merely technical: 
+regulatory mandates for demonstrable deletion exist, but the technical means to satisfy them do not, 
+creating a gap between legal obligation and practical verification.
+
+\textbf{Performance-latency Trade-offs} : 
+
+Secure deletion oscillates between two poles: immediate guarantees with severe performance cost, 
+or deferred guarantees with unbounded latency. This tension is structurally embedded in how flash 
+storage manages physical erasure. After the FTL invalidates a file's address mapping, the physical 
+data on the NAND cells remains intact until garbage collection erases the containing block. The 
+zombie time is the core latency parameter of any erasure-based scheme. Its duration is not fixed: 
+it depends on write pressure, over-provisioning ratios, FTL victim selection policy, and whether 
+TRIM was issued.
+
+The trade-off extends beyond GC to the approach category itself. Delayed approaches reduce wear 
+and I/O overhead but introduce a fixed worst-case upper bound on deletion latency that may be 
+minutes, hours, or longer. Purging and ballooning techniques address this by deliberately filling 
+the device with junk data to force GC, but the erasing time scales with device capacity and write 
+speed. Performance overhead is not limited to erasure-based methods, even scrubbing incurs a 
+performance decrease due to overhead. Every performance-enhancing mechanism inside SSDs is 
+counterproductive to secure deletion guarantees.The pattern is clear: at one end, cryptographic 
+erasure achieves sub-second deletion latency regardless of device usage but provides no physical 
+guarantee. At the other end, immediate-mode compulsory GC provides bounded physical erasure but 
+at a 68x I/O penalty. There is currently no technique that achieves both bounded physical erasure 
+and negligible performance cost on commodity hardware.
+
+\textbf{Shifting Trust, Not Eliminating It} :  
+
+Cryptographic erasure is often presented as a clean solution, delete the key, and the encrypted 
+data becomes irrecoverable. The literature reveals that this framing obscures multiple layers of 
+trust that cryptographic erasure merely relocates rather than removes. Every secure deletion 
+approach relies on a trust model, an assumption about which components behave correctly and can be 
+observed. Cryptographic erasure replaces trust in the physical storage medium with trust in a 
+cryptographic key store. This is a favorable trade for most deployment contexts, but it is a shift 
+of trust, not its removal. The approach that is strong on security guarantees is simultaneously 
+weak on verifiability. It assumes that encrypted data, once the key is destroyed, is 
+computationally irrecoverable. This is a forward-looking assumption that depends on the encryption 
+algorithm remaining secure against future cryptanalytic advances. For long-term confidentiality 
+requirements, this is a significant assumption that physical erasure does not require. FTL 
+operations create duplicate copies of data at the physical level, the same problem applies at the 
+key management level: if duplicate copies of encryption keys exist in journal files, crash 
+recovery logs, or backup metadata, cryptographic erasure fails silently because the attacker can 
+recover the key from a copy the OS does not know exists. Verifying that all key copies have been 
+eliminated requires the same kind of system-wide visibility that physical erasure struggles with.
+
+\textbf{Absence of Crash Consistency in Regulatory Frameworks} :
+The patterns across above discussed systems reveals a structural principle: the crash consistency 
+of a secure deletion system is determined by whether key metadata and data metadata share the same 
+durability domain. When key state is maintained in a separate trusted component (TPM) while data 
+metadata is on disk, the interface between them becomes the consistency bottleneck. Any system that 
+crosses durability domains must explicitly address this interface or accept the crash consistency 
+gap. The GDPR right to erasure (Article 17), the CCPA's right to deletion, and standards including 
+NIST SP 800-88 Rev. 1 and IEEE 2883-2022 mandate timely, demonstrable data removal at defined 
+sanitization levels. None of these frameworks describe any requirement for crash-consistent 
+deletion. They specify what must be deleted and at what assurance level, but they are silent on 
+what happens when the deletion process itself is interrupted by a power failure or system fault. A 
+system could be fully compliant with every regulatory sanitization mandate and still leave data in 
+an inconsistent, partially recoverable state after a crash during deletion. 
+
+Large cloud providers describe deletion as an iterative process requiring up to 180 days due to 
+data replication and backup cycles, far exceeding the timelines implied by GDPR Article 17. At 
+that scale, crash events during the deletion window are a statistical certainty rather than a 
+corner case. Regulatory standards that specify a deletion outcome but not the reliability of the 
+deletion process create a dangerous gap: a provider can certify compliance based on policy while 
+the technical mechanism silently fails under crash conditions. Shastri et al.'s identification of 
+six GDPR anti-patterns in cloud-scale systems -- storing data without clear deletion timelines, 
+reusing data indiscriminately, and risk-agnostic data processing -- reinforces that achieving 
+regulatory compliance requires systemic architectural changes, not point solutions. Crash 
+consistency is a prime example of a systemic architectural requirement that regulation has not yet 
+addressed.
 
 \section{Empirical Evaluation Approaches in the Literature}
 Experimental evaluations in the literature vary widely in methodology. Reardon et al. conducted 

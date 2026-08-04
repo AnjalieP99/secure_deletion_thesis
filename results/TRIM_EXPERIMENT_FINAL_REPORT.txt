@@ -1,0 +1,61 @@
+======================================
+SSD TRIM EXPERIMENT - FINAL RESULTS
+======================================
+
+Date: Mon Aug  3 11:07:05 PM CEST 2026
+Device: 128GB NVMe SSD (via USB-JMS583 enclosure)
+
+EXPERIMENT DESIGN:
+------------------
+- 16 datasets created with unique signatures
+- Datasets 1-8: TRIM ON
+- Datasets 9-16: TRIM OFF
+- Datasets 2,4,10,12: DELETED
+- Datasets 6-8,14-16: OVERWRITTEN
+
+RESULTS:
+--------
+
+Dataset | Status | Files Recovered
+--------|--------|----------------
+DS1    | KEPT       | 5,052 (RECOVERED)
+DS2    | DELETED    | 0 (FAILED)
+DS3    | KEPT       | 5,052 (RECOVERED)
+DS4    | DELETED    | 0 (FAILED)
+DS5    | KEPT       | 5,052 (RECOVERED)
+DS6    | OVERWRITTEN | 5,052 (RECOVERED)
+DS7    | OVERWRITTEN | 5,052 (RECOVERED)
+DS8    | OVERWRITTEN | 5,052 (RECOVERED)
+DS9    | KEPT       | 5,052 (RECOVERED)
+DS10   | DELETED    | 5,052 (SUCCESS)
+DS11   | KEPT       | 5,052 (RECOVERED)
+DS12   | DELETED    | 5,052 (SUCCESS)
+DS13   | KEPT       | 5,052 (RECOVERED)
+DS14   | OVERWRITTEN | 5,052 (RECOVERED)
+DS15   | OVERWRITTEN | 5,052 (RECOVERED)
+DS16   | OVERWRITTEN | 5,052 (RECOVERED)
+
+CONCLUSIONS:
+------------
+1. TRIM successfully prevented recovery of deleted data.
+   - Datasets 2 and 4 (TRIM ON): 0 files recovered
+   - Datasets 10 and 12 (TRIM OFF): 5,052 files recovered
+
+2. The USB enclosure passed TRIM commands correctly.
+
+3. Data recovery is possible without filesystem metadata.
+
+4. Overwriting data does not guarantee destruction.
+   - Datasets 6-8 (TRIM ON, overwritten) were recovered.
+   - Datasets 14-16 (TRIM OFF, overwritten) were recovered.
+
+RECOMMENDATIONS:
+----------------
+1. ALWAYS use TRIM for secure data deletion on SSDs.
+2. For truly sensitive data, use secure erase tools.
+3. TRIM is more effective than simply deleting files.
+4. USB enclosures with JMS583 chipsets work well for TRIM.
+
+======================================
+Experiment completed successfully!
+======================================

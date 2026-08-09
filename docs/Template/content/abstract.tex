@@ -4,17 +4,7 @@
 Within the branch of Anti-Forensics, secure deletion has emerged as a critical component in cybersecurity,
 regulatory compliance and digital Forensics. While standard deletion operations remove file-system
 references without erasing the underlying data,  secure deletion techniques aim to ensure that data
-is made irrecoverable. The importance of secure deletion is highlighed in cases where sensitive 
-information, such as personal data, financial records, or confidential business information, expected 
-by users to be permanently removed, can be recovered by malicious actors or forensic investigators. This 
-disconnected between user expectation and technical reality has led to a cascade of high-profile data 
-breaches across public and private sectors. Further the widespread transition from HDDs to SSDs has
-resulted in a paradigm shift in data storage and management, introducing new challenges for secure deletion
-through out-of-place updates, wear levelling, garbage collection, and Flash Translation Layer abstraction. 
-These mechanisms can preserve residual copies of deleted data even after deletion or overwriting operations 
-have been performed.
-
-This Thesis presents an experimental framework for evaluating the effectiveness, performance, and observability 
+is made irrecoverable. This Thesis presents an experimental framework for evaluating the effectiveness, performance, and observability 
 of secure deletion techniques in modern solid-state drives. The framework addresses the lack of standardized 
 and reproducible evaluation methods by considering measurable factors such as post-deletion data 
 recoverability, deletion latency, timing variability and verification limitations. The experimental study will 
@@ -28,6 +18,17 @@ regulatory and legal implications of secure deletion practices, particularly in 
 laws and individual privacy rights. By establishing a reproducible evaluation methodology, this work contributes a 
 foundation for systematically assessing secure deletion techniques and bridging the gap between technical 
 capabilities and regulatory compliance requirements.
+
+The importance of secure deletion is highlighed in cases where sensitive 
+information, such as personal data, financial records, or confidential business information, expected 
+by users to be permanently removed, can be recovered by malicious actors or forensic investigators. This 
+disconnected between user expectation and technical reality has led to a cascade of high-profile data 
+breaches across public and private sectors. Further the widespread transition from HDDs to SSDs has
+resulted in a paradigm shift in data storage and management, introducing new challenges for secure deletion
+through out-of-place updates, wear levelling, garbage collection, and Flash Translation Layer abstraction. 
+These mechanisms can preserve residual copies of deleted data even after deletion or overwriting operations 
+have been performed.
+
 
 \vspace{0.5cm}
 

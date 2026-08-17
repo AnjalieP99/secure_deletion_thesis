@@ -68,17 +68,53 @@ even after overwrite attempts. Whether the mechanism is a visual redaction overl
 encryption activation, an unverified third-party promise, or a simple failure to wipe before 
 resale, the result is identical: data thought to be gone remains recoverable.
 
-The literature review below surveys state-of-the-art techniques in secure deletion, 
-identifies methodological gaps, and motivates the need for a systematic framework that can 
-reliably assess deletion effectiveness across diverse modern storage environments. The 
-remainder of this thesis is organized as follows. The next section reviews the background of NAND 
-flash storage architecture and the secure deletion problem in detail. Chapter 2 presents a 
-systematic review of existing secure deletion techniques and their empirical evaluations along 
-with a review on the Legal and Ethical Aspects. Chapter 3 describes the proposed experimental 
-framework, including its metric system, test methodology, and verification protocols. Chapter 4
- presents the results of applying the framework across a diverse set of storage devices and 
- deletion techniques. Chapter 5 discusses the implications of the findings and Chapter 6 
- concludes with directions for future work.
+\section{Identified Research Gaps}
+
+Secure deletion in modern digital environments is a multi-layered problem spanning storage 
+architecture, cryptographic key management, regulatory compliance, and empirical verification. 
+Existing literature has produced a rich taxonomy of techniques overwriting, encryption-based, 
+erasure-based, and integrated approaches each with distinct trade-offs. The central research gap 
+addressed by this thesis is the absence of a standardized and reproducible framework for 
+evaluating secure deletion techniques across modern storage environments. Existing research has 
+examined individual deletion mechanisms, file systems, storage devices, or controller-level 
+techniques, but the experimental methods, hardware configurations, evaluation criteria, and 
+verification procedures vary considerably. This variation limits the comparability of results and 
+makes it difficult to determine whether a deletion method is effective across different devices 
+and operating conditions. Existing evaluations are also insufficient because successful 
+completion of a deletion command does not necessarily demonstrate physical data removal. TRIM, 
+for example, informs the controller that specific logical blocks are no longer required, but it 
+does not provide the host with a definitive indication of when or whether the corresponding 
+physical pages have been erased. The interval between logical invalidation and physical erasure, 
+referred to in this thesis as zombie time and explained in detail in Chapter 2, may depend on 
+workload pressure, garbage-collection behaviour, over-provisioning, and the controller's 
+victim-block selection policy. 
+
+To address these limitations, this thesis proposes an experimental framework based on observable 
+and reproducible evidence. The framework evaluates data recoverability after TRIM, conventional 
+overwriting, and drive-level sanitization operations. For TRIM experiments, recoverability is 
+examined at different time intervals defined by observable events, such as command-completion 
+signals, failed or successful recovery attempts, and available device-status information. The 
+framework also examines how workload conditions, device characteristics, file-system journaling, 
+and overwrite operations affected by FTL remapping influence the persistence of deleted data. In 
+addition to recoverability, the framework evaluates the latency and variability of sanitization 
+operations. Experiments are conducted at different drive fill levels to determine whether a 
+partially used drive behaves differently from a heavily used drive. The analysis considers both 
+average execution time and unpredictability between repeated measurements, since vendor-specific 
+controller behaviour may produce substantially different results even for similar storage devices.
+The proposed framework differs from existing evaluations in several ways. First, it evaluates 
+deletion through post-operation recoverability rather than assuming that a successful command 
+guarantees physical erasure. Second, it combines security, performance, workload, device-state, 
+and verification dimensions within a single evaluation structure. Third, it treats drive fill 
+level, controller implementation, and vendor behaviour as experimental variables rather than 
+uncontrolled background conditions. The objective of this thesis is therefore not to identify a 
+universally effective deletion command. Instead, it is to establish a systematic basis for 
+comparing deletion mechanisms, defining their observable security guarantees, identifying their 
+limitations, and assessing their suitability for reliable and standards-aligned data sanitization. 
+The following sections first describe NAND flash architecture and its implications for secure 
+deletion, then review existing techniques and evaluation methods, before presenting the proposed 
+framework, experimental results, and analysis. And finally, the thesis concludes with a 
+discussion of the findings and directions for future research.
+
 
 \section {NAND flash storage architecture}
 NAND flash memory which was introduced by Toshiba in 1988, is a type of non-volatile 

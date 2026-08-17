@@ -2488,9 +2488,6 @@
     <bcf:citekey order="102" intorder="1">Visconti2024zeroknowledge</bcf:citekey>
     <bcf:citekey order="103" intorder="1">Casino2022Research</bcf:citekey>
     <bcf:citekey order="104" intorder="1">aronsson2025secure</bcf:citekey>
-    <bcf:citekey order="105" intorder="1">aronsson2025secure</bcf:citekey>
-    <bcf:citekey order="106" intorder="1">ahn2021forensics</bcf:citekey>
-    <bcf:citekey order="107" intorder="1">aronsson2025secure</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

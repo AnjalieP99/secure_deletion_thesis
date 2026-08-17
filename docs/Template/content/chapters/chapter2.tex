@@ -771,42 +771,5 @@ frameworks such as NIST SP 800-88 Rev. 1 and IEEE 2883-2022 provide operational 
 sanitization levels but remain limited by their focus on traditional storage media \cite{aronsson2025secure},
 leaving emerging contexts such as containers, cloud storage, and AI systems without clear compliance guidance.
 
-\section{Summary and Identified Research Gaps}
-
-Secure deletion in modern digital environments is a multi-layered problem spanning storage 
-architecture, cryptographic key management, regulatory compliance, and empirical verification. 
-The literature has produced a rich taxonomy of techniques overwriting, encryption-based, 
-erasure-based, and integrated approaches each with distinct trade-offs. However, the absence of 
-a standardized experimental framework for evaluating these techniques across diverse storage 
-platforms limits both academic progress and practical deployment. An experimental framework 
-that defines consistent metrics, covers a representative range of modern storage devices, 
-incorporates verification protocols, and aligns with regulatory standards would address a 
-critical gap in the current state of the art. 
-
-\subsection*{Gaps and Directions for an Experimental Framework}
-
-The literature consistently identifies several gaps that motivate an experimental framework for 
-evaluating secure deletion techniques.
-
-
-\textbf{Broader device coverage.} Existing studies test only a handful of SSD models and 
-manufacturers. Given the significant variability in FTL implementation across vendors, broader 
-testing is essential for generalizable conclusions \cite{aronsson2025secure}
-
-\textbf{Standardized metrics.} The absence of standardized evaluation criteria for deletion 
-effectiveness, performance overhead, and verifiability prevents meaningful comparisons between 
-techniques. A framework should define measurable outcomes including residual data recoverability, 
-deletion latency, write amplification, and device wear.
-
-\textbf{Verification protocols.} Cryptographic erasure requires protocols that can independently 
-verify key deletion rather than relying on opaque TPM or SSD controller attestations. Research 
-into verifiable deletion, including cell-count-based verification techniques, points toward 
-practical verification mechanisms \cite{ahn2021forensics}.
-
-\textbf{Alignment with regulatory standards.} Future frameworks should align experimental 
-evaluation with regulatory requirements NIST SP 800-88 Purge level, IEEE 2883-2022 to ensure 
-that laboratory testing directly demonstrates compliance readiness \cite{aronsson2025secure}.
-
-
 
 \vfill

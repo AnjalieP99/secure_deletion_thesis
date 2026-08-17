@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.23)  9 AUG 2026 11:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.23)  10 AUG 2026 16:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1375,7 +1375,7 @@ Package translations Info: loading dictionary `translations-basic-dictionary' fo
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<images/logo/polito_logo_2021_blu-2-2.jpg, id=174, 845.3181pt x 326.4195pt>
+<images/logo/polito_logo_2021_blu-2-2.jpg, id=178, 845.3181pt x 326.4195pt>
 File: images/logo/polito_logo_2021_blu-2-2.jpg Graphic file (type jpg)
 <use images/logo/polito_logo_2021_blu-2-2.jpg>
 Package pdftex.def Info: images/logo/polito_logo_2021_blu-2-2.jpg  used on input line 6.
@@ -1806,48 +1806,55 @@ Underfull \vbox (badness 2111) has occurred while \output is active []
 
 [51]
 Chapter 3.
-) (./content/chapters/chapter4.tex
+
 
 [52
 
-]
+]) (./content/chapters/chapter4.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[53]
+
+[54]
 Chapter 4.
 ) (./content/chapters/chapter5.tex
 
-[53
+[55
 
 ]
 Chapter 5.
 ) (./content/chapters/chapter6.tex
 
-[54
+[56
 
 ]
 Chapter 6.
 ) (./content/appendix.tex
 
-[55
+[57
 
 ]
 Appendix A.
 )
 
-[56
+[58
 
 ]
 
-[57
+[59
 
 
 ]
-
-[58]
-
-[59]
 
 [60]
 
-[61] (./thesis.aux)
+[61]
+
+[62]
+
+[63] (./thesis.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -1857,24 +1864,24 @@ L3 programming layer <2025-09-02>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: C2A98BEEBBB74E050D480D44DE66D43E;9181.
+(rerunfilecheck)             Checksum: 6573FC8199DF06DC29A582148B253243;9335.
 Package logreq Info: Writing requests to 'thesis.run.xml'.
 \openout1 = `thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46600 strings out of 467748
- 936189 string characters out of 5431137
- 2146026 words of memory out of 5000000
- 74101 multiletter control sequences out of 15000+600000
- 768470 words of font info for 286 fonts, out of 8000000 for 9000
+ 46614 strings out of 467748
+ 936322 string characters out of 5431137
+ 2146029 words of memory out of 5000000
+ 74102 multiletter control sequences out of 15000+600000
+ 768664 words of font info for 288 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  138i,11n,135p,2648b,2975s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmro10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on thesis.pdf (70 pages, 2663583 bytes).
+Output written on thesis.pdf (72 pages, 2668198 bytes).
 PDF statistics:
- 964 PDF objects out of 1000 (max. 8388607)
- 858 compressed objects within 9 object streams
- 175 named destinations out of 1000 (max. 500000)
- 80738 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 985 PDF objects out of 1000 (max. 8388607)
+ 877 compressed objects within 9 object streams
+ 184 named destinations out of 1000 (max. 500000)
+ 80746 words of extra memory for PDF output out of 89155 (max. 10000000)
 

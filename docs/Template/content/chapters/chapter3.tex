@@ -1,18 +1,78 @@
 \chapter{Experimental Framework and Methodology}
 \label{sec:experimental-framework}
 
-This chapter details the proposed experimental framework for evaluating secure deletion techniques in modern digital environments. 
-The methodology is designed to bridge the gap between theoretical system-layer taxonomies and empirical forensic verification, 
-specifically addressing the architectural complexities of NAND flash storage. The primary aim of this research is to develop and 
-validate an experimental framework for evaluating secure deletion techniques. Due to the abstraction layers introduced by file 
-systems, flash translation layers (FTLs), and storage controllers, direct verification of deletion operations is often impossible 
-from the host perspective. Therefore, this work focuses on measurable and observable indicators of deletion effectiveness, 
-performance, and recoverability.
+This chapter presents the experimental framework developed to evaluate secure deletion techniques in modern storage environments. The 
+framework is designed to assess not only whether a deletion technique prevents data recovery, but also how quickly it operates, how 
+consistently it behaves across storage devices, and what limitations affect verification from the host system.
+
+Secure deletion is difficult to evaluate because the deletion request issued by the operating system does not necessarily correspond 
+to the physical removal of data from the storage medium. In NAND flash storage, the Flash Translation Layer (FTL) maps logical block 
+addresses to physical pages and performs operations such as wear leveling, garbage collection, and out-of-place updates. These 
+processes may create or preserve physical copies of data that are no longer visible through the file system. Consequently, a file may 
+appear to have been deleted at the file-system level while remnants remain recoverable at lower storage layers.
+
+Previous experimental studies have used different devices, workloads, deletion procedures, recovery methods, and performance metrics. 
+This variation makes it difficult to compare findings across studies. The literature therefore identifies the absence of a 
+standardized and reproducible evaluation framework as a major methodological gap. The framework proposed in this chapter addresses 
+this gap by defining common experimental conditions, measurable evaluation criteria, repeatable testing procedures, and a host-side 
+verification methodology.
+
+The study focuses on outcomes that can be observed from the host perspective. It does not assume that a command completion message 
+from the operating system or storage controller proves physical destruction. Instead, secure deletion is evaluated using observable 
+indicators such as post-deletion data recovery, residual data persistence, deletion latency, performance variability, and differences 
+between storage devices.
 
 \section{Research Objectives}
+The aim of this thesis is to develop an experimental framework to evaluate the effectiveness, performance, and practical limitations of 
+secure deletion techniques in modern storage environments. Although many secure deletion mechanisms have been proposed in the literature, 
+their behavior in real-world systems is difficult to verify because of the abstraction layers introduced by file systems, flash 
+translation layers (FTLs), and storage controllers. This work therefore focuses on outcomes that are observable and measurable from the 
+host perspective.
+
+The objectives of this study are:
+
+\begin{enumerate}
+    \item To evaluate the effectiveness of different secure deletion techniques in preventing post-deletion data recovery.
+    \item To investigate how long deleted data persists after TRIM and sanitization operations, and to assess the practical implications 
+    of data remanence.
+    \item To compare the latency characteristics and variability of secure deletion mechanisms, including TRIM, block erase, and 
+    cryptographic erase operations.
+    \item To examine how filesystem and storage-layer behavior, such as journaling and FTL remapping, influences the effectiveness of 
+    secure deletion.
+    \item To analyse differences in secure deletion behavior across consumer and enterprise storage devices.
+    \item To identify the practical limitations of host-side verification and establish a methodology for evaluating secure deletion techniques 
+    under realistic operating conditions.
+
+\end{enumerate}
+
+\subsection{Research Questions}
+
+To achieve these objectives, the following research questions are investigated:
+
+\textbf{RQ1:} To what extent do different secure deletion techniques prevent the recovery of previously stored data from a host-side forensic 
+perspective?
+
+\textbf{RQ2:} How does the recoverability of deleted data change over time following TRIM and sanitization operations?
+
+\textbf{RQ3:} What are the latency characteristics and performance variability of TRIM, block erase, and cryptographic erase operations across 
+different storage devices?
+
+\textbf{RQ4:} How do filesystem mechanisms and flash translation layer behavior affect the effectiveness of secure deletion techniques?
+
+\textbf{RQ5:} How does secure deletion behavior vary across different SSD implementations and vendors?
+
+\textbf{RQ6:} What are the practical limitations of verifying secure deletion from the host side, and how can these limitations be incorporated 
+into an experimental evaluation framework?
+
+
+The research questions are interconnected. RQ1 focuses on the outcome of the deletion operation, namely whether the original data can be recovered. 
+RQ2 introduces time as an experimental variable because the interval between logical deletion and physical reclamation can vary according to workload 
+and device behavior. RQ3 addresses the cost of enforcing deletion. RQ4 and RQ5 examine the technical causes of variation, while RQ6 addresses the 
+reliability and scope of the evaluation itself.
 
 
 \section{Experimental Environment}
+
 
 \section{Analysis Methodology}
 

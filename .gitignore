@@ -1,0 +1,10 @@
+# Bash history
+logs/.bash_history
+
+# PhotoRec / Foremost recovery output
+logs/Exp_001 - trim_on_off/recup_dir.*/
+results/foremost/
+results/recovered_data/
+
+# Generated TRIM experiment datasets
+logs/Experiment 1 - TRIM/Dataset/*.bin

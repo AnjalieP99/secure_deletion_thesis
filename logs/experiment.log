@@ -1,0 +1,1443 @@
+Script started on 2026-08-11 11:08:33+02:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="114" LINES="55"]
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ sudo cat report.xml[4P[C[C[C[C[C[C[C[C[C[Ccd recup.dirdiff ~/Desktop/experiment1/dataset/hashes.txt /tmp/copied_hashes.txt[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csudo cd recup.dir[K[2Preport.xml[4@cat [C[C[C[C[C[C[C[C[C[C[Ksudo cat report.xml[K[7msudo mount -o discard /dev/sda1 /mnt/ssd_test[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csudo mount -o discard /dev/sda1 /mnt/ssd_test
+[?2004l]133;C\]666;vte.shell.preexec!\[sudo: authenticate] Password: ****    
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7mmake_filler() {[27m
+[7m    local num=$1[27m
+[7m    local folder="FILLER_${num}"[27m
+[7m    sudo mkdir -p "/mnt/ssd_test/${folder}"[27m
+[7m    sudo dd if=/dev/urandom of="/mnt/ssd_test/${folder}/data.bin" bs=1M count=50 status=none[27m
+[7m    sudo bash -c "echo 'FILLER_SIGNATURE_${num}' >> /mnt/ssd_test/${folder}/data.bin"[27m
+[7m}[27m[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ make_filler() {
+    local num=$1
+    local folder="FILLER_${num}"
+    sudo mkdir -p "/mnt/ssd_test/${folder}"
+    sudo dd if=/dev/urandom of="/mnt/ssd_test/${folder}/data.bin" bs=1M count=50 status=none
+    sudo bash -c "echo 'FILLER_SIGNATURE_${num}' >> /mnt/ssd_test/${folder}/data.bin"
+}
+[?2004l]133;C\]666;vte.shell.preexec!\]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7mcount=1[27m
+[7mwhile true; do[27m
+[7m    current=$(df -h /mnt/ssd_test | tail -1 | awk '{print $5}' | sed 's/%//')[27m
+[7m    echo "Current usage: ${current}%"[27m
+[7m    [27m
+[7m    if [ $current -ge 25 ]; then[27m
+[7m        echo "✅ Reached 25% fill!"[27m
+[7m        break[27m
+[7m    fi[27m
+[7m    [27m
+[7m    make_filler $count[27m
+[7m    count=$((count + 1))[27m
+[7m    [27m
+[7m    if [ $((count % 10)) -eq 0 ]; then[27m
+[7m        echo "Created $count filler datasets"[27m
+[7m        df -h /mnt/ssd_test[27m
+[7m    fi[27m
+[7mdone[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ count=1
+while true; do
+    current=$(df -h /mnt/ssd_test | tail -1 | awk '{print $5}' | sed 's/%//')
+    echo "Current usage: ${current}%"
+    
+    if [ $current -ge 25 ]; then
+        echo "✅ Reached 25% fill!"
+        break
+    fi
+    
+    make_filler $count
+    count=$((count + 1))
+    
+    if [ $((count % 10)) -eq 0 ]; then
+        echo "Created $count filler datasets"
+        df -h /mnt/ssd_test
+    fi
+done
+[?2004l]133;C\]666;vte.shell.preexec!\]133;C\]666;vte.shell.preexec!\Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Created 10 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  453M  111G   1% /mnt/ssd_test
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Created 20 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  953M  110G   1% /mnt/ssd_test
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 1%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Created 30 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  1.5G  110G   2% /mnt/ssd_test
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Created 40 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  2.0G  109G   2% /mnt/ssd_test
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 2%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Created 50 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  2.4G  109G   3% /mnt/ssd_test
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Created 60 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  2.9G  108G   3% /mnt/ssd_test
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Current usage: 3%
+Created 70 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  3.4G  108G   4% /mnt/ssd_test
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Created 80 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  3.9G  107G   4% /mnt/ssd_test
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Current usage: 4%
+Created 90 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  4.4G  107G   4% /mnt/ssd_test
+Current usage: 4%
+Current usage: 4%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Created 100 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  4.9G  106G   5% /mnt/ssd_test
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Created 110 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  5.4G  106G   5% /mnt/ssd_test
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 5%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Created 120 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  5.9G  105G   6% /mnt/ssd_test
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Created 130 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  6.4G  105G   6% /mnt/ssd_test
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 6%
+Current usage: 7%
+Current usage: 7%
+Created 140 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  6.8G  104G   7% /mnt/ssd_test
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Created 150 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  7.3G  104G   7% /mnt/ssd_test
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Current usage: 7%
+Created 160 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  7.8G  104G   8% /mnt/ssd_test
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Created 170 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  8.3G  103G   8% /mnt/ssd_test
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Created 180 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  8.8G  103G   8% /mnt/ssd_test
+Current usage: 8%
+Current usage: 8%
+Current usage: 8%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Created 190 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  9.3G  102G   9% /mnt/ssd_test
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Created 200 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G  9.8G  102G   9% /mnt/ssd_test
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 9%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Created 210 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   11G  101G  10% /mnt/ssd_test
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Created 220 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   11G  101G  10% /mnt/ssd_test
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 10%
+Current usage: 11%
+Current usage: 11%
+Created 230 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   12G  100G  11% /mnt/ssd_test
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Created 240 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   12G  100G  11% /mnt/ssd_test
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Current usage: 11%
+Created 250 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   13G   99G  11% /mnt/ssd_test
+Current usage: 11%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Created 260 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   13G   99G  12% /mnt/ssd_test
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Created 270 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   14G   98G  12% /mnt/ssd_test
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 12%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Created 280 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   14G   98G  13% /mnt/ssd_test
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Created 290 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   15G   97G  13% /mnt/ssd_test
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 13%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Created 300 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   15G   97G  14% /mnt/ssd_test
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Created 310 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   16G   96G  14% /mnt/ssd_test
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 14%
+Current usage: 15%
+Created 320 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   16G   96G  15% /mnt/ssd_test
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Created 330 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   17G   95G  15% /mnt/ssd_test
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Current usage: 15%
+Created 340 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   17G   95G  15% /mnt/ssd_test
+Current usage: 15%
+Current usage: 15%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Created 350 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   18G   94G  16% /mnt/ssd_test
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Created 360 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   18G   94G  16% /mnt/ssd_test
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 16%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Created 370 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   19G   93G  17% /mnt/ssd_test
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Created 380 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   19G   93G  17% /mnt/ssd_test
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 17%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Created 390 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   19G   92G  18% /mnt/ssd_test
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Created 400 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   20G   92G  18% /mnt/ssd_test
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Current usage: 18%
+Created 410 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   20G   91G  19% /mnt/ssd_test
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Created 420 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   21G   91G  19% /mnt/ssd_test
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Current usage: 19%
+Created 430 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   21G   90G  19% /mnt/ssd_test
+Current usage: 19%
+Current usage: 19%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Created 440 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   22G   90G  20% /mnt/ssd_test
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Created 450 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   22G   89G  20% /mnt/ssd_test
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 20%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Created 460 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   23G   89G  21% /mnt/ssd_test
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Created 470 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   23G   88G  21% /mnt/ssd_test
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 21%
+Current usage: 22%
+Current usage: 22%
+Created 480 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   24G   88G  22% /mnt/ssd_test
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Created 490 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   24G   87G  22% /mnt/ssd_test
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Current usage: 22%
+Created 500 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   25G   87G  22% /mnt/ssd_test
+Current usage: 22%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Created 510 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   25G   86G  23% /mnt/ssd_test
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Created 520 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   26G   86G  23% /mnt/ssd_test
+Current usage: 23%
+Current usage: 23%
+Current usage: 23%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Created 530 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   26G   85G  24% /mnt/ssd_test
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Created 540 filler datasets
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       117G   27G   85G  24% /mnt/ssd_test
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 24%
+Current usage: 25%
+✅ Reached 25% fill!
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7mfor i in {1..3}; do[27m
+[7m    folder="TEST_DATA_${i}"[27m
+[7m    sudo mkdir -p "/mnt/ssd_test/${folder}"[27m
+[7m    [27m
+[7m    # Main signature[27m
+[7m    sudo bash -c "cat > /mnt/ssd_test/${folder}/signature.txt << EOF[27m
+[7mUNIQUE_SIGNATURE_TEST_${i}[27m
+[7m$(yes "UNIQUE_SIGNATURE_TEST_${i}" | head -100)[27m
+[7mEOF"[27m[A[A[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ for i in {1..3}; do
+    folder="TEST_DATA_${i}"
+    sudo mkdir -p "/mnt/ssd_test/${folder}"
+    
+    # Main signature
+    sudo bash -c "cat > /mnt/ssd_test/${folder}/signature.txt << EOF
+UNIQUE_SIGNATURE_TEST_${i}
+$(yes "UNIQUE_SIGNATURE_TEST_${i}" | head -100)
+EOF"
+[?2004l[?2004h> ^C[?2004l[?2004h[?2004l
+]666;vte.shell.postexec=130\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7mfor i in {1..3}; do[27m
+[7m    folder="TEST_DATA_${i}"[27m
+[7m    sudo mkdir -p "/mnt/ssd_test/${folder}"[27m
+[7m    [27m
+[7m    # Main signature[27m
+[7m    sudo bash -c "cat > /mnt/ssd_test/${folder}/signature.txt << EOF[27m
+[7mUNIQUE_SIGNATURE_TEST_${i}[27m
+[7m$(yes "UNIQUE_SIGNATURE_TEST_${i}" | head -100)[27m
+[7mEOF"[27m
+[7m    [27m
+[7m    # Binary file with signature[27m
+[7m    sudo dd if=/dev/urandom of="/mnt/ssd_test/${folder}/random.bin" bs=1M count=5 status=none[27m
+[7m    sudo bash -c "echo 'UNIQUE_SIGNATURE_TEST_${i}_BIN' >> /mnt/ssd_test/${folder}/random.bin"[27m
+[7m    [27m
+[7m    # Small files[27m
+[7m    for j in {1..50}; do[27m
+[7m        sudo bash -c "echo 'UNIQUE_SIGNATURE_TEST_${i}_small_${j}' > /mnt/ssd_test/${folder}/small_${j}.txt"[27m
+[7m    done[27m
+[7m    [27m
+[7m    echo "Created TEST_DATA_${i}"[27m
+[7mdone[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ for i in {1..3}; do
+    folder="TEST_DATA_${i}"
+    sudo mkdir -p "/mnt/ssd_test/${folder}"
+    
+    # Main signature
+    sudo bash -c "cat > /mnt/ssd_test/${folder}/signature.txt << EOF
+UNIQUE_SIGNATURE_TEST_${i}
+$(yes "UNIQUE_SIGNATURE_TEST_${i}" | head -100)
+EOF"
+    
+    # Binary file with signature
+    sudo dd if=/dev/urandom of="/mnt/ssd_test/${folder}/random.bin" bs=1M count=5 status=none
+    sudo bash -c "echo 'UNIQUE_SIGNATURE_TEST_${i}_BIN' >> /mnt/ssd_test/${folder}/random.bin"
+    
+    # Small files
+    for j in {1..50}; do
+        sudo bash -c "echo 'UNIQUE_SIGNATURE_TEST_${i}_small_${j}' > /mnt/ssd_test/${folder}/small_${j}.txt"
+    done
+    
+    echo "Created TEST_DATA_${i}"
+done
+[?2004l]133;C\]666;vte.shell.preexec!\Created TEST_DATA_1
+Created TEST_DATA_2
+Created TEST_DATA_3
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msudo find /mnt/ssd_test -type f > ~/files_before_delete.txt[27m
+[7mecho "Files before deletion: $(sudo find /mnt/ssd_test -type f | wc -l)"[27m[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csudo find /mnt/ssd_test -type f > ~/files_before_delete.txt
+echo "Files before deletion: $(sudo find /mnt/ssd_test -type f | wc -l)"
+[?2004l]133;C\]666;vte.shell.preexec!\]133;C\]666;vte.shell.preexec!\Files before deletion: 701
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msudo rm -rf /mnt/ssd_test/TEST_DATA_*[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csudo rm -rf /mnt/ssd_test/TEST_DATA_*
+[?2004l]133;C\]666;vte.shell.preexec!\]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ sync
+[?2004l]133;C\]666;vte.shell.preexec!\]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msudo fstrim -v /mnt/ssd_test[27msudo fstrim -v /mnt/ssd_test
+[?2004l]133;C\]666;vte.shell.preexec!\fstrim: /mnt/ssd_test: the discard operation is not supported
+]666;vte.shell.postexec=1\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [K]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ sudo fstrim -v /mnt/ssd_test
+[?2004l]133;C\]666;vte.shell.preexec!\/mnt/ssd_test: 90.1 GiB (96751833088 bytes) trimmed
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msudo find /mnt/ssd_test -type f > ~/files_after_delete.txt[27m
+[7mecho "Files after deletion: $(sudo find /mnt/ssd_test -type f | wc -l)"[27m[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csudo find /mnt/ssd_test -type f > ~/files_after_delete.txt
+echo "Files after deletion: $(sudo find /mnt/ssd_test -type f | wc -l)"
+[?2004l]133;C\]666;vte.shell.preexec!\]133;C\]666;vte.shell.preexec!\Files after deletion: 545
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7mmkdir -p ~/search_results/trim_on_25[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmkdir -p ~/search_results/trim_on_25
+[?2004l]133;C\]666;vte.shell.preexec!\]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msearch_live_drive() {[27m
+[7m    local time_label=$1[27m
+[7m    local output_file="~/search_results/trim_on_25/search_${time_label}.txt"[27m
+[7m    [27m
+[7m    echo "========================================" | tee -a $output_file[27m
+[7m    echo "Search Results - ${time_label}" | tee -a $output_file[27m
+[7m    echo "Time: $(date)" | tee -a $output_file[27m
+[7m    echo "========================================" | tee -a $output_file[27m
+[7m    echo "" | tee -a $output_file[27m
+[7m    [27m
+[7m    # Search for test signatures[27m
+[7m    echo "=== TEST DATA SIGNATURES ===" | tee -a $output_file[27m
+[7m    for i in {1..3}; do[27m
+[7m        count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null)[27m
+[7m        echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a $output_file[27m
+[7m    done[27m
+[7m    [27m
+[7m    echo "" | tee -a $output_file[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[Asearch_live_drive() {
+    local time_label=$1
+    local output_file="~/search_results/trim_on_25/search_${time_label}.txt"
+    
+    echo "========================================" | tee -a $output_file
+    echo "Search Results - ${time_label}" | tee -a $output_file
+    echo "Time: $(date)" | tee -a $output_file
+    echo "========================================" | tee -a $output_file
+    echo "" | tee -a $output_file
+    
+    # Search for test signatures
+    echo "=== TEST DATA SIGNATURES ===" | tee -a $output_file
+    for i in {1..3}; do
+        count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null)
+        echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a $output_file
+    done
+    
+    echo "" | tee -a $output_file
+[?2004l[?2004h> ^C[?2004l[?2004h[?2004l
+]666;vte.shell.postexec=130\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msearch_live_drive() {[27m
+[7m    local time_label=$1[27m
+[7m    local output_file="~/search_results/trim_on_25/search_${time_label}.txt"[27m
+[7m    [27m
+[7m    echo "========================================" | tee -a $output_file[27m
+[7m    echo "Search Results - ${time_label}" | tee -a $output_file[27m
+[7m    echo "Time: $(date)" | tee -a $output_file[27m
+[7m    echo "========================================" | tee -a $output_file[27m
+[7m    echo "" | tee -a $output_file[27m
+[7m    [27m
+[7m    # Search for test signatures[27m
+[7m    echo "=== TEST DATA SIGNATURES ===" | tee -a $output_file[27m
+[7m    for i in {1..3}; do[27m
+[7m        count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null)[27m
+[7m        echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a $output_file[27m
+[7m    done[27m
+[7m    [27m
+[7m    echo "" | tee -a $output_file[27m
+[7m    [27m
+[7m    # Search for filler signatures (should still be there)[27m
+[7m    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a $output_file[27m
+[7m    filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null)[27m
+[7m    echo "Total filler signatures: ${filler_count:-0}" | tee -a $output_file[27m
+[7m    [27m
+[7m    # Sample of found signatures[27m
+[7m    echo "" | tee -a $output_file[27m
+[7m    echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a $output_file[27m
+[7m    sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a $output_file[27m
+[7m    [27m
+[7m    echo "" | tee -a $output_file[27m
+[7m    echo "Search complete. Results saved to: $output_file"[27m
+[7m}[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ search_live_drive() {
+    local time_label=$1
+    local output_file="~/search_results/trim_on_25/search_${time_label}.txt"
+    
+    echo "========================================" | tee -a $output_file
+    echo "Search Results - ${time_label}" | tee -a $output_file
+    echo "Time: $(date)" | tee -a $output_file
+    echo "========================================" | tee -a $output_file
+    echo "" | tee -a $output_file
+    
+    # Search for test signatures
+    echo "=== TEST DATA SIGNATURES ===" | tee -a $output_file
+    for i in {1..3}; do
+        count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null)
+        echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a $output_file
+    done
+    
+    echo "" | tee -a $output_file
+    
+    # Search for filler signatures (should still be there)
+    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a $output_file
+    filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null)
+    echo "Total filler signatures: ${filler_count:-0}" | tee -a $output_file
+    
+    # Sample of found signatures
+    echo "" | tee -a $output_file
+    echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a $output_file
+    sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a $output_file
+    
+    echo "" | tee -a $output_file
+    echo "Search complete. Results saved to: $output_file"
+}
+[?2004l]133;C\]666;vte.shell.preexec!\]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msearch_live_drive "0h"[27msearch_live_drive "0h"[C[1P"m"i"n"[C
+[?2004l]133;C\]666;vte.shell.preexec!\'~/search_results/trim_on_25/search_0min.txt': No such file or directory (os error 2)
+========================================
+'~/search_results/trim_on_25/search_0min.txt': No such file or directory (os error 2)
+Search Results - 0min
+'~/search_results/trim_on_25/search_0min.txt': No such file or directory (os error 2)
+Time: Tue Aug 11 11:18:55 AM CEST 2026
+'~/search_results/trim_on_25/search_0min.txt': No such file or directory (os error 2)
+========================================
+'~/search_results/trim_on_25/search_0min.txt': No such file or directory (os error 2)
+
+'~/search_results/trim_on_25/search_0min.txt': No such file or directory (os error 2)
+=== TEST DATA SIGNATURES ===
+^C
+]666;vte.shell.postexec=130\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ ls
+[?2004l]133;C\]666;vte.shell.preexec!\[0m[01;34mDesktop[0m    [01;34mPictures[0m   commands.txt         [01;34mexperiment_results[0m       [01;32mrecover_data.sh[0m  [01;31mssd_image_after_trim.dd.gz[0m
+[01;34mDocuments[0m  [01;34mPublic[0m     [01;32mcreate_test_data.sh[0m  files_after_delete.txt   [01;34msearch_results[0m
+[01;34mDownloads[0m  [01;34mTemplates[0m  experiment.log       files_before_delete.txt  [01;34msnap[0m
+[01;34mMusic[0m      [01;34mVideos[0m     [01;34mexperiment1[0m          photorec.se2             [01;31mssd_image.dd.gz[0m
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ cd search_results/
+[?2004l]133;C\]666;vte.shell.preexec!\]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji/search_results\]0;anji@anji-Nitro-AN515-58:~/search_results\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~/search_results[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~/search_results[00m$ ls
+[?2004l]133;C\]666;vte.shell.preexec!\[0m[01;34mtrim_on_25[0m
+]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji/search_results\]0;anji@anji-Nitro-AN515-58:~/search_results\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~/search_results[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~/search_results[00m$ cd~ ~
+[?2004l]133;C\]666;vte.shell.preexec!\]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ cd ~[2Plscd search_results/ls[Ksearch_live_drive "0min"() {     local time_label=$1;     local output_file="~/search_results/trim_on_25/search_${time_label}.txt";          echo "========================================" | tee -a $output_file;     echo "Search Results - ${time_label}" | tee -a $output_file;     echo "Time: $(date)" | tee -a $output_file;     echo "========================================" | tee -a $output_file;     echo "" | tee -a $output_file;      
+    echo "=== TEST DATA SIGNATURES ===" | tee -a $output_file;     for i in {1..3}; do         count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null);         echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a $output_file;     done;          echo "" | tee -a $output_file;      
+    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a $output_file;     filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null);     echo "Total filler signatures: ${filler_count:-0}" | tee -a $output_file;      
+    echo "" | tee -a $output_file;     echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a $output_file;     sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a $output_file;          echo "" | tee -a $output_file;     echo "Search complete. Results saved to: $output_file"; }[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CUNIQUE_SIGNATURE" | head -10 | tee -a $output_file;          echo "" | tee -a $output_file;    [C[1P[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CUNIQUE_SIGNATURE" | head -10 | tee -a $output_file;          echo "" | tee -a $output_file;     [1P[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[A[A[A[A[A[A[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C "0min"[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kls[K[K[K[7msearch_live_drive() {[27m
+[7m    local time_label=$1[27m
+[7m    local output_dir="$HOME/search_results/trim_on_25"[27m
+[7m    local output_file="$output_dir/search_${time_label}.txt"[27m
+
+[7m    mkdir -p "$output_dir"[27m
+
+[7m    echo "========================================" | tee -a "$output_file"[27m
+[7m    echo "Search Results - ${time_label}" | tee -a "$output_file"[27m
+[7m    echo "Time: $(date)" | tee -a "$output_file"[27m
+[7m    echo "========================================" | tee -a "$output_file"[27m
+[7m    echo "" | tee -a "$output_file"[27m
+
+[7m    # Search for test signatures[27m
+[7m    echo "=== TEST DATA SIGNATURES ===" | tee -a "$output_file"[27m
+
+[7m    for i in {1..3}; do[27m
+[7m        count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null)[27m
+[7m        echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a "$output_file"[27m
+[7m    done[27m
+
+[7m    echo "" | tee -a "$output_file"[27m
+
+[7m    # Search for filler signatures[27m
+[7m    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a "$output_file"[27m
+
+[7m    filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null)[27m
+[7m    echo "Total filler signatures: ${filler_count:-0}" | tee -a "$output_file"[27m
+
+[7m    echo "" | tee -a "$output_file"[27m
+
+[7m    # Sample of found signatures[27m
+[7m    echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a "$output_file"[27m
+
+[7m    sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a "$output_file"[27m
+
+[7m    echo "" | tee -a "$output_file"[27m
+[7m    echo "Search complete. Results saved to: $output_file"[27m
+[7m}[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ search_live_drive() {
+    local time_label=$1
+    local output_dir="$HOME/search_results/trim_on_25"
+    local output_file="$output_dir/search_${time_label}.txt"
+
+    mkdir -p "$output_dir"
+
+    echo "========================================" | tee -a "$output_file"
+    echo "Search Results - ${time_label}" | tee -a "$output_file"
+    echo "Time: $(date)" | tee -a "$output_file"
+    echo "========================================" | tee -a "$output_file"
+    echo "" | tee -a "$output_file"
+
+    # Search for test signatures
+    echo "=== TEST DATA SIGNATURES ===" | tee -a "$output_file"
+
+    for i in {1..3}; do
+        count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null)
+        echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a "$output_file"
+    done
+
+    echo "" | tee -a "$output_file"
+
+    # Search for filler signatures
+    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a "$output_file"
+
+    filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null)
+    echo "Total filler signatures: ${filler_count:-0}" | tee -a "$output_file"
+
+    echo "" | tee -a "$output_file"
+
+    # Sample of found signatures
+    echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a "$output_file"
+
+    sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a "$output_file"
+
+    echo "" | tee -a "$output_file"
+    echo "Search complete. Results saved to: $output_file"
+}
+[?2004l]133;C\]666;vte.shell.preexec!\]666;vte.shell.postexec=0\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ search_live_drive() {     local time_label=$1;     local output_dir="$HOME/search_results/trim_on_25";     local output_file="$output_dir/search_${time_label}.txt";      mkdir -p "$output_dir";      echo "========================================" | tee -a "$output_file";     echo "Search Results - ${time_label}" | tee -a "$output_file";     echo "Time: $(date)" | tee -a "$output_file";     echo "========================================" | tee -a "$output_file";     echo "" | tee -a "$output_file";  
+    echo "=== TEST DATA SIGNATURES ===" | tee -a "$output_file";      for i in {1..3}; do         count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null);         echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a "$output_file";     done;      echo "" | tee -a "$output_file";  
+    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a "$output_file";      filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null);     echo "Total filler signatures: ${filler_count:-0}" | tee -a "$output_file";      echo "" | tee -a "$output_file";  
+    echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a "$output_file";      sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a "$output_file";      echo "" | tee -a "$output_file";     echo "Search complete. Results saved to: $output_file"; }[A[A[A[A[A[A[A[A[A[A[A[A[A[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csearch_live_drive() {     local time_label=$1;     local output_dir="$HOME/search_results/trim_on_25";     local output_file="$output_dir/search_${time_label}.txt";      mkdir -p "$output_dir";      echo "========================================" | tee -a "$output_file";     echo "Search Results - ${time_label}" | tee -a "$output_file";     echo "Time: $(date)" | tee -a "$output_file";     echo "========================================" | tee -a "$output_file";     echo "" | tee -a "$output_file";  
+    echo "=== TEST DATA SIGNATURES ===" | tee -a "$output_file";      for i in {1..3}; do         count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null);         echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a "$output_file";     done;      echo "" | tee -a "$output_file";  
+    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a "$output_file";      filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null);     echo "Total filler signatures: ${filler_count:-0}" | tee -a "$output_file";      echo "" | tee -a "$output_file";  
+    echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a "$output_file";      sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a "$output_file";      echo "" | tee -a "$output_file";     echo "Search complete. Results saved to: $output_file"; }[A[A[A[A[A[A[A[A[A[A[A[A[Acd ~[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[2Plscd search_results/ls[Ksearch_live_drive "0min() {     local time_label=$1;     local output_file="~/search_results/trim_on_25/search_${time_label}.txt";          echo "========================================" | tee -a $output_file;     echo "Search Results - ${time_label}" | tee -a $output_file;     echo "Time: $(date)" | tee -a $output_file;     echo "========================================" | tee -a $output_file;     echo "" | tee -a $output_file;      
+    echo "=== TEST DATA SIGNATURES ===" | tee -a $output_file;     for i in {1..3}; do         count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null);         echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a $output_file;     done;          echo "" | tee -a $output_file;      
+    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a $output_file;     filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null);     echo "Total filler signatures: ${filler_count:-0}" | tee -a $output_file;      
+    echo "" | tee -a $output_file;     echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a $output_file;     sudo strings /dev/sda | grepUNIQUE_SIGNATURE" | head -10 | tee -a $output_file;          echo "" | tee -a $output_file;     echo "Search complete. Results saved to: $output_file"; }[A[A[A[A[A[A[A[A[A[A[A[A[A "0min[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[?2004l[?2004h> ^C[?2004l[?2004h[?2004l
+]666;vte.shell.postexec=130\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ search_live_drive "0min"
+[?2004l]133;C\]666;vte.shell.preexec!\========================================
+Search Results - 0min
+Time: Tue Aug 11 11:23:32 AM CEST 2026
+========================================
+
+=== TEST DATA SIGNATURES ===
+^C
+]666;vte.shell.postexec=130\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [H[2J]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ ```bash
+search_live_drive() {
+    local time_label="$1"
+
+    local output_dir="$HOME/search_results/trim_on_25"
+    local output_file="$output_dir/search_${time_label}.txt"
+    local strings_file="$output_dir/strings_${time_label}.txt"
+
+    # Create output directory
+    mkdir -p "$output_dir"
+
+    echo "========================================" | tee "$output_file"
+    echo "SSD RAW DATA SEARCH" | tee -a "$output_file"
+    echo "========================================" | tee -a "$output_file"
+    echo "Time label: ${time_label}" | tee -a "$output_file"
+    echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S %Z')" | tee -a "$output_file"
+    echo "Device: /dev/sda" | tee -a "$output_file"
+    echo "Device model: EDILOCA ES106 128GB" | tee -a "$output_file"
+    echo "========================================" | tee -a "$output_file"
+    echo "" | tee -a "$output_file"
+
+    # --------------------------------------------------
+    # ONE RAW READ OF THE ENTIRE SSD
+    # --------------------------------------------------
+
+    echo "Reading /dev/sda once and extracting printable strings..." | tee -a "$output_file"
+    echo "This may take several minutes." | tee -a "$output_file"
+    echo "" | tee -a "$output_file"
+
+    sudo strings -a /dev/sda > "$strings_file"
+
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Raw device read failed." | tee -a "$output_file"
+        return 1
+    fi
+
+    echo "Raw read completed." | tee -a "$output_file"
+    echo "Strings saved to: $strings_file" | tee -a "$output_file"
+    echo "" | tee -a "$output_file"
+
+    # --------------------------------------------------
+    # TEST DATA SIGNATURES
+    # --------------------------------------------------
+
+    echo "========================================" | tee -a "$output_file"
+    echo "TEST DATA SIGNATURES" | tee -a "$output_file"
+    echo "========================================" | tee -a "$output_file"
+
+    for i in {1..3}; do
+        signature="UNIQUE_SIGNATURE_TEST_${i}"
+
+        count=$(grep -Fc "$signature" "$strings_file")
+
+        echo "${signature}: ${count} occurrence(s)" | tee -a "$output_file"
+    done
+
+    echo "" | tee -a "$output_file"
+
+    # --------------------------------------------------
+    # FILLER DATA CONTROL
+    # --------------------------------------------------
+
+    echo "========================================" | tee -a "$output_file"
+    echo "FILLER DATA SIGNATURES (CONTROL)" | tee -a "$output_file"
+    echo "========================================" | tee -a "$output_file"
+
+    filler_count=$(grep -Fc "FILLER_SIGNATURE" "$strings_file")
+
+    echo "FILLER_SIGNATURE: ${filler_count} occurrence(s)" | tee -a "$output_file"
+
+[7m    echo "" | tee -a "$output_file"[27m
+
+[7m    # --------------------------------------------------[27m
+[7m    # SAMPLE MATCHES[27m
+[7m    # --------------------------------------------------[27m
+
+[7m    echo "========================================" | tee -a "$output_file"[27m
+[7m    echo "SAMPLE UNIQUE SIGNATURES FOUND" | tee -a "$output_file"[27m
+[7m    echo "========================================" | tee -a "$output_file"[27m
+
+[7m    grep "UNIQUE_SIGNATURE" "$strings_file" | head -10 | tee -a "$output_file"[27m
+
+[7m    echo "" | tee -a "$output_file"[27m
+
+[7m    # --------------------------------------------------[27m
+[7m    # SUMMARY[27m
+[7m    # --------------------------------------------------[27m
+
+[7m    echo "========================================" | tee -a "$output_file"[27m
+[7m    echo "SUMMARY" | tee -a "$output_file"[27m
+[7m    echo "========================================" | tee -a "$output_file"[27m
+
+[7m    echo "Time label: ${time_label}" | tee -a "$output_file"[27m
+[7m    echo "Search completed: $(date '+%Y-%m-%d %H:%M:%S %Z')" | tee -a "$output_file"[27m
+[7m    echo "" | tee -a "$output_file"[27m
+
+[7m    for i in {1..3}; do[27m
+[7m        signature="UNIQUE_SIGNATURE_TEST_${i}"[27m
+[7m        count=$(grep -Fc "$signature" "$strings_file")[27m
+
+[7m        if [ "$count" -gt 0 ]; then[27m
+[7m            echo "TEST_DATA_${i}: PRESENT (${count} occurrence(s))" | tee -a "$output_file"[27m
+[7m        else[27m
+[7m            echo "TEST_DATA_${i}: NOT FOUND" | tee -a "$output_file"[27m
+[7m        fi[27m
+[7m    done[27m
+
+[7m    echo "" | tee -a "$output_file"[27m
+
+[7m    if [ "$filler_count" -gt 0 ]; then[27m
+[7m        echo "FILLER_DATA: PRESENT (${filler_count} occurrence(s))" | tee -a "$output_file"[27m
+[7m    else[27m
+[7m        echo "FILLER_DATA: NOT FOUND" | tee -a "$output_file"[27m
+[7m    fi[27m
+
+[7m    echo "" | tee -a "$output_file"[27m
+[7m    echo "Detailed strings file: $strings_file" | tee -a "$output_file"[27m
+[7m    echo "Search results file:   $output_file" | tee -a "$output_file"[27m
+[7m    echo "========================================" | tee -a "$output_file"[27m
+[7m}[27m
+[7m```[27m
+[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A    echo "" | tee -a "$output_file"
+
+    # --------------------------------------------------
+    # SAMPLE MATCHES
+    # --------------------------------------------------
+
+    echo "========================================" | tee -a "$output_file"
+    echo "SAMPLE UNIQUE SIGNATURES FOUND" | tee -a "$output_file"
+    echo "========================================" | tee -a "$output_file"
+
+    grep "UNIQUE_SIGNATURE" "$strings_file" | head -10 | tee -a "$output_file"
+
+    echo "" | tee -a "$output_file"
+
+    # --------------------------------------------------
+    # SUMMARY
+    # --------------------------------------------------
+
+    echo "========================================" | tee -a "$output_file"
+    echo "SUMMARY" | tee -a "$output_file"
+    echo "========================================" | tee -a "$output_file"
+
+    echo "Time label: ${time_label}" | tee -a "$output_file"
+    echo "Search completed: $(date '+%Y-%m-%d %H:%M:%S %Z')" | tee -a "$output_file"
+    echo "" | tee -a "$output_file"
+
+    for i in {1..3}; do
+        signature="UNIQUE_SIGNATURE_TEST_${i}"
+        count=$(grep -Fc "$signature" "$strings_file")
+
+        if [ "$count" -gt 0 ]; then
+            echo "TEST_DATA_${i}: PRESENT (${count} occurrence(s))" | tee -a "$output_file"
+        else
+            echo "TEST_DATA_${i}: NOT FOUND" | tee -a "$output_file"
+        fi
+    done
+
+    echo "" | tee -a "$output_file"
+
+    if [ "$filler_count" -gt 0 ]; then
+        echo "FILLER_DATA: PRESENT (${filler_count} occurrence(s))" | tee -a "$output_file"
+    else
+        echo "FILLER_DATA: NOT FOUND" | tee -a "$output_file"
+    fi
+
+    echo "" | tee -a "$output_file"
+    echo "Detailed strings file: $strings_file" | tee -a "$output_file"
+    echo "Search results file:   $output_file" | tee -a "$output_file"
+    echo "========================================" | tee -a "$output_file"
+}
+```   [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csearch_live_drive "0min"
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K() {     local time_label=$1;     local output_dir="$HOME/search_results/trim_on_25";     local output_file="$output_dir/search_${time_label}.txt";      mkdir -p "$output_dir";      echo "========================================" | tee -a "$output_file";     echo "Search Results - ${time_label}" | tee -a "$output_file";     echo "Time: $(date)" | tee -a "$output_file";     echo "========================================" | tee -a "$output_file";     echo "" | tee -a "$output_file";  
+    echo "=== TEST DATA SIGNATURES ===" | tee -a "$output_file";      for i in {1..3}; do         count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null);         echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a "$output_file";     done;      echo "" | tee -a "$output_file";  
+    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a "$output_file";      filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null);     echo "Total filler signatures: ${filler_count:-0}" | tee -a "$output_file";      echo "" | tee -a "$output_file";  
+    echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a "$output_file";      sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a "$output_file";      echo "" | tee -a "$output_file";     echo "Search complete. Results saved to: $output_file"; }[A[A[A[A[A[A[A[A[A[A[A[A[Acd ~[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csearch_live_drive() {     local time_label=$1;     local output_dir="$HOME/search_results/trim_on_25";     local output_file="$output_dir/search_${time_label}.txt";      mkdir -p "$output_dir";      echo "========================================" | tee -a "$output_file";     echo "Search Results - ${time_label}" | tee -a "$output_file";     echo "Time: $(date)" | tee -a "$output_file";     echo "========================================" | tee -a "$output_file";     echo "" | tee -a "$output_file";  
+    echo "=== TEST DATA SIGNATURES ===" | tee -a "$output_file";      for i in {1..3}; do         count=$(sudo strings /dev/sda | grep -c "UNIQUE_SIGNATURE_TEST_${i}" 2>/dev/null);         echo "TEST_DATA_${i}: ${count:-0} signatures found" | tee -a "$output_file";     done;      echo "" | tee -a "$output_file";  
+    echo "=== FILLER DATA SIGNATURES (Control) ===" | tee -a "$output_file";      filler_count=$(sudo strings /dev/sda | grep -c "FILLER_SIGNATURE" 2>/dev/null);     echo "Total filler signatures: ${filler_count:-0}" | tee -a "$output_file";      echo "" | tee -a "$output_file";  
+    echo "=== SAMPLE SIGNATURES FOUND ===" | tee -a "$output_file";      sudo strings /dev/sda | grep "UNIQUE_SIGNATURE" | head -10 | tee -a "$output_file";      echo "" | tee -a "$output_file";     echo "Search complete. Results saved to: $output_file"; }[A[A[A[A[A[A[A[A[A[A[A[A[Acd ~[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[2Plscd search_results/ls[Kcd search_results/ls[K^C[?2004l[?2004h[?2004l
+]666;vte.shell.postexec=130\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msearch_live_drive() { local time_label="$1" local output_dir="$HOME/search_results/tri[27m[7mm[27m[7m_on_25" local output_file="$output_dir/search_${time_label}.txt" local strings_file="$output_dir/strings_${time_l[27m[7ma[27m[7mbel}.txt" # Create output directory mkdir -p "$output_dir" echo "========================================" | tee [27m[7m"[27m[7m$output_file" echo "SSD RAW DATA SEARCH" | tee -a "$output_file" echo "========================================" [27m[7m|[27m[7m tee -a "$output_file" echo "Time label: ${time_label}" | tee -a "$output_file" echo "Timestamp: $(date '+%Y-%m-%[27m[7md[27m[7m %H:%M:%S %Z')" | tee -a "$output_file" echo "Device: /dev/sda" | tee -a "$output_file" echo "Device model: EDILO[27m[7mC[27m[7mA ES106 128GB" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" ec[27m[7mh[27m[7mo "" | tee -a "$output_file" # -------------------------------------------------- # ONE RAW READ OF THE ENTIRE SS[27m[7mD[27m[7m # -------------------------------------------------- echo "Reading /dev/sda once and extracting printable string[27m[7ms[27m[7m..." | tee -a "$output_file" echo "This may take several minutes." | tee -a "$output_file" echo "" | tee -a "$out[27m[7mp[27m[7mut_file" sudo strings -a /dev/sda > "$strings_file" if [ $? -ne 0 ]; then echo "ERROR: Raw device read failed." |[27m[7m [27m[7mtee -a "$output_file" return 1 fi echo "Raw read completed." | tee -a "$output_file" echo "Strings saved to: $str[27m[7mi[27m[7mngs_file" | tee -a "$output_file" echo "" | tee -a "$output_file" # ---------------------------------------------[27m[7m-[27m[7m---- # TEST DATA SIGNATURES # -------------------------------------------------- echo "==========================[27m[7m=[27m[7m=============" | tee -a "$output_file" echo "TEST DATA SIGNATURES" | tee -a "$output_file" echo "================[27m[7m=[27m[7m=======================" | tee -a "$output_file" for i in {1..3}; do signature="UNIQUE_SIGNATURE_TEST_${i}" count[27m[7m=[27m[7m$(grep -Fc "$signature" "$strings_file") echo "${signature}: ${count} occurrence(s)" | tee -a "$output_file" done[27m[7m [27m[7mecho "" | tee -a "$output_file" # -------------------------------------------------- # FILLER DATA CONTROL # ----[27m[7m-[27m[7m--------------------------------------------- echo "========================================" | tee -a "$output_f[27m[7mi[27m[7mle" echo "FILLER DATA SIGNATURES (CONTROL)" | tee -a "$output_file" echo "=======================================[27m[7m=[27m[7m" | tee -a "$output_file" filler_count=$(grep -Fc "FILLER_SIGNATURE" "$strings_file") echo "FILLER_SIGNATURE: ${f[27m[7mi[27m[7mller_count} occurrence(s)" | tee -a "$output_file" echo "" | tee -a "$output_file" # ----------------------------[27m[7m-[27m[7m--------------------- # SAMPLE MATCHES # -------------------------------------------------- echo "===============[27m[7m=[27m[7m========================" | tee -a "$output_file" echo "SAMPLE UNIQUE SIGNATURES FOUND" | tee -a "$output_file" e[27m[7mc[27m[7mho "========================================" | tee -a "$output_file" grep "UNIQUE_SIGNATURE" "$strings_file" | h[27m[7me[27m[7mad -10 | tee -a "$output_file" echo "" | tee -a "$output_file" # ------------------------------------------------[27m[7m-[27m[7m- # SUMMARY # -------------------------------------------------- echo "========================================" [27m[7m|[27m[7m tee -a "$output_file" echo "SUMMARY" | tee -a "$output_file" echo "========================================" | t[27m[7me[27m[7me -a "$output_file" echo "Time label: ${time_label}" | tee -a "$output_file" echo "Search completed: $(date '+%Y-[27m[7m%[27m[7mm-%d %H:%M:%S %Z')" | tee -a "$output_file" echo "" | tee -a "$output_file" for i in {1..3}; do signature="UNIQUE[27m[7m_[27m[7mSIGNATURE_TEST_${i}" count=$(grep -Fc "$signature" "$strings_file") if [ "$count" -gt 0 ]; then echo "TEST_DATA_$[27m[7m{[27m[7mi}: PRESENT (${count} occurrence(s))" | tee -a "$output_file" else echo "TEST_DATA_${i}: NOT FOUND" | tee -a "$ou[27m[7mt[27m[7mput_file" fi done echo "" | tee -a "$output_file" if [ "$filler_count" -gt 0 ]; then echo "FILLER_DATA: PRESENT ([27m[7m$[27m[7m{filler_count} occurrence(s))" | tee -a "$output_file" else echo "FILLER_DATA: NOT FOUND" | tee -a "$output_file"[27m[7m [27m[7mfi echo "" | tee -a "$output_file" echo "Detailed strings file: $strings_file" | tee -a "$output_file" echo "Sear[27m[7mc[27m[7mh results file: $output_file" | tee -a "$output_file" echo "========================================" | tee -a "$[27m[7mo[27m[7mutput_file"[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ search_live_drive() { local time_label="$1" local output_dir="$HOME/search_results/trim_on_25" local output_file="$output_dir/search_${time_label}.txt" local strings_file="$output_dir/strings_${time_label}.txt" # Create output directory mkdir -p "$output_dir" echo "========================================" | tee "$output_file" echo "SSD RAW DATA SEARCH" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" echo "Time label: ${time_label}" | tee -a "$output_file" echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S %Z')" | tee -a "$output_file" echo "Device: /dev/sda" | tee -a "$output_file" echo "Device model: EDILOCA ES106 128GB" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" echo "" | tee -a "$output_file" # -------------------------------------------------- # ONE RAW READ OF THE ENTIRE SSD # -------------------------------------------------- echo "Reading /dev/sda once and extracting printable strings..." | tee -a "$output_file" echo "This may take several minutes." | tee -a "$output_file" echo "" | tee -a "$output_file" sudo strings -a /dev/sda > "$strings_file" if [ $? -ne 0 ]; then echo "ERROR: Raw device read failed." | tee -a "$output_file" return 1 fi echo "Raw read completed." | tee -a "$output_file" echo "Strings saved to: $strings_file" | tee -a "$output_file" echo "" | tee -a "$output_file" # -------------------------------------------------- # TEST DATA SIGNATURES # -------------------------------------------------- echo "========================================" | tee -a "$output_file" echo "TEST DATA SIGNATURES" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" for i in {1..3}; do signature="UNIQUE_SIGNATURE_TEST_${i}" count=$(grep -Fc "$signature" "$strings_file") echo "${signature}: ${count} occurrence(s)" | tee -a "$output_file" done echo "" | tee -a "$output_file" # -------------------------------------------------- # FILLER DATA CONTROL # -------------------------------------------------- echo "========================================" | tee -a "$output_file" echo "FILLER DATA SIGNATURES (CONTROL)" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" filler_count=$(grep -Fc "FILLER_SIGNATURE" "$strings_file") echo "FILLER_SIGNATURE: ${filler_count} occurrence(s)" | tee -a "$output_file" echo "" | tee -a "$output_file" # -------------------------------------------------- # SAMPLE MATCHES # -------------------------------------------------- echo "========================================" | tee -a "$output_file" echo "SAMPLE UNIQUE SIGNATURES FOUND" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" grep "UNIQUE_SIGNATURE" "$strings_file" | head -10 | tee -a "$output_file" echo "" | tee -a "$output_file" # -------------------------------------------------- # SUMMARY # -------------------------------------------------- echo "========================================" | tee -a "$output_file" echo "SUMMARY" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" echo "Time label: ${time_label}" | tee -a "$output_file" echo "Search completed: $(date '+%Y-%m-%d %H:%M:%S %Z')" | tee -a "$output_file" echo "" | tee -a "$output_file" for i in {1..3}; do signature="UNIQUE_SIGNATURE_TEST_${i}" count=$(grep -Fc "$signature" "$strings_file") if [ "$count" -gt 0 ]; then echo "TEST_DATA_${i}: PRESENT (${count} occurrence(s))" | tee -a "$output_file" else echo "TEST_DATA_${i}: NOT FOUND" | tee -a "$output_file" fi done echo "" | tee -a "$output_file" if [ "$filler_count" -gt 0 ]; then echo "FILLER_DATA: PRESENT (${filler_count} occurrence(s))" | tee -a "$output_file" else echo "FILLER_DATA: NOT FOUND" | tee -a "$output_file" fi echo "" | tee -a "$output_file" echo "Detailed strings file: $strings_file" | tee -a "$output_file" echo "Search results file: $output_file" | tee -a "$output_file" echo "========================================" | tee -a "$output_file"
+[?2004l[?2004h> ^C[?2004l[?2004h[?2004l
+]666;vte.shell.postexec=130\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ [7msearch_live_drive() { local time_label="$1" local output_dir="$HOME/search_results/tri[27m[7mm[27m[7m_on_25" local output_file="$output_dir/search_${time_label}.txt" local strings_file="$output_dir/strings_${time_l[27m[7ma[27m[7mbel}.txt" # Create output directory mkdir -p "$output_dir" echo "========================================" | tee [27m[7m"[27m[7m$output_file" echo "SSD RAW DATA SEARCH" | tee -a "$output_file" echo "========================================" [27m[7m|[27m[7m tee -a "$output_file" echo "Time label: ${time_label}" | tee -a "$output_file" echo "Timestamp: $(date '+%Y-%m-%[27m[7md[27m[7m %H:%M:%S %Z')" | tee -a "$output_file" echo "Device: /dev/sda" | tee -a "$output_file" echo "Device model: EDILO[27m[7mC[27m[7mA ES106 128GB" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" ec[27m[7mh[27m[7mo "" | tee -a "$output_file" # -------------------------------------------------- # ONE RAW READ OF THE ENTIRE SS[27m[7mD[27m[7m # -------------------------------------------------- echo "Reading /dev/sda once and extracting printable string[27m[7ms[27m[7m..." | tee -a "$output_file" echo "This may take several minutes." | tee -a "$output_file" echo "" | tee -a "$out[27m[7mp[27m[7mut_file" sudo strings -a /dev/sda > "$strings_file" if [ $? -ne 0 ]; then echo "ERROR: Raw device read failed." |[27m[7m [27m[7mtee -a "$output_file" return 1 fi echo "Raw read completed." | tee -a "$output_file" echo "Strings saved to: $str[27m[7mi[27m[7mngs_file" | tee -a "$output_file" echo "" | tee -a "$output_file" # ---------------------------------------------[27m[7m-[27m[7m---- # TEST DATA SIGNATURES # -------------------------------------------------- echo "==========================[27m[7m=[27m[7m=============" | tee -a "$output_file" echo "TEST DATA SIGNATURES" | tee -a "$output_file" echo "================[27m[7m=[27m[7m=======================" | tee -a "$output_file" for i in {1..3}; do signature="UNIQUE_SIGNATURE_TEST_${i}" count[27m[7m=[27m[7m$(grep -Fc "$signature" "$strings_file") echo "${signature}: ${count} occurrence(s)" | tee -a "$output_file" done[27m[7m [27m[7mecho "" | tee -a "$output_file" # -------------------------------------------------- # FILLER DATA CONTROL # ----[27m[7m-[27m[7m--------------------------------------------- echo "========================================" | tee -a "$output_f[27m[7mi[27m[7mle" echo "FILLER DATA SIGNATURES (CONTROL)" | tee -a "$output_file" echo "=======================================[27m[7m=[27m[7m" | tee -a "$output_file" filler_count=$(grep -Fc "FILLER_SIGNATURE" "$strings_file") echo "FILLER_SIGNATURE: ${f[27m[7mi[27m[7mller_count} occurrence(s)" | tee -a "$output_file" echo "" | tee -a "$output_file" # ----------------------------[27m[7m-[27m[7m--------------------- # SAMPLE MATCHES # -------------------------------------------------- echo "===============[27m[7m=[27m[7m========================" | tee -a "$output_file" echo "SAMPLE UNIQUE SIGNATURES FOUND" | tee -a "$output_file" e[27m[7mc[27m[7mho "========================================" | tee -a "$output_file" grep "UNIQUE_SIGNATURE" "$strings_file" | h[27m[7me[27m[7mad -10 | tee -a "$output_file" echo "" | tee -a "$output_file" # ------------------------------------------------[27m[7m-[27m[7m- # SUMMARY # -------------------------------------------------- echo "========================================" [27m[7m|[27m[7m tee -a "$output_file" echo "SUMMARY" | tee -a "$output_file" echo "========================================" | t[27m[7me[27m[7me -a "$output_file" echo "Time label: ${time_label}" | tee -a "$output_file" echo "Search completed: $(date '+%Y-[27m[7m%[27m[7mm-%d %H:%M:%S %Z')" | tee -a "$output_file" echo "" | tee -a "$output_file" for i in {1..3}; do signature="UNIQUE[27m[7m_[27m[7mSIGNATURE_TEST_${i}" count=$(grep -Fc "$signature" "$strings_file") if [ "$count" -gt 0 ]; then echo "TEST_DATA_$[27m[7m{[27m[7mi}: PRESENT (${count} occurrence(s))" | tee -a "$output_file" else echo "TEST_DATA_${i}: NOT FOUND" | tee -a "$ou[27m[7mt[27m[7mput_file" fi done echo "" | tee -a "$output_file" if [ "$filler_count" -gt 0 ]; then echo "FILLER_DATA: PRESENT ([27m[7m$[27m[7m{filler_count} occurrence(s))" | tee -a "$output_file" else echo "FILLER_DATA: NOT FOUND" | tee -a "$output_file"[27m[7m [27m[7mfi echo "" | tee -a "$output_file" echo "Detailed strings file: $strings_file" | tee -a "$output_file" echo "Sear[27m[7mc[27m[7mh results file: $output_file" | tee -a "$output_file" echo "========================================" | tee -a "$[27m[7mo[27m[7mutput_file" }[27m[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ search_live_drive() { local time_label="$1" local output_dir="$HOME/search_results/trim_on_25" local output_file="$output_dir/search_${time_label}.txt" local strings_file="$output_dir/strings_${time_label}.txt" # Create output directory mkdir -p "$output_dir" echo "========================================" | tee "$output_file" echo "SSD RAW DATA SEARCH" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" echo "Time label: ${time_label}" | tee -a "$output_file" echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S %Z')" | tee -a "$output_file" echo "Device: /dev/sda" | tee -a "$output_file" echo "Device model: EDILOCA ES106 128GB" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" echo "" | tee -a "$output_file" # -------------------------------------------------- # ONE RAW READ OF THE ENTIRE SSD # -------------------------------------------------- echo "Reading /dev/sda once and extracting printable strings..." | tee -a "$output_file" echo "This may take several minutes." | tee -a "$output_file" echo "" | tee -a "$output_file" sudo strings -a /dev/sda > "$strings_file" if [ $? -ne 0 ]; then echo "ERROR: Raw device read failed." | tee -a "$output_file" return 1 fi echo "Raw read completed." | tee -a "$output_file" echo "Strings saved to: $strings_file" | tee -a "$output_file" echo "" | tee -a "$output_file" # -------------------------------------------------- # TEST DATA SIGNATURES # -------------------------------------------------- echo "========================================" | tee -a "$output_file" echo "TEST DATA SIGNATURES" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" for i in {1..3}; do signature="UNIQUE_SIGNATURE_TEST_${i}" count=$(grep -Fc "$signature" "$strings_file") echo "${signature}: ${count} occurrence(s)" | tee -a "$output_file" done echo "" | tee -a "$output_file" # -------------------------------------------------- # FILLER DATA CONTROL # -------------------------------------------------- echo "========================================" | tee -a "$output_file" echo "FILLER DATA SIGNATURES (CONTROL)" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" filler_count=$(grep -Fc "FILLER_SIGNATURE" "$strings_file") echo "FILLER_SIGNATURE: ${filler_count} occurrence(s)" | tee -a "$output_file" echo "" | tee -a "$output_file" # -------------------------------------------------- # SAMPLE MATCHES # -------------------------------------------------- echo "========================================" | tee -a "$output_file" echo "SAMPLE UNIQUE SIGNATURES FOUND" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" grep "UNIQUE_SIGNATURE" "$strings_file" | head -10 | tee -a "$output_file" echo "" | tee -a "$output_file" # -------------------------------------------------- # SUMMARY # -------------------------------------------------- echo "========================================" | tee -a "$output_file" echo "SUMMARY" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" echo "Time label: ${time_label}" | tee -a "$output_file" echo "Search completed: $(date '+%Y-%m-%d %H:%M:%S %Z')" | tee -a "$output_file" echo "" | tee -a "$output_file" for i in {1..3}; do signature="UNIQUE_SIGNATURE_TEST_${i}" count=$(grep -Fc "$signature" "$strings_file") if [ "$count" -gt 0 ]; then echo "TEST_DATA_${i}: PRESENT (${count} occurrence(s))" | tee -a "$output_file" else echo "TEST_DATA_${i}: NOT FOUND" | tee -a "$output_file" fi done echo "" | tee -a "$output_file" if [ "$filler_count" -gt 0 ]; then echo "FILLER_DATA: PRESENT (${filler_count} occurrence(s))" | tee -a "$output_file" else echo "FILLER_DATA: NOT FOUND" | tee -a "$output_file" fi echo "" | tee -a "$output_file" echo "Detailed strings file: $strings_file" | tee -a "$output_file" echo "Search results file: $output_file" | tee -a "$output_file" echo "========================================" | tee -a "$output_file" }
+[?2004l[?2004h> ^C[?2004l[?2004h[?2004l
+]666;vte.shell.postexec=130\]7;file://anji-Nitro-AN515-58/home/anji\]0;anji@anji-Nitro-AN515-58:~\]666;vte.shell.precmd!\[?2004h]0;anji@anji-Nitro-AN515-58: ~[01;32manji@anji-Nitro-AN515-58[00m:[01;34m~[00m$ exit
+[?2004l]133;C\]666;vte.shell.preexec!\exit
+
+Script done on 2026-08-11 11:37:49+02:00 [COMMAND_EXIT_CODE="130"]

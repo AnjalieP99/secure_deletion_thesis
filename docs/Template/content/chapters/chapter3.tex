@@ -70,11 +70,32 @@ into an experimental evaluation framework?
 
 \subsection*{Host System}
 
+The experiments were conducted using an Acer Nitro AN515-58 laptop operating as the host system. The system ran Ubuntu 26.04 LTS with a Linux 
+7.0.0-28-generic kernel on an x86-64 architecture. The host system firmware version was recorded as V2.21. The use of a consistent host 
+operating system and kernel was intended to reduce variation in file-system behaviour, device-driver operation, command execution, and 
+communication with the storage devices. The host system provided the operating environment through which the deletion commands, device-inspection 
+utilities, system-management commands, and storage-analysis procedures were executed. The experiments were performed using administrative privileges 
+where required because device-level inspection and sanitization commands cannot normally be executed by an unprivileged user.
+
+
 \subsection*{Test Drives}
+
+Two 128 GB solid-state storage devices were used to conduct the experiments. The devices were chosen to represent different storage interfaces and 
+controller communication methods. One device used the NVMe interface, while the second device was a 2.5-inch SATA solid-state drive. The first device 
+was a Phison E4c PCLe NVMe. It used NVMe version 1.4, had a reported capacity of approximately 128 GB, and used a formatted logical block size of 512 bytes. 
+Its recorded firmware version was HPE4BP01. The device reported support for Data Set Management commands and Security Format operations. The second device 
+was identified as an EDILOCA ES106 128GB solid-state drive. It used a Serial ATA interface and was reported as compatible with SATA standards up to SATA 
+Revision 3.0. The device had a capacity of approximately 128 GB, a 2.5-inch form factor, and a firmware revision of HC2705H3. Its recorded capabilities 
+included the ATA SANITIZE feature set, the BLOCK ERASE EXT command, Data Set Management TRIM support, and enhanced security erase support. The two devices 
+were used to examine whether differences in storage interface, device implementation, firmware, and supported sanitization commands affected deletion latency 
+and post-deletion data recoverability. The devices were not treated as interchangeable. Results were recorded separately for each model because storage 
+behaviour varied between controller implementations, firmware versions, capacities, and device interfaces.
+
 
 \subsection*{Tools Used}
 
 \section{Analysis Methodology}
+
 
 \section{Experiments and Results}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.23)  19 AUG 2026 10:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.23)  29 AUG 2026 19:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1375,7 +1375,7 @@ Package translations Info: loading dictionary `translations-basic-dictionary' fo
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<images/logo/polito_logo_2021_blu-2-2.jpg, id=178, 845.3181pt x 326.4195pt>
+<images/logo/polito_logo_2021_blu-2-2.jpg, id=194, 845.3181pt x 326.4195pt>
 File: images/logo/polito_logo_2021_blu-2-2.jpg Graphic file (type jpg)
 <use images/logo/polito_logo_2021_blu-2-2.jpg>
 Package pdftex.def Info: images/logo/polito_logo_2021_blu-2-2.jpg  used on input line 6.
@@ -1802,61 +1802,180 @@ Underfull \vbox (badness 2111) has occurred while \output is active []
 [47]
 
 [48]
+Underfull \vbox (badness 2111) has occurred while \output is active []
+
+
 
 [49]
 
-[50]) (./content/chapters/chapter3.tex
+[50]
 
 [51]
+
+[52]
+
+[53]) (./content/chapters/chapter3.tex
+
+[54]
 Chapter 3.
 
 
-[52
+[55
 
 ]
 
-[53]
+[56]
 
-[54]) (./content/chapters/chapter4.tex
+[57]
+Overfull \hbox (26.33954pt too wide) in paragraph at lines 128--128
+[]\T1/lmtt/m/n/12 sudo openssl rand -out "/mnt/test/test_data/inode_test001.dat" 104857600[] |
+ []
 
-[55]
-Chapter 4.
-) (./content/chapters/chapter5.tex
 
-[56
 
-]
-Chapter 5.
-) (./content/chapters/chapter6.tex
+[58]
+Overfull \hbox (51.04655pt too wide) in paragraph at lines 135--135
+[]\T1/lmtt/m/n/12 sudo find "/mnt/test/test_data" -type f -exec stat -c '%n | Inode: %i' {} \; |
+ []
 
-[57
 
-]
-Chapter 6.
-) (./content/appendix.tex
+Overfull \hbox (32.50053pt too wide) in paragraph at lines 193--193
+[]\T1/lmtt/m/n/12 sudo ext4magic /dev/sda1 -j /dev/sda1 -I 6291458 -B 620 -d /tmp/recovery/ |
+ []
 
-[58
 
-]
-Appendix A.
+
+[59]
+Overfull \hbox (51.03255pt too wide) in paragraph at lines 223--223
+[]\T1/lmtt/m/n/12 sudo dd if=/dev/sda1 bs=4096 skip=33388 count=1 2>/dev/null | xxd | head -20 |
+ []
+
+
+Overfull \hbox (51.02554pt too wide) in paragraph at lines 224--224
+[]\T1/lmtt/m/n/12 sudo dd if=/dev/sda1 bs=4096 skip=33389 count=1 2>/dev/null | xxd | head -20[] |
+ []
+
+
+Overfull \hbox (118.95058pt too wide) in paragraph at lines 231--231
+[]\T1/lmtt/m/n/12 sudo dd if=/dev/sda1 of=~/inode_analysis/journal_tx61.bin bs=4096 skip=15237743 count=1 |
+ []
+
+
+Overfull \hbox (217.74362pt too wide) in paragraph at lines 232--232
+[]\T1/lmtt/m/n/12 sudo dd if=~/inode_analysis/journal_tx61.bin of=~/inode_analysis/inode_tx61.bin bs=1 skip=256 count=256[] |
+ []
+
+
+
+[60]
+
+[61] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+) (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 293.
 
-[59
-
-]
-
-[60
-
-
-]
-
-[61]
 
 [62]
 
 [63]
 
-[64] (./thesis.aux)
+[64]
+
+[65]
+
+[66{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]) (./content/chapters/chapter4.tex
+
+[67]
+Chapter 4.
+
+
+[68
+
+]
+
+[69]
+
+[70]
+Overfull \hbox (51.03255pt too wide) in paragraph at lines 153--153
+[]\T1/lmtt/m/n/12 sudo dd if=/dev/sda1 bs=4096 skip=33388 count=1 2>/dev/null | xxd | head -20 |
+ []
+
+
+
+[71]
+Overfull \hbox (217.74362pt too wide) in paragraph at lines 167--167
+[]\T1/lmtt/m/n/12 sudo dd if=~/inode_analysis/journal_tx61.bin of=~/inode_analysis/inode_tx61.bin bs=1 skip=256 count=256 |
+ []
+
+
+Overfull \hbox (82.58897pt too wide) in paragraph at lines 193--216
+ [][] |
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[72]
+
+[73]
+Overfull \hbox (82.58897pt too wide) in paragraph at lines 239--262
+ [][] |
+ []
+
+
+
+[74]) (./content/chapters/chapter5.tex
+
+[75]
+Chapter 5.
+) (./content/chapters/chapter6.tex
+
+[76
+
+]
+Chapter 6.
+) (./content/appendix.tex
+
+[77
+
+]
+Appendix A.
+)
+
+[78
+
+]
+
+[79
+
+
+]
+
+[80]
+
+[81]
+
+Package biblatex Warning: No driver for 'standard'.
+(biblatex)                Using fallback driver on input line 128.
+
+
+Package biblatex Warning: No driver for 'standard'.
+(biblatex)                Using fallback driver on input line 128.
+
+
+
+[82]
+
+Package biblatex Warning: No driver for 'standard'.
+(biblatex)                Using fallback driver on input line 128.
+
+
+
+[83] (./thesis.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -1866,24 +1985,24 @@ L3 programming layer <2025-09-02>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 448D7362691A8918326ABC3840597945;9269.
+(rerunfilecheck)             Checksum: 3661588ABA19A7394C818F2F4D6F5E43;10569.
 Package logreq Info: Writing requests to 'thesis.run.xml'.
 \openout1 = `thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46617 strings out of 467748
- 936351 string characters out of 5431137
- 2146014 words of memory out of 5000000
- 74102 multiletter control sequences out of 15000+600000
- 768664 words of font info for 288 fonts, out of 8000000 for 9000
+ 47250 strings out of 467748
+ 943451 string characters out of 5431137
+ 2265673 words of memory out of 5000000
+ 74595 multiletter control sequences out of 15000+600000
+ 775838 words of font info for 300 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  138i,11n,135p,2648b,2975s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmro10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on thesis.pdf (73 pages, 2672736 bytes).
+<c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmro10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on thesis.pdf (92 pages, 2761845 bytes).
 PDF statistics:
- 989 PDF objects out of 1000 (max. 8388607)
- 880 compressed objects within 9 object streams
- 187 named destinations out of 1000 (max. 500000)
- 80746 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 1244 PDF objects out of 1440 (max. 8388607)
+ 1108 compressed objects within 12 object streams
+ 299 named destinations out of 1000 (max. 500000)
+ 85386 words of extra memory for PDF output out of 89155 (max. 10000000)
 

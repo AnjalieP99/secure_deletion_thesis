@@ -1,0 +1,60 @@
+[0] Config.pm:328> INFO - This is Biber 2.21
+[1] Config.pm:331> INFO - Logfile is 'thesis.blg'
+[385] biber-MSWIN64:342> INFO - === 
+[508] Biber.pm:421> INFO - Reading 'thesis.bcf'
+[1076] Biber.pm:1002> INFO - Found 40 citekeys in bib section 0
+[1154] Biber.pm:4487> INFO - Processing section 0
+[1194] Biber.pm:4678> INFO - Looking for bibtex file 'bibliography.bib' for section 0
+[1429] bibtex.pm:1713> INFO - LaTeX decoding ...
+[1717] bibtex.pm:1519> INFO - Found BibTeX data source 'bibliography.bib'
+[2953] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2953] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2954] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'it-IT'
+[2954] Biber.pm:4313> INFO - No sort tailoring available for locale 'it-IT'
+[3056] bbl.pm:676> INFO - Writing 'thesis.bbl' with encoding 'UTF-8'
+[3134] bbl.pm:779> INFO - Output to thesis.bbl
+[3135] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 21, warning: 1 characters of junk seen at toplevel
+[3135] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 31, warning: 1 characters of junk seen at toplevel
+[3136] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 40, warning: 1 characters of junk seen at toplevel
+[3136] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 51, warning: 1 characters of junk seen at toplevel
+[3136] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 61, warning: 1 characters of junk seen at toplevel
+[3136] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 71, warning: 1 characters of junk seen at toplevel
+[3136] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 81, warning: 1 characters of junk seen at toplevel
+[3137] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 92, warning: 1 characters of junk seen at toplevel
+[3137] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 106, warning: 1 characters of junk seen at toplevel
+[3137] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 114, warning: 1 characters of junk seen at toplevel
+[3137] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 129, warning: 1 characters of junk seen at toplevel
+[3138] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 141, warning: 1 characters of junk seen at toplevel
+[3138] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 159, warning: 1 characters of junk seen at toplevel
+[3138] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 171, warning: 1 characters of junk seen at toplevel
+[3139] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 184, warning: 1 characters of junk seen at toplevel
+[3139] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 197, warning: 1 characters of junk seen at toplevel
+[3139] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 209, warning: 1 characters of junk seen at toplevel
+[3140] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 218, warning: 1 characters of junk seen at toplevel
+[3140] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 236, warning: 1 characters of junk seen at toplevel
+[3140] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 248, warning: 1 characters of junk seen at toplevel
+[3141] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 260, warning: 1 characters of junk seen at toplevel
+[3141] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 272, warning: 1 characters of junk seen at toplevel
+[3141] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 280, warning: 1 characters of junk seen at toplevel
+[3142] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 292, warning: 1 characters of junk seen at toplevel
+[3142] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 305, warning: 1 characters of junk seen at toplevel
+[3142] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 312, warning: 1 characters of junk seen at toplevel
+[3143] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 323, warning: 1 characters of junk seen at toplevel
+[3143] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 341, warning: 1 characters of junk seen at toplevel
+[3143] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 353, warning: 1 characters of junk seen at toplevel
+[3144] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 368, warning: 1 characters of junk seen at toplevel
+[3144] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 377, warning: 1 characters of junk seen at toplevel
+[3144] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 386, warning: 1 characters of junk seen at toplevel
+[3145] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 395, warning: 1 characters of junk seen at toplevel
+[3145] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 408, warning: 1 characters of junk seen at toplevel
+[3145] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 421, warning: 1 characters of junk seen at toplevel
+[3146] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 434, warning: 1 characters of junk seen at toplevel
+[3146] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 445, warning: 1 characters of junk seen at toplevel
+[3146] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 458, warning: 1 characters of junk seen at toplevel
+[3146] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 471, warning: 1 characters of junk seen at toplevel
+[3146] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 483, warning: 1 characters of junk seen at toplevel
+[3147] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 501, warning: 1 characters of junk seen at toplevel
+[3147] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 513, warning: 1 characters of junk seen at toplevel
+[3147] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 526, warning: 1 characters of junk seen at toplevel
+[3147] Biber.pm:132> WARN - BibTeX subsystem: C:\Users\hp\AppData\Local\Temp\biber_tmp_lu9q\f4d088b3f9f145b5c3058da33afd57d4_29488.utf8, line 538, warning: 1 characters of junk seen at toplevel
+[3148] Biber.pm:134> INFO - WARNINGS: 44

@@ -1,2 +1,271 @@
 \chapter{Experimental Results and Analysis}
 \label{sec:experimental-results}
+
+\section{Results Analysis}
+
+\subsection{Experiment 1: TRIM and Filesystem-Level Data Recoverability}
+
+\subsubsection{Inode State After Deletion and TRIM}
+
+The debugfs stat command returned the following inode information after deletion:
+
+\begin{verbatim}
+Inode: 6291458   Type: regular    Mode:  0644   Flags: 0x80000
+Generation: 2405750640    Version: 0x00000000:0000005c
+User:     0   Group:     0   Project:     0   Size: 0
+File ACL: 0
+Links: 0   Blockcount: 0
+Fragment:  Address: 0    Number: 0    Size: 0
+ ctime: 0x6a86c9f3:ad975988 -- Thu Aug 20 11:33:39 2026
+ atime: 0x6a86c7cc:115e960c -- Thu Aug 20 11:24:28 2026
+ mtime: 0x6a86c9f3:ad975988 -- Thu Aug 20 11:33:39 2026
+ crtime: 0x6a86c7cc:115e960c -- Thu Aug 20 11:24:28 2026
+ dtime: 0x6a86c9f3:(ad975988) -- Thu Aug 20 11:33:39 2026
+Size of extra inode fields: 32
+Inode checksum: 0xbe4252c1
+EXTENTS:
+\end{verbatim}
+
+Several observations from the inode state are significant:
+
+\begin{itemize}
+    \item \textbf{Size and Blockcount:} Both were zero, indicating that the file content had been logically unlinked from the inode. The Size: 0 and Blockcount: 0 
+    fields confirm that the inode no longer references any data blocks.
+
+    \item \textbf{Links:} The Links: 0 value indicates that no directory entries reference this inode, confirming it was unlinked.
+
+    \item \textbf{Deletion Timestamp:} The dtime field was set to the deletion time (Thu Aug 20 11:33:39 2026), confirming that the inode had been deallocated.
+
+    \item \textbf{EXTENTS:} The extent tree was empty, meaning no block pointers were retained in the inode.
+
+    \item \textbf{Inode Type and Flags:} The inode remained marked as type regular with flags 0x80000, but the loss of block pointers made data recovery through 
+    filesystem metadata impossible.
+\end{itemize}
+\subsubsection*{Journal State Comparison}
+
+The journal state before and after deletion showed an important distinction:
+
+Before deletion:
+
+\begin{verbatim}
+Journal sequence: 0x0000003d
+Journal checksum: 0x0cd525e3
+\end{verbatim}
+
+After deletion:
+
+\begin{verbatim}
+Journal sequence: 0x0000003d
+Journal checksum: 0x92f1d2b1
+\end{verbatim}
+
+The journal checksum changed while the sequence number remained the same. This indicates that the journal had been updated with deletion information but had not yet 
+advanced to a new transaction sequence. The checksum change confirms that deletion metadata was written to the journal.
+
+\subsubsection*{ext4magic Recovery Attempt}
+
+The ext4magic recovery produced the following output:
+
+\begin{verbatim}
+Filesystem in use: /dev/sda1
+
+Dump internal Inode 6291458
+Status : Inode is Unallocated
+
+Inode: 6291458   Type: regular    Mode:  0644   Flags: 0x80000
+...
+ext4magic : EXIT_SUCCESS
+\end{verbatim}
+
+The tool reported that the inode was unallocated (Status : Inode is Unallocated) and could not recover the file content. Even when the journal start block was specified, 
+ext4magic was unable to reconstruct the file. The output "Dump Filesystemblock 620 Status : Block is Allocated" indicated that the journal block itself was present but 
+contained no recoverable file data.
+
+\subsubsection*{Pathname Resolution}
+
+The ncheck command returned no pathname for the inode:
+
+\begin{verbatim}
+debugfs: ncheck 6291458
+Inode	Pathname
+debugfs: q
+\end{verbatim}
+
+This confirmed that no directory entry pointed to the inode, consistent with the file having been unlinked.
+
+\subsubsection*{Inode Map Location}
+
+The imap command identified the inode's location in the filesystem:
+
+\begin{verbatim}
+Inode 6291458 is part of block group 768
+    located at block 25165856, offset 0x0100
+\end{verbatim}
+
+This information confirmed that the inode was physically present but its contents had been cleared.
+
+\subsubsection*{Journal Log Analysis}
+
+The journal logdump revealed the transactions that had been written during the deletion process:
+
+\begin{verbatim}
+Journal starts at block 620, transaction 61
+Found expected sequence 61, type 1 (descriptor block) at block 620
+Found expected sequence 61, type 2 (commit block) at block 626
+Found expected sequence 62, type 1 (descriptor block) at block 627
+Found expected sequence 62, type 2 (commit block) at block 633
+Found expected sequence 63, type 1 (descriptor block) at block 634
+Found expected sequence 63, type 2 (commit block) at block 637
+Found expected sequence 64, type 5 (revoke table) at block 638
+Found expected sequence 64, type 1 (descriptor block) at block 639
+Found expected sequence 64, type 2 (commit block) at block 652
+No magic number at block 653: end of journal.
+\end{verbatim}
+
+The journal contained four transactions (61–64) related to the deletion. Notably, transaction 64 included a revoke table (type 5), which is used to indicate that 
+certain blocks should no longer be considered valid in the journal. This revocation mechanism is relevant to filesystem-level recoverability after deletion.
+
+The detailed descriptor block dump showed which filesystem blocks were logged:
+
+\begin{verbatim}
+Dumping descriptor block, sequence 64, at block 639:
+  FS block 25174048 logged at journal block 640 (flags 0x0)
+  FS block 25165856 logged at journal block 641 (flags 0x2)
+  FS block 9504 logged at journal block 642 (flags 0x2)
+  FS block 25165825 logged at journal block 643 (flags 0x2)
+  FS block 13 logged at journal block 644 (flags 0x2)
+  FS block 2097166 logged at journal block 645 (flags 0x2)
+  FS block 2 logged at journal block 646 (flags 0x2)
+  FS block 25165840 logged at journal block 647 (flags 0x2)
+  FS block 26214432 logged at journal block 648 (flags 0x2)
+  FS block 30933001 logged at journal block 649 (flags 0x2)
+  FS block 15 logged at journal block 650 (flags 0x2)
+  FS block 26214416 logged at journal block 651 (flags 0xa)
+\end{verbatim}
+
+The journal blocks included inodes and metadata blocks but did not contain the actual file data blocks, which explains why ext4magic could not recover the file content.
+
+\subsubsection*{Direct Block Inspection}
+
+The direct inspection of previously allocated data blocks showed that they contained zero bytes:
+
+\begin{verbatim}
+sudo dd if=/dev/sda1 bs=4096 skip=33388 count=1 2>/dev/null | xxd | head -20
+00000000: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000010: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+...
+\end{verbatim}
+
+Both previously allocated blocks (33388 and 33389) contained only zeros. This indicates that the data blocks had been sanitized—either through the TRIM operation itself, 
+through subsequent garbage collection, or through the filesystem's block deallocation process that returned them to the free list.
+
+\subsubsection*{Journal Inode Extraction}
+
+The extracted inode portions from the journal blocks confirmed that no recoverable inode data remained:
+
+\begin{verbatim}
+sudo dd if=~/inode_analysis/journal_tx61.bin of=~/inode_analysis/inode_tx61.bin bs=1 skip=256 count=256
+\end{verbatim}
+
+The extracted journal inode showed that the journal recorded the inode in its deallocated state, with zero size and block count, consistent with the debugfs stat output.
+
+The experimental results demonstrate several important characteristics of filesystem-level recoverability after deletion and TRIM. The inode state after deletion shows 
+that ext4 fully deallocates the inode when a file is removed. The inode's block pointers are cleared (Blockcount: 0, empty EXTENTS), the size is set to zero (Size: 0), 
+and the link count is set to zero (Links: 0). The dtime field records the deletion time, which is a forensic indicator but does not assist in data recovery. This 
+deallocation pattern is consistent with the standard ext4 deletion behavior described in the filesystem documentation: when a file is unlinked, the inode is marked as 
+free and its block pointers are cleared to prevent the filesystem from treating stale block references as valid. The journal analysis reveals that the deletion was 
+recorded in the journal, but the journal contained only metadata updates, not the actual file data. This is expected behavior for the ext4 filesystem in its default 
+data-ordered mode: metadata is journaled before it is written to the filesystem, but data blocks are not necessarily journaled. Consequently, while the journal can be 
+used to recover filesystem metadata after a crash, it does not provide a reliable mechanism for recovering deleted file data. The revoke table in transaction 64 is 
+particularly significant: it indicates that the journal explicitly invalidated certain blocks, further reducing the likelihood of recovery through journal replay. The 
+direct block inspection showed that the previously allocated data blocks contained zero bytes. This is consistent with the TRIM operation having informed the SSD that 
+the logical blocks were no longer in use, allowing the controller to discard the physical data. The zeros observed in the block inspection could reflect either physical 
+erasure of the NAND cells or the controller returning zeroed data at the logical block level. Either interpretation is consistent with the conclusion that the data was 
+not recoverable through host-side block access. 
+
+\subsection{Experiment 2: Data Recovery After TRIM}
+\subsection*{NVMe SSD Results}
+\begin{table}[H]
+    \centering
+    \caption{Data Recovery Results After TRIM on NVMe SSD}
+    \label{tab:nvme-recovery-results}
+
+    \begin{tabular}{c c c c c}
+        \toprule
+        \textbf{Dataset} & \textbf{TRIM} & \textbf{Status} &
+        \textbf{Signatures Recovered} & \textbf{Recovery Rate} \\
+        \midrule
+        DS1  & ON  & KEPT        & 5,052 & 100\% \\
+        DS2  & ON  & DELETED & 0 & 0\% \\
+        DS3  & ON  & KEPT        & 5,052 & 100\% \\
+        DS4  & ON  & DELETED & 0 & 0\% \\
+        DS5  & ON  & KEPT        & 5,052 & 100\% \\
+        DS6  & ON  & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS7  & ON  & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS8  & ON  & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS9  & OFF & KEPT        & 5,052 & 100\% \\
+        DS10 & OFF & DELETED & 5,052 & 100\% \\
+        DS11 & OFF & KEPT        & 5,052 & 100\% \\
+        DS12 & OFF & DELETED & 5,052 & 100\% \\
+        DS13 & OFF & KEPT        & 5,052 & 100\% \\
+        DS14 & OFF & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS15 & OFF & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS16 & OFF & POST-DELETION WRITE & 5,052 & 100\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The results indicate a binary outcome based on the TRIM command's state which shows a clear difference in observed recovery between the TRIM-enabled and TRIM-disabled 
+conditions on the tested NVMe SSD. When TRIM was enabled, no signatures from the deleted datasets (DS2 and DS4) were recovered, corresponding to a recovery rate of 0\%. 
+In contrast, when TRIM was disabled, all signatures from the deleted datasets (DS10 and DS12) were recovered, corresponding to a recovery rate of 100\%. The 
+positive-control datasets were fully recovered in both conditions, indicating that the recovery procedure was capable of detecting the experimental signatures. These 
+results therefore indicate that, under the conditions of this experiment, TRIM was associated with a substantial reduction in host-side recoverability on the tested NVMe 
+SSD. However, the absence of recovered signatures does not by itself establish that the corresponding NAND cells were physically erased, since the physical state of the 
+flash memory cannot be directly observed through the host-side recovery procedure.
+
+Furthermore, the results showed that the datasets 6-8 (TRIM ON, post-deletion write) and 14-16 (TRIM OFF, post-deletion write) were all fully recoverable. This 
+indicates that file overwriting alone is insufficient for secure deletion. Even after new data was written, the original signatures remained recoverable. The results also 
+showed that the datasets created after deletion (DS6–DS8 under TRIM-enabled conditions and DS14–DS16 under TRIM-disabled conditions) remained fully recoverable. This 
+indicates that the additional write workload performed after deletion did not eliminate the signatures belonging to the previously deleted datasets under the conditions 
+tested. Because the experiment did not directly overwrite the same physical NAND locations, these results should not be interpreted as a direct evaluation of physical 
+block overwriting.
+
+\subsection*{SATA SSD Results}
+\begin{table}[H]
+    \centering
+    \caption{Data Recovery Results After TRIM on SATA SSD}
+    \label{tab:sata-recovery-results}
+
+    \begin{tabular}{c c c r c}
+        \toprule
+        \textbf{Dataset} & \textbf{TRIM} & \textbf{Status} &
+        \textbf{Signatures Recovered} & \textbf{Recovery Rate} \\
+        \midrule
+        DS1  & ON  & KEPT        & 5,052 & 100\% \\
+        DS2  & ON  & DELETED & 56 & 1.11\% \\
+        DS3  & ON  & KEPT        & 5,052 & 100\% \\
+        DS4  & ON  & DELETED & 47 & 0.93\% \\
+        DS5  & ON  & KEPT        & 5,052 & 100\% \\
+        DS6  & ON  & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS7  & ON  & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS8  & ON  & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS9  & OFF & KEPT        & 5,052 & 100\% \\
+        DS10 & OFF & DELETED & 56 & 1.11\% \\
+        DS11 & OFF & KEPT        & 5,052 & 100\% \\
+        DS12 & OFF & DELETED & 72 & 1.42\% \\
+        DS13 & OFF & KEPT        & 5,052 & 100\% \\
+        DS14 & OFF & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS15 & OFF & POST-DELETION WRITE & 5,052 & 100\% \\
+        DS16 & OFF & POST-DELETION WRITE & 5,052 & 100\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Recovery from the deleted datasets on the SATA SSD was low across both TRIM conditions, ranging from 0.93\% to 1.42\% of the expected signatures.Under the TRIM-enabled 
+condition, DS2 and DS4 yielded 56 and 47 recovered signatures, corresponding to recovery rates of 1.11\% and 0.93\%, respectively. Under the TRIM-disabled condition, DS10 
+and DS12 yielded 56 and 72 recovered signatures, corresponding to recovery rates of 1.11\% and 1.42\%, respectively. The observed recovery rates were therefore broadly 
+similar between the TRIM-enabled and TRIM-disabled conditions. Within this experiment, no substantial difference in host-side recoverability was observed on the tested 
+SATA SSD based on the TRIM configuration. 
+
+The recovery results consisted primarily of fragments rather than complete recovered files. This observation is consistent with controller-level processing such as 
+garbage collection or wear levelling.

@@ -83,22 +83,437 @@ where required because device-level inspection and sanitization commands cannot 
 Two 128 GB solid-state storage devices were used to conduct the experiments. The devices were chosen to represent different storage interfaces and 
 controller communication methods. One device used the NVMe interface, while the second device was a 2.5-inch SATA solid-state drive. The first device 
 was a Phison E4c PCLe NVMe. It used NVMe version 1.4, had a reported capacity of approximately 128 GB, and used a formatted logical block size of 512 bytes. 
-Its recorded firmware version was HPE4BP01. The device reported support for Data Set Management commands and Security Format operations. The second device 
-was identified as an EDILOCA ES106 128GB solid-state drive. It used a Serial ATA interface and was reported as compatible with SATA standards up to SATA 
+Its recorded firmware version was HPE4BP01. The device reported support for Data Set Management commands and Security Format operations. This device will be 
+referred to as the \textbf{NVMe SSD} in the remainder of this thesis. The NVMe SSD was connected to the host system using a JMicron JMS583 USB 3.0 enclosure.
+
+The second device was identified as an EDILOCA ES106 128GB solid-state drive. It used a Serial ATA interface and was reported as compatible with SATA standards up to SATA 
 Revision 3.0. The device had a capacity of approximately 128 GB, a 2.5-inch form factor, and a firmware revision of HC2705H3. Its recorded capabilities 
 included the ATA SANITIZE feature set, the BLOCK ERASE EXT command, Data Set Management TRIM support, and enhanced security erase support. The two devices 
 were used to examine whether differences in storage interface, device implementation, firmware, and supported sanitization commands affected deletion latency 
 and post-deletion data recoverability. The devices were not treated as interchangeable. Results were recorded separately for each model because storage 
-behaviour varied between controller implementations, firmware versions, capacities, and device interfaces.
+behaviour varied between controller implementations, firmware versions, capacities, and device interfaces. This device will be referred to as the \textbf{SATA SSD} in the remainder 
+of this thesis and it was connected to the host system using a USB 3.0 to SATA adapter.
 
 
-\subsection*{Tools Used}
+\section{Experiments Conducted}
 
-\section{Analysis Methodology}
+\subsection{Experiment 1: TRIM and Filesystem-Level Data Recoverability}
+
+This experiment was conducted to investigate the effect of the TRIM operation on the recoverability of deleted data at the filesystem level. The objective was to 
+determine whether information associated with a deleted file remained accessible through filesystem metadata, inode structures, the ext4 journal, or the previously 
+allocated data blocks after TRIM. The experiment was performed on an SSD formatted with the ext4 filesystem using a block size of 4096 bytes. A test file was created and 
+its filesystem metadata and block allocation information were recorded before deletion. The relevant inode and journal structures were subsequently examined to establish 
+the state of the filesystem before and after deletion and TRIM.
+
+The experiment was performed on an SSD formatted with the ext4 filesystem using a block size of 4096 bytes. The test device was \texttt{/dev/sda1}, mounted at \texttt{/mnt/test}. The following 
+tools were used for analysis:
+
+\begin{itemize}
+    \item {ext4magic}: A recovery tool capable of extracting deleted files from ext3/ext4 filesystems using journal data
+
+    \item {debugfs}: A filesystem debugger for examining ext4 internal structures
+
+    \item {dumpe2fs}: A tool for displaying filesystem superblock and group descriptor information
+
+    \item {dd with xxd}: For direct block-level inspection of allocated data blocks
+\end{itemize}
+
+The experimental procedure consisted of the following steps:
+
+A 100 MB test file was created using \texttt{openssl rand} to ensure random, non-compressible content:
+
+\begin{verbatim}
+
+sudo mkdir -p /mnt/test/test_data
+sudo openssl rand -out "/mnt/test/test_data/inode_test001.dat" 104857600
+
+\end{verbatim}
+
+The file's inode number was recorded using the \texttt{stat} command:
+
+\begin{verbatim}
+sudo find "/mnt/test/test_data" -type f -exec stat -c '%n | Inode: %i' {} \;
+/mnt/test/test_data/inode_test001.dat | Inode: 6291458
+\end{verbatim}
 
 
-\section{Experiments and Results}
+The filesystem journal state and superblock information were recorded as a baseline. This provided a reference point showing the journal sequence number, checksum, and inode count before deletion.
 
-\section{Evaluation Metrics}
 
-\section{Statistical Analysis Methods}
+\begin{verbatim}
+sudo dumpe2fs -h /dev/sda1 | grep -E "Journal|Inode"
+\end{verbatim}
+
+
+The test file was deleted using the rm command:
+
+\begin{verbatim}
+sudo rm -rf "/mnt/test/test_data"/*
+\end{verbatim}
+
+
+After deletion but before issuing TRIM, the inode state was examined using debugfs:
+
+\begin{verbatim}
+sudo debugfs -R "stat <6291458>" /dev/sda1
+\end{verbatim}
+The inode status was checked to determine whether the inode had been marked as unallocated and whether its block pointers had been cleared.
+
+The journal state was again examined to capture the deletion transaction:
+
+\begin{verbatim}
+sudo dumpe2fs -h /dev/sda1 | grep -E "Journal|Inode"
+\end{verbatim}
+
+
+The TRIM command was issued to inform the SSD controller that the logical blocks previously occupied by the deleted file were no longer in use:
+
+\begin{verbatim}
+sudo fstrim -v "/mnt/test"
+\end{verbatim}
+
+The fstrim command reported the amount of space trimmed: /mnt/test: 105.1 GiB (112828841984 bytes) trimmed.
+
+
+The filesystem journal and superblock state were again examined to determine whether TRIM had affected any filesystem-level metadata structures:
+
+\begin{verbatim}
+sudo dumpe2fs -h /dev/sda1 | grep -E "Journal|Inode"
+\end{verbatim}
+
+
+Recovery was attempted using ext4magic, which leverages the ext4 journal to reconstruct deleted files:
+
+\begin{verbatim}
+sudo ext4magic /dev/sda1 -j /dev/sda1 -I 6291458 -d /tmp/recovery/
+\end{verbatim}
+The -I 6291458 flag instructed ext4magic to attempt recovery of the specific inode. Because ext4magic relies on journal data, a secondary attempt was made specifying the journal start block:
+
+\begin{verbatim}
+sudo ext4magic /dev/sda1 -j /dev/sda1 -I 6291458 -B 620 -d /tmp/recovery/
+\end{verbatim}
+The -B 620 flag specified the journal start block identified from the dumpe2fs output.
+
+Debugfs was used to check whether the inode could be resolved to a pathname:
+
+\begin{verbatim}
+sudo debugfs /dev/sda1
+debugfs: ncheck 6291458
+\end{verbatim}
+
+The inode's location in the filesystem was also examined:
+
+\begin{verbatim}
+sudo debugfs -R "imap <6291458>" /dev/sda1
+\end{verbatim}
+
+The journal was examined to identify which filesystem blocks had been logged during the deletion operation:
+
+\begin{verbatim}
+sudo debugfs -R "logdump" /dev/sda1
+sudo debugfs -R "logdump -a" /dev/sda1
+\end{verbatim}
+
+This identified the specific journal transactions and the filesystem blocks they contained, revealing which blocks had been modified during deletion.
+
+
+The data blocks previously allocated to the file were directly inspected to determine whether the file content remained recoverable at the block level. The extent information from the inode was used to identify the block numbers, and dd was used to read these blocks directly:
+
+\begin{verbatim}
+sudo dd if=/dev/sda1 bs=4096 skip=33388 count=1 2>/dev/null | xxd | head -20
+sudo dd if=/dev/sda1 bs=4096 skip=33389 count=1 2>/dev/null | xxd | head -20
+\end{verbatim}
+
+
+Individual journal blocks were extracted for detailed analysis of the inode state as recorded in the journal:
+
+\begin{verbatim}
+sudo dd if=/dev/sda1 of=~/inode_analysis/journal_tx61.bin bs=4096 skip=15237743 count=1
+sudo dd if=~/inode_analysis/journal_tx61.bin of=~/inode_analysis/inode_tx61.bin bs=1 skip=256 count=256
+\end{verbatim}
+The extraction of specific journal blocks and their inode portions allowed verification of what information the journal had recorded about the deletion operation.
+
+
+
+\subsection{Experiment 2: Data Recovery After TRIM}
+This experiment investigated the effect of TRIM configuration on the host-side recoverability of deleted data from the tested NVMe and SATA SSDs. The experiment compared 
+the number of dataset-specific signatures recovered under TRIM-enabled and TRIM-disabled conditions using a forensic recovery procedure. The experiment was conducted on 
+the Ubuntu host machine using and tests were performed on the NVMe and SATA SSDs. Before each experimental run, the beginning of the storage device was overwritten with 
+zeros to remove existing partition and filesystem structures. A new GPT partition table and ext4 filesystem were then created.
+
+For each experimental run, the following preparation steps were performed:
+
+\begin{verbatim}
+ # 1. Unmount if mounted
+sudo umount /dev/sda1 2>/dev/null
+
+# 2. Wipe the drive (quick wipe)
+sudo dd if=/dev/zero of=/dev/sda bs=1M count=100 status=progress
+
+# 3. Create GPT partition table
+sudo parted /dev/sda mklabel gpt
+
+# 4. Create single ext4 partition
+sudo parted /dev/sda mkpart primary ext4 0% 100%
+
+# 5. Reload partition table
+sudo partprobe /dev/sda
+sleep 2
+
+# 6. Format as ext4
+sudo mkfs.ext4 -F /dev/sda1
+
+# 7. Create mount point
+sudo mkdir -p /mnt/{MountPoint}
+
+\end{verbatim}
+
+Discard behaviour was controlled using the filesystem mount options \texttt{discard} and \texttt{nodiscard}. The TRIM-enabled condition used the discard mount option, 
+while the TRIM-disabled condition used nodiscard. In the TRIM-enabled condition, an explicit fstrim operation was also performed after deletion.
+
+\begin{verbatim}
+
+# TRIM ON
+sudo mount -o discard /dev/sda1 /mnt/{MountPoint}
+
+# TRIM OFF
+sudo mount -o nodiscard /dev/sda1 /mnt/{MountPoint}
+
+\end{verbatim}
+
+\subsection*{Dataset Generation}
+
+To enable precise measurement of data recovery, a custom data generation script was developed. The script created unique, searchable signatures within each dataset, allowing 
+recovery success to be quantified by counting the number of signatures found after deletion. Each dataset used a dataset-specific signature identifier, allowing recovered 
+content to be attributed to its original dataset and enabling recovery to be quantified consistently across experimental conditions.Each dataset contained repeated-signature 
+text files, multiple small text files, binary files containing embedded signatures, and checksum information. The mixture was intended to test recovery of both text-based evidence and binary content. 
+
+The following script was used to create each dataset:
+
+\begin{lstlisting}[language=bash, caption={Data Generation Script}]
+
+#!/bin/bash
+# Data generation script
+
+MOUNT_POINT=$1
+DATASET_NUM=$2
+UNIQUE_ID=$(openssl rand -hex 8)
+
+FOLDER_NAME="TEST_DATA_${DATASET_NUM}_${UNIQUE_ID}"
+mkdir -p "${MOUNT_POINT}/${FOLDER_NAME}"
+
+# File 1: Small text file (51 signatures)
+cat > "${MOUNT_POINT}/${FOLDER_NAME}/small.txt" << ENDTEXT
+UNIQUE_SIGNATURE_DS${DATASET_NUM}_SMALL
+$(for i in {1..50}; do echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_SMALL"; done)
+ENDTEXT
+
+# File 2: Medium text file (5,001 signatures)
+cat > "${MOUNT_POINT}/${FOLDER_NAME}/medium.txt" << ENDTEXT
+UNIQUE_SIGNATURE_DS${DATASET_NUM}_MEDIUM
+$(for i in {1..5000}; do echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_MEDIUM"; done)
+ENDTEXT
+
+# File 3: Large binary file (10MB + 1 signature)
+dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/large.bin" bs=1M count=10 status=none
+echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_LARGE" >> "${MOUNT_POINT}/${FOLDER_NAME}/large.bin"
+
+# File 4: 500 small text files (500 signatures)
+for i in {1..500}; do
+    echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_SMALL_${i}" > "${MOUNT_POINT}/${FOLDER_NAME}/tiny_${i}.txt"
+done
+
+# File 5: Binary image file (no signatures)
+dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/image.jpg" bs=1K count=50 status=none
+
+# File 6: Binary PDF file (no signatures)
+dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/document.pdf" bs=1K count=30 status=none
+
+# Create checksum file for verification
+md5sum "${MOUNT_POINT}/${FOLDER_NAME}"/* > "${MOUNT_POINT}/${FOLDER_NAME}/checksums_${DATASET_NUM}.md5"
+
+echo "Created dataset $DATASET_NUM in ${MOUNT_POINT}/${FOLDER_NAME}"
+
+\end{lstlisting}
+
+
+\subsubsection*{Phase A: TRIM ON Procedure}
+
+\begin{enumerate}
+    
+\item{Mount with TRIM enabled:}
+
+\begin{verbatim}
+sudo mount -o discard /dev/sda1 /mnt/ssd_test
+\end{verbatim}
+
+\item{Create Datasets 1-5 with unique signatures:}
+
+\begin{verbatim}
+for i in {1..5}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Delete Datasets 2 and 4:}
+
+\begin{verbatim}
+sudo rm -rf /mnt/ssd_test/TEST_DATA_2_*
+sudo rm -rf /mnt/ssd_test/TEST_DATA_4_*
+\end{verbatim}
+
+\item{Force TRIM:}
+
+\begin{verbatim}
+sudo fstrim -v /mnt/ssd_test
+\end{verbatim}
+
+\item{Create Overwrite Datasets 6-8:}
+
+\begin{verbatim}
+for i in {6..8}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Unmount the drive:}
+
+\begin{verbatim}
+sudo umount /mnt/ssd_test
+\end{verbatim}
+
+\end{enumerate}
+
+\subsubsection*{Phase B: TRIM OFF Procedure}
+\begin{enumerate}
+
+\item{Mount without TRIM:}
+
+\begin{verbatim}
+sudo mount -o nodiscard /dev/sda1 /mnt/ssd_test
+\end{verbatim}
+
+\item{Create Datasets 9-13:}
+
+\begin{verbatim}
+for i in {9..13}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Delete Datasets 10 and 12:}
+
+\begin{verbatim}
+sudo rm -rf /mnt/ssd_test/TEST_DATA_10_*
+sudo rm -rf /mnt/ssd_test/TEST_DATA_12_*
+\end{verbatim}
+
+\item{NO TRIM - deliberately skipped}
+
+\item{Create Overwrite Datasets 14-16:}
+
+\begin{verbatim}
+for i in {14..16}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Unmount the drive:}
+
+\begin{verbatim}
+sudo umount /mnt/ssd_test
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection*{Dataset Allocation}
+
+\begin{table}[H]
+    \centering
+    \caption{Dataset Allocation for the TRIM Recovery Experiment}
+    \label{tab:dataset-trim}
+    \begin{tabular}{c c c l}
+        \toprule
+        \textbf{Dataset} & \textbf{TRIM} & \textbf{Status} & \textbf{Purpose} \\
+        \midrule
+        DS1      & ON  & Kept        & Positive control \\
+        DS2      & ON  & Deleted     & Test group \\
+        DS3      & ON  & Kept        & Positive control \\
+        DS4      & ON  & Deleted     & Test group \\
+        DS5      & ON  & Kept        & Positive control \\
+        DS6--8   & ON  & Post Deletion Write & After TRIM \\
+        DS9      & OFF & Kept        & Positive control \\
+        DS10     & OFF & Deleted     & Test group \\
+        DS11     & OFF & Kept        & Positive control \\
+        DS12     & OFF & Deleted     & Test group \\
+        DS13     & OFF & Kept        & Positive control \\
+        DS14--16 & OFF & Post Deletion Write & After deletion \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+This design ensured that for each SSD type and TRIM status, there were 3 kept datasets (positive controls) to confirm recovery tools worked, 2 deleted datasets (test 
+groups) to measure recovery after deletion and 3 post-deletion write datasets to test whether new data destroyed old data
+
+\subsection*{Recovery Procedure}
+
+PhotoRec was used to attempt recovery of deleted datasets. PhotoRec is a widely used open-source data recovery tool that can recover lost files from various storage devices. The recovery process involved scanning the entire SSD for recoverable files and searching for the unique signatures embedded in the datasets. 
+PhotoRec performes full file carving based on file headers and footers and is able to recover complete files regardless of the filesystem. It is interactive and requires user input to specify the source device, file types to recover, and destination for recovered files. After PhotoRec completed the recovery process, 
+the recovered files were analyzed to determine the presence of the unique signatures from the deleted datasets. The number of successfully recovered signatures was recorded for each dataset, allowing for a quantitative assessment of data recoverability under different TRIM conditions.
+
+Recovery was quantified using the number of dataset-specific signature occurrences identified in the recovered output. For each dataset, the recovery rate was calculated as:
+
+\[
+\text{Recovery Rate (\%)} =
+\frac{\text{Recovered Signatures}}{\text{Expected Signatures}}
+\times 100
+\]
+
+A recovery rate of 100\% indicates that all expected signature occurrences were identified in the recovery output, whereas a recovery rate of 0\% indicates that no 
+matching signatures were identified. The metric represents host-side recovery by the specified forensic procedure and should not be interpreted as a direct measurement 
+of the physical state of NAND flash.
+
+\begin{verbatim}
+for i in {1..16}; do
+count=$(grep -r "UNIQUE_SIGNATURE_DS${i}_". 2>/dev/null | wc -l)
+echo "Dataset $i: $count files found"
+done
+\end{verbatim}
+
+\subsection*{Repeatability}
+
+The same experimental procedure, dataset-generation script, TRIM configuration, deletion procedure, and recovery procedure were applied to both storage devices. Results were recorded separately for each device to account for differences in device implementation and controller behaviour.
+
+\subsection*{Limitations and Workarounds}
+
+\textbf{TRIM was not Recognized on USB Enclosure}: \\
+Initially, Ubuntu did not recognize TRIM support on the USB NVMe enclosure. This was because USB enclosure was unable to automatically pass the TRIM command to the NVMe SSD. The Kernel had to be explicitly configured to enable the \texttt{unmap} feature, which is the SCSI equivalent of TRIM. The following steps were taken to 
+enable TRIM support on the USB enclosure:
+\begin{enumerate}
+    \item Identify the USB enclosure's chip and obtain its vendor and product ID using the command:
+        \begin{verbatim}
+        lsusb
+        \end{verbatim}
+
+    \item Created udev rule to enable unmap
+        \begin{verbatim}
+        sudo nano /etc/udev/rules.d/90-usb-discard.rules
+        echo 'ACTION=="add|change", ATTRS{idVendor}=="152d", 
+        ATTRS{idProduct}=="a583", SUBSYSTEM=="scsi_disk", 
+        ATTR{provisioning_mode}="unmap"' | sudo tee 
+        /etc/udev/rules.d/90-usb-discard.rules
+        \end{verbatim}
+
+    \item Reloaded udev rules and replugged the device
+        \begin{verbatim}
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger
+        \end{verbatim}
+
+    \item Verified TRIM was recognized. \texttt{DISC-GRAN and DISC-MAX} values should be non-zero. 
+        \begin{verbatim}
+        lsblk --discard
+        # DISC-GRAN=4K, DISC-MAX=4G (TRIM recognized)
+        \end{verbatim}
+
+\end{enumerate}

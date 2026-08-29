@@ -10,7 +10,10 @@
 \contentsline {table}{\numberline {2.2}{\ignorespaces Secure Deletion Approaches by System Layer}}{26}{table.2.2}%
 \contentsline {table}{\numberline {2.3}{\ignorespaces Comprehensive Comparison of Secure Deletion Approaches for Flash Storage}}{31}{table.2.3}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Dataset Allocation for the TRIM Recovery Experiment}}{65}{table.caption.30}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Data Recovery Results After TRIM on NVMe SSD}}{73}{table.caption.43}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Data Recovery Results After TRIM on SATA SSD}}{74}{table.caption.45}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

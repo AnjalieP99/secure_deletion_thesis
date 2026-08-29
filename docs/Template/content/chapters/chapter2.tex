@@ -649,9 +649,33 @@ for measuring deletion effectiveness, performance impact, or verifiability.
 \section{Legal and Ethical Dimensions}
 
 \subsection{GDPR and the Right to Erasure}
-The General Data Protection Regulation (GDPR), effective May 2018, introduces the right to 
+The General Data Protection Regulation (GDPR), introduces the right to 
 erasure (Article 17) as a foundational data protection obligation that directly intersects with 
-secure deletion. Politou et al. (2018) provide a comprehensive analysis of these provisions, 
+secure deletion. Article 17(1) requires the controller to erase personal data without undue delay 
+where, among other grounds, the data are no longer necessary for the purposes for which they were 
+collected, consent has been withdrawn and no other legal ground applies, the data have been 
+unlawfully processed, or erasure is required by Union or Member State law. The right is not absolute 
+and the Article 17(3) provides exceptions where continued processing is necessary for freedom of expression 
+and information, compliance with a legal obligation, the performance of a task in the public interest, 
+public-health reasons, archiving or research purposes, or the establishment, exercise, or defence of legal 
+claims. Recital 65 explains that the right to erasure is particularly relevant where continued retention 
+infringes the GDPR or other applicable law. It also confirms that further retention may remain lawful 
+where it is necessary to protect competing interests, including freedom of expression and information, 
+legal obligations, public-interest tasks, research, archiving, or legal claims. Recital 66 extends 
+the right to the online environment. Where a controller has made personal data public and is obliged to 
+erase them, it must take reasonable steps, including technical measures and measures directed towards 
+other controllers, to inform them of the request to erase links, copies, or replications of those data. 
+Article 5(2) is the point at which the legal framework becomes directly relevant to secure deletion. It 
+requires the controller to be responsible for, and able to demonstrate compliance with, the GDPR principles. 
+This accountability obligation must be read together with the storage-limitation principle in Article 5(1)(e) 
+and the requirement in Article 32 to implement technical and organisational measures appropriate to the risks 
+of processing \cite{gdpr2016}. The GDPR therefore establishes an obligation to erase personal data when the legal 
+conditions are satisfied, but it does not define a single technical meaning of “erasure.” It does not require every 
+controller to use overwriting, cryptographic erasure, block erasure, or physical destruction in every case. The 
+appropriate technique depends on the storage medium, the sensitivity of the data, the possibility of replication, 
+the intended reuse or disposal of the equipment, and the risks associated with recovery.
+
+Politou et al. (2018) provide a comprehensive analysis of these provisions, 
 noting that the right encompasses both the erasure of personal data and the broader right to be 
 forgotten, requiring deletion from all possible sources in which the data resides, including 
 third-party controllers to whom the data has been disseminated \cite{Politou2018}. The GDPR 
@@ -660,7 +684,6 @@ data protection frameworks, and obligates controllers to take reasonable steps, 
 measures, to inform other controllers processing the data of the erasure request. Politou et al. 
 argue that enforcement is feasible provided that implementation guidelines and low-level business 
 specifications are put in place in a clear, cross-platform manner \cite{Politou2018}.
-
 Shastri et al. (2019) identify six GDPR anti-patterns arising from the design and operation of 
 modern cloud-scale systems: storing data without a clear timeline for deletion, reusing data 
 indiscriminately, creating walled gardens and black markets, risk-agnostic data processing, hiding 
@@ -678,6 +701,64 @@ creating an obligation without specifying the means by which compliance is to be
 analysis of the landmark Google Spain case further illustrates the territorial and procedural 
 complexity of deletion obligations, where search engine operators were held responsible as data 
 controllers for processing personal data linked through search results \cite{AlgorithmicDestruction}.
+
+\subsection{Disposal and reuse of storage media}
+The lifecycle of storage equipment creates a separate and concrete deletion risk. A device may no longer be used by the original 
+controller while still containing recoverable personal data in user-accessible space, remapped blocks, reserved areas, temporary 
+files, or other parts of the storage architecture. Disposal and reuse must therefore be treated as data-protection operations 
+rather than as ordinary asset-management activities. The Italian Garante addressed this issue in its provision of 13 October 
+2008 concerning electrical and electronic waste and the security of personal data. The Garante required organisations that dispose 
+of, reuse, or recycle equipment containing personal data to adopt suitable measures to prevent unauthorised access. For reuse or 
+recycling, the equipment must contain no personal data that remain present or intelligible. The measures may include secure erasure, 
+making the data unintelligible, or physical destruction of the relevant media, taking account of the state of the art and the 
+sensitivity of the information \cite{garante2008_electronic_waste}. The Garante’s accompanying practical guidance also emphasises 
+that ordinary operating-system deletion is not sufficient for secure disposal. It describes secure erasure, overwriting, degaussing
+ where appropriate, and physical destruction as possible measures, depending on the type of medium and the required level of 
+ protection \cite{garante2008_secure_deletion}. ISO/IEC 27040:2024 provides a more current technical framework for storage 
+ security. It covers the protection of storage devices and media, related management activities, applications and services, and the 
+ period during which equipment remains in use and after its end of use or end of life \cite{iso27040_2024}. The standard is therefore 
+ relevant to the  selection and documentation of deletion methods across different storage technologies, including storage devices whose 
+ internal  behaviour is not fully visible to the host system. ISO/IEC 27001:2022 Annex A control 7.14 addresses the secure disposal or 
+ reuse of equipment. Its requirement is that equipment containing storage media be verified to ensure that sensitive data and licensed 
+ software have been removed or securely overwritten before disposal or reuse \cite{iso27001_2022}. The control is significant because it expressly 
+ includes verification. A deletion command or a user-interface message indicating completion should not automatically be treated as 
+ sufficient evidence that the requirement has been met. The relationship between ISO/IEC 27001 and ISO/IEC 27002 should also be stated 
+ accurately. ISO/IEC 27001 defines requirements for an information-security management system, whereas ISO/IEC 27002 provides guidance on 
+ information-security controls, including the control corresponding to secure disposal or reuse \cite{iso27002_2022}. Compliance with an ISO 
+ standard does not, by itself, establish compliance with the GDPR. The standards provide a risk-management and control framework that may 
+ help a controller demonstrate appropriate technical and organisational measures.The importance of this guidance for modern flash storage 
+ is not that its older overwriting examples remain universally appropriate. Rather, it demonstrates that disposal requires a deliberate and 
+ technically suitable sanitisation decision.
+
+\subsection{Accountability and evidencing deletion}
+The technical results of this thesis become legally significant through Article 5(2). If no deletion method can always be verified independently 
+and non-destructively, the controller must determine what evidence can reasonably demonstrate that the deletion obligation was fulfilled. Article 5(2) 
+should not be interpreted as requiring impossible proof of the physical state of every storage cell. It requires the controller to be able to 
+demonstrate compliance. The relevant question is therefore not whether the controller can establish absolute metaphysical certainty that no 
+residual bit exists anywhere, but whether the controller selected and implemented a deletion process that was appropriate to the risk and supported 
+that process with credible evidence \cite{gdpr2016}.
+
+A defensible deletion record should establish at least the following:
+\begin{enumerate}
+\item The controller identified the personal data covered by the erasure obligation and determined where those data, replicas, backups, and 
+processor-held copies were located.
+
+\item The controller assessed whether Article 17 applied and recorded any applicable exception under Article 17(3).
+
+\item The controller selected a sanitisation method appropriate to the storage medium, the sensitivity of the data, the threat model, and 
+the intended disposal or reuse of the equipment.
+
+\item The deletion operation produced an authenticated record identifying the relevant asset, the deletion scope, the method used, the time 
+of execution, the responsible process or operator, and the result reported by the storage system.
+
+\item The controller performed verification proportionate to the risk. Depending on the environment, this may include device-level logs, 
+cryptographic-key destruction records, confirmation from processors, controlled recovery attempts, independent sampling, or a certificate 
+of physical destruction.
+
+\item The controller documented limitations and exceptions, including failed commands, interrupted operations, inaccessible storage areas, 
+cloud replicas, offline backups, retention periods, and data that could not yet be deleted because of a legal obligation.
+
+\end{enumerate}
 
 \subsection{Technical Challenges to the Right to Be Forgotten}
 The tension between the right to be forgotten and technical system design is a recurring theme in 

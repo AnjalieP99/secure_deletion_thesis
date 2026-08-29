@@ -43,19 +43,24 @@
 \contentsline {section}{\numberline {2.4}Empirical Evaluation Approaches in the Literature}{48}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Legal and Ethical Dimensions}{48}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}GDPR and the Right to Erasure}{48}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Technical Challenges to the Right to Be Forgotten}{49}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Digital Evidence and Cross-Border Procedure}{50}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Comparative Regulatory Landscape}{50}{subsection.2.5.4}%
-\contentsline {chapter}{\numberline {3}Experimental Framework and Methodology}{52}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Research Objectives}{53}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Research Questions}{53}{subsection.3.1.1}%
-\contentsline {section}{\numberline {3.2}Experimental Environment}{54}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Analysis Methodology}{55}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Experiments and Results}{55}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Evaluation Metrics}{55}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Statistical Analysis Methods}{55}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Experimental Results and Analysis}{56}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Interpretation of Findings and Implications}{57}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusions and Future Work}{58}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Appendix A}{59}{appendix.A}%
-\contentsline {chapter}{Bibliography}{60}{appendix.A}%
+\contentsline {subsection}{\numberline {2.5.2}Disposal and reuse of storage media}{50}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Accountability and evidencing deletion}{51}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}Technical Challenges to the Right to Be Forgotten}{52}{subsection.2.5.4}%
+\contentsline {subsection}{\numberline {2.5.5}Digital Evidence and Cross-Border Procedure}{52}{subsection.2.5.5}%
+\contentsline {subsection}{\numberline {2.5.6}Comparative Regulatory Landscape}{53}{subsection.2.5.6}%
+\contentsline {chapter}{\numberline {3}Experimental Framework and Methodology}{55}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Research Objectives}{56}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Research Questions}{56}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Experimental Environment}{57}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Experiments Conducted}{58}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Experiment 1: TRIM and Filesystem-Level Data Recoverability}{58}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Experiment 2: Data Recovery After TRIM}{61}{subsection.3.3.2}%
+\contentsline {chapter}{\numberline {4}Experimental Results and Analysis}{68}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Results Analysis}{68}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Experiment 1: TRIM and Filesystem-Level Data Recoverability}{68}{subsection.4.1.1}%
+\contentsline {subsubsection}{Inode State After Deletion and TRIM}{68}{section*.34}%
+\contentsline {subsection}{\numberline {4.1.2}Experiment 2: Data Recovery After TRIM}{73}{subsection.4.1.2}%
+\contentsline {chapter}{\numberline {5}Discussion of Findings}{76}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusions and Future Work}{77}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Appendix A}{78}{appendix.A}%
+\contentsline {chapter}{Bibliography}{79}{appendix.A}%

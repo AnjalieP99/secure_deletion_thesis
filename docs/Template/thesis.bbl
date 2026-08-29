@@ -891,109 +891,51 @@
       \verb https://link.springer.com/article/10.1007/s11416-014-0221-z
       \endverb
     \endentry
-    \entry{SystematicReview}{article}{}{}
-      \name{author}{5}{}{%
-        {{hash=05877e667648f0530b9099d14336ef0d}{%
-           family={González\bibnamedelima Arias},
-           familyi={G\bibinitperiod\bibinitdelim A\bibinitperiod},
-           given={Rafael},
-           giveni={R\bibinitperiod}}}%
-        {{hash=a82c1fc73bbc63a3ddb77c609e682240}{%
-           family={Bermejo\bibnamedelima Higuera},
-           familyi={B\bibinitperiod\bibinitdelim H\bibinitperiod},
-           given={Javier},
-           giveni={J\bibinitperiod}}}%
-        {{hash=064df8ff1b58f194911e93c17e1089e5}{%
-           family={Rainer\bibnamedelima Granados},
-           familyi={R\bibinitperiod\bibinitdelim G\bibinitperiod},
-           given={J.\bibnamedelimi Javier},
-           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
-        {{hash=e53bdf84bf47d95dd986ad2b164a5a53}{%
-           family={Bermejo\bibnamedelima Higuera},
-           familyi={B\bibinitperiod\bibinitdelim H\bibinitperiod},
-           given={Juan\bibnamedelima Ramón},
-           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
-        {{hash=66a9012bc810399ee72561c866f63633}{%
-           family={Sicilia\bibnamedelima Montalvo},
-           familyi={S\bibinitperiod\bibinitdelim M\bibinitperiod},
-           given={Juan\bibnamedelima Antonio},
-           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-      }
-      \strng{namehash}{4f0067382df307ae9363fc954e6a1037}
-      \strng{fullhash}{158797a21a720e109238b4edce9a8aae}
-      \strng{fullhashraw}{158797a21a720e109238b4edce9a8aae}
-      \strng{bibnamehash}{158797a21a720e109238b4edce9a8aae}
-      \strng{authorbibnamehash}{158797a21a720e109238b4edce9a8aae}
-      \strng{authornamehash}{4f0067382df307ae9363fc954e6a1037}
-      \strng{authorfullhash}{158797a21a720e109238b4edce9a8aae}
-      \strng{authorfullhashraw}{158797a21a720e109238b4edce9a8aae}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one's way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.}
-      \field{issn}{2076-3417}
-      \field{journaltitle}{Applied Sciences}
-      \field{number}{12}
-      \field{title}{Systematic Review: Anti-Forensic Computer Techniques}
-      \field{volume}{14}
-      \field{year}{2024}
-      \verb{doi}
-      \verb 10.3390/app14125302
-      \endverb
-      \verb{urlraw}
-      \verb https://www.mdpi.com/2076-3417/14/12/5302
-      \endverb
-      \verb{url}
-      \verb https://www.mdpi.com/2076-3417/14/12/5302
-      \endverb
-    \endentry
-    \entry{peterson2005secure}{inproceedings}{}{}
-      \name{author}{5}{}{%
-        {{hash=bf64d8adf3d01bfa7175a079a5d6e0ee}{%
-           family={Peterson},
-           familyi={P\bibinitperiod},
-           given={Zachary\bibnamedelimb N.\bibnamedelimi J.},
-           giveni={Z\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
-        {{hash=e4052db41a87cae56addb18d98501100}{%
-           family={Burns},
-           familyi={B\bibinitperiod},
-           given={Randal},
-           giveni={R\bibinitperiod}}}%
-        {{hash=52a62232610b3a335c79c67b9ff43c20}{%
-           family={Herring},
+    \entry{wang2020challenges}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=40ba2e89c56f2485296a2475f31cd7d2}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Wei-Chen},
+           giveni={W\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=595536f3d5cb136facb2c94bb0f56e62}{%
+           family={Ho},
            familyi={H\bibinitperiod},
-           given={Joe},
-           giveni={J\bibinitperiod}}}%
-        {{hash=affe62342f6e9a3da8fa30b04b6137e5}{%
-           family={Stubblefield},
-           familyi={S\bibinitperiod},
-           given={Adam},
-           giveni={A\bibinitperiod}}}%
-        {{hash=965642065f2b3bc3ffcbcb6a2dea0f92}{%
-           family={Rubin},
-           familyi={R\bibinitperiod},
-           given={Aviel\bibnamedelima D.},
-           giveni={A\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+           given={Chien-Chung},
+           giveni={C\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=f73736934e303edaba569fb742031372}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Yu-Ming},
+           giveni={Y\bibinithyphendelim M\bibinitperiod}}}%
+        {{hash=b534164af816ec79a9ee6b1b3e73d28a}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Yuan-Hao},
+           giveni={Y\bibinithyphendelim H\bibinitperiod}}}%
       }
-      \list{location}{1}{%
-        {San Francisco, CA}%
-      }
-      \strng{namehash}{7b6bb1ba3bacb3e3647db8169fdb5681}
-      \strng{fullhash}{ac8cb372ecad80ddeeef97a0cc5f3993}
-      \strng{fullhashraw}{ac8cb372ecad80ddeeef97a0cc5f3993}
-      \strng{bibnamehash}{ac8cb372ecad80ddeeef97a0cc5f3993}
-      \strng{authorbibnamehash}{ac8cb372ecad80ddeeef97a0cc5f3993}
-      \strng{authornamehash}{7b6bb1ba3bacb3e3647db8169fdb5681}
-      \strng{authorfullhash}{ac8cb372ecad80ddeeef97a0cc5f3993}
-      \strng{authorfullhashraw}{ac8cb372ecad80ddeeef97a0cc5f3993}
+      \strng{namehash}{aab03cc8dfac2234170c281b2ab2ba43}
+      \strng{fullhash}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{fullhashraw}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{bibnamehash}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{authorbibnamehash}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{authornamehash}{aab03cc8dfac2234170c281b2ab2ba43}
+      \strng{authorfullhash}{7c3a6dc1064f4220774c22a10e1abd06}
+      \strng{authorfullhashraw}{7c3a6dc1064f4220774c22a10e1abd06}
+      \field{extraname}{2}
       \field{sortinit}{6}
       \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 4th USENIX Conference on File and Storage Technologies (FAST '05)}
-      \field{title}{Secure Deletion for a Versioning File System}
-      \field{year}{2005}
+      \field{booktitle}{2020 Indo - Taiwan 2nd International Conference on Computing, Analytics and Networks (Indo-Taiwan ICAN)}
+      \field{title}{Challenges and Designs for Secure Deletion in Storage Systems}
+      \field{year}{2020}
+      \field{pages}{181\bibrangedash 189}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1109/Indo-TaiwanICAN48429.2020.9181335
+      \endverb
+      \keyw{Magnetic recording;Encryption;Hard disks;Law;secure deletion;data sanitization;data scrubbing;programming strategy;encryption}
     \endentry
     \entry{holepunch}{misc}{}{}
       \name{author}{5}{}{%
@@ -1045,51 +987,94 @@
       \verb https://eprint.iacr.org/2023/1927
       \endverb
     \endentry
-    \entry{wang2020challenges}{inproceedings}{}{}
-      \name{author}{4}{}{%
-        {{hash=40ba2e89c56f2485296a2475f31cd7d2}{%
-           family={Wang},
-           familyi={W\bibinitperiod},
-           given={Wei-Chen},
-           giveni={W\bibinithyphendelim C\bibinitperiod}}}%
-        {{hash=595536f3d5cb136facb2c94bb0f56e62}{%
-           family={Ho},
-           familyi={H\bibinitperiod},
-           given={Chien-Chung},
-           giveni={C\bibinithyphendelim C\bibinitperiod}}}%
-        {{hash=f73736934e303edaba569fb742031372}{%
-           family={Chang},
-           familyi={C\bibinitperiod},
-           given={Yu-Ming},
-           giveni={Y\bibinithyphendelim M\bibinitperiod}}}%
-        {{hash=b534164af816ec79a9ee6b1b3e73d28a}{%
-           family={Chang},
-           familyi={C\bibinitperiod},
-           given={Yuan-Hao},
-           giveni={Y\bibinithyphendelim H\bibinitperiod}}}%
+    \entry{SystematicReview}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=05877e667648f0530b9099d14336ef0d}{%
+           family={González\bibnamedelima Arias},
+           familyi={G\bibinitperiod\bibinitdelim A\bibinitperiod},
+           given={Rafael},
+           giveni={R\bibinitperiod}}}%
+        {{hash=a82c1fc73bbc63a3ddb77c609e682240}{%
+           family={Bermejo\bibnamedelima Higuera},
+           familyi={B\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Javier},
+           giveni={J\bibinitperiod}}}%
+        {{hash=064df8ff1b58f194911e93c17e1089e5}{%
+           family={Rainer\bibnamedelima Granados},
+           familyi={R\bibinitperiod\bibinitdelim G\bibinitperiod},
+           given={J.\bibnamedelimi Javier},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=e53bdf84bf47d95dd986ad2b164a5a53}{%
+           family={Bermejo\bibnamedelima Higuera},
+           familyi={B\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Juan\bibnamedelima Ramón},
+           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=66a9012bc810399ee72561c866f63633}{%
+           family={Sicilia\bibnamedelima Montalvo},
+           familyi={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Juan\bibnamedelima Antonio},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
       }
-      \strng{namehash}{aab03cc8dfac2234170c281b2ab2ba43}
-      \strng{fullhash}{7c3a6dc1064f4220774c22a10e1abd06}
-      \strng{fullhashraw}{7c3a6dc1064f4220774c22a10e1abd06}
-      \strng{bibnamehash}{7c3a6dc1064f4220774c22a10e1abd06}
-      \strng{authorbibnamehash}{7c3a6dc1064f4220774c22a10e1abd06}
-      \strng{authornamehash}{aab03cc8dfac2234170c281b2ab2ba43}
-      \strng{authorfullhash}{7c3a6dc1064f4220774c22a10e1abd06}
-      \strng{authorfullhashraw}{7c3a6dc1064f4220774c22a10e1abd06}
-      \field{extraname}{2}
+      \strng{namehash}{4f0067382df307ae9363fc954e6a1037}
+      \strng{fullhash}{158797a21a720e109238b4edce9a8aae}
+      \strng{fullhashraw}{158797a21a720e109238b4edce9a8aae}
+      \strng{bibnamehash}{158797a21a720e109238b4edce9a8aae}
+      \strng{authorbibnamehash}{158797a21a720e109238b4edce9a8aae}
+      \strng{authornamehash}{4f0067382df307ae9363fc954e6a1037}
+      \strng{authorfullhash}{158797a21a720e109238b4edce9a8aae}
+      \strng{authorfullhashraw}{158797a21a720e109238b4edce9a8aae}
       \field{sortinit}{7}
       \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{2020 Indo - Taiwan 2nd International Conference on Computing, Analytics and Networks (Indo-Taiwan ICAN)}
-      \field{title}{Challenges and Designs for Secure Deletion in Storage Systems}
-      \field{year}{2020}
-      \field{pages}{181\bibrangedash 189}
-      \range{pages}{9}
+      \field{abstract}{The main purpose of anti-forensic computer techniques, in the broadest sense, is to hinder the investigation of a computer attack by eliminating traces and preventing the collection of data contained in a computer system. Nowadays, cyber-attacks are becoming more and more frequent and sophisticated, so it is necessary to understand the techniques used by hackers to be able to carry out a correct forensic analysis leading to the identification of the perpetrators. Despite its importance, this is a poorly represented area in the scientific literature. The disparity of the existing works, together with the small number of articles, makes it challenging to find one's way around the vast world of computer forensics. This article presents a comprehensive review of the existing scientific literature on anti-forensic techniques, mainly DFIR (digital forensics incident response), organizing the studies according to their subject matter and orientation. It also presents key ideas that contribute to the understanding of this field of forensic science and details the shortcomings identified after reviewing the state of the art.}
+      \field{issn}{2076-3417}
+      \field{journaltitle}{Applied Sciences}
+      \field{number}{12}
+      \field{title}{Systematic Review: Anti-Forensic Computer Techniques}
+      \field{volume}{14}
+      \field{year}{2024}
       \verb{doi}
-      \verb 10.1109/Indo-TaiwanICAN48429.2020.9181335
+      \verb 10.3390/app14125302
       \endverb
-      \keyw{Magnetic recording;Encryption;Hard disks;Law;secure deletion;data sanitization;data scrubbing;programming strategy;encryption}
+      \verb{urlraw}
+      \verb https://www.mdpi.com/2076-3417/14/12/5302
+      \endverb
+      \verb{url}
+      \verb https://www.mdpi.com/2076-3417/14/12/5302
+      \endverb
+    \endentry
+    \entry{gdpr2016}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=d0baa957acb6522d22e3251a428fe067}{%
+           family={{European Parliament and Council of the European Union}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{d0baa957acb6522d22e3251a428fe067}
+      \strng{fullhash}{d0baa957acb6522d22e3251a428fe067}
+      \strng{fullhashraw}{d0baa957acb6522d22e3251a428fe067}
+      \strng{bibnamehash}{d0baa957acb6522d22e3251a428fe067}
+      \strng{authorbibnamehash}{d0baa957acb6522d22e3251a428fe067}
+      \strng{authornamehash}{d0baa957acb6522d22e3251a428fe067}
+      \strng{authorfullhash}{d0baa957acb6522d22e3251a428fe067}
+      \strng{authorfullhashraw}{d0baa957acb6522d22e3251a428fe067}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Official Journal of the European Union, L119}
+      \field{title}{Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 (General Data Protection Regulation)}
+      \field{urlday}{29}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2016}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://eur-lex.europa.eu/eli/reg/2016/679/oj
+      \endverb
+      \verb{url}
+      \verb https://eur-lex.europa.eu/eli/reg/2016/679/oj
+      \endverb
     \endentry
     \entry{Politou2018}{article}{}{}
       \name{author}{3}{}{%
@@ -1117,8 +1102,8 @@
       \strng{authornamehash}{5b1476cb2844377aba914c8d51da9a4d}
       \strng{authorfullhash}{570e4ebd67af2ca331655f67d0b2fa22}
       \strng{authorfullhashraw}{570e4ebd67af2ca331655f67d0b2fa22}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of Cybersecurity}
@@ -1162,8 +1147,8 @@
       \strng{authornamehash}{ae9ee45e7b0bf92335f2b431b18dc82c}
       \strng{authorfullhash}{e2126a8d4b2e662e82bf475ecdb4a2f9}
       \strng{authorfullhashraw}{e2126a8d4b2e662e82bf475ecdb4a2f9}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{ACM SIGOPS Operating Systems Review}
@@ -1196,8 +1181,8 @@
       \strng{authornamehash}{9085bf3d5aad688c80f6e2e2378f43c2}
       \strng{authorfullhash}{9085bf3d5aad688c80f6e2e2378f43c2}
       \strng{authorfullhashraw}{9085bf3d5aad688c80f6e2e2378f43c2}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issue}{3}
@@ -1240,8 +1225,8 @@
       \strng{authornamehash}{c770c007455251476fddee0f0000f600}
       \strng{authorfullhash}{c770c007455251476fddee0f0000f600}
       \strng{authorfullhashraw}{c770c007455251476fddee0f0000f600}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of Consumer Policy}
@@ -1258,6 +1243,196 @@
       \endverb
       \verb{url}
       \verb https://doi.org/10.1007/s10603-018-9399-7
+      \endverb
+    \endentry
+    \entry{garante2008_electronic_waste}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=ade79fa57783d031687de018717f6d49}{%
+           family={{Garante per la protezione dei dati personali}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{ade79fa57783d031687de018717f6d49}
+      \strng{fullhash}{ade79fa57783d031687de018717f6d49}
+      \strng{fullhashraw}{ade79fa57783d031687de018717f6d49}
+      \strng{bibnamehash}{ade79fa57783d031687de018717f6d49}
+      \strng{authorbibnamehash}{ade79fa57783d031687de018717f6d49}
+      \strng{authornamehash}{ade79fa57783d031687de018717f6d49}
+      \strng{authorfullhash}{ade79fa57783d031687de018717f6d49}
+      \strng{authorfullhashraw}{ade79fa57783d031687de018717f6d49}
+      \field{extraname}{1}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{13}
+      \field{month}{10}
+      \field{title}{Electrical and Electronic Waste and Data Protection}
+      \field{urlday}{29}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2008}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/1583482
+      \endverb
+      \verb{url}
+      \verb https://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/1583482
+      \endverb
+    \endentry
+    \entry{garante2008_secure_deletion}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=ade79fa57783d031687de018717f6d49}{%
+           family={{Garante per la protezione dei dati personali}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{ade79fa57783d031687de018717f6d49}
+      \strng{fullhash}{ade79fa57783d031687de018717f6d49}
+      \strng{fullhashraw}{ade79fa57783d031687de018717f6d49}
+      \strng{bibnamehash}{ade79fa57783d031687de018717f6d49}
+      \strng{authorbibnamehash}{ade79fa57783d031687de018717f6d49}
+      \strng{authornamehash}{ade79fa57783d031687de018717f6d49}
+      \strng{authorfullhash}{ade79fa57783d031687de018717f6d49}
+      \strng{authorfullhashraw}{ade79fa57783d031687de018717f6d49}
+      \field{extraname}{2}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{5}
+      \field{month}{12}
+      \field{title}{Come rottamare il pc in tutta tranquillità. Le indicazioni del Garante per la cancellazione sicura dei dati}
+      \field{urlday}{29}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2008}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/1571960
+      \endverb
+      \verb{url}
+      \verb https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/1571960
+      \endverb
+    \endentry
+    \entry{iso27040_2024}{standard}{}{}
+      \name{author}{2}{}{%
+        {{hash=7058e4bd76f877c52b621c942b30613c}{%
+           family={{International Organization for Standardization}},
+           familyi={I\bibinitperiod}}}%
+        {{hash=1bfbc8812fd493bd4a6c196b196d1291}{%
+           family={{International Electrotechnical Commission}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {International Organization for Standardization}%
+      }
+      \strng{namehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{fullhash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{fullhashraw}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{bibnamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorbibnamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authornamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorfullhash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorfullhashraw}{64f571336774620bb71aeea10e0e7eb7}
+      \field{extraname}{1}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{1}
+      \field{number}{ISO/IEC 27040:2024}
+      \field{title}{Information technology --- Security techniques --- Storage security}
+      \field{urlday}{29}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.iso.org/standard/80194.html
+      \endverb
+      \verb{url}
+      \verb https://www.iso.org/standard/80194.html
+      \endverb
+    \endentry
+    \entry{iso27001_2022}{standard}{}{}
+      \name{author}{2}{}{%
+        {{hash=7058e4bd76f877c52b621c942b30613c}{%
+           family={{International Organization for Standardization}},
+           familyi={I\bibinitperiod}}}%
+        {{hash=1bfbc8812fd493bd4a6c196b196d1291}{%
+           family={{International Electrotechnical Commission}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {International Organization for Standardization}%
+      }
+      \strng{namehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{fullhash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{fullhashraw}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{bibnamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorbibnamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authornamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorfullhash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorfullhashraw}{64f571336774620bb71aeea10e0e7eb7}
+      \field{extraname}{2}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{number}{ISO/IEC 27001:2022}
+      \field{title}{Information security, cybersecurity and privacy protection --- Information security management systems --- Requirements}
+      \field{urlday}{29}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.iso.org/standard/82875.html
+      \endverb
+      \verb{url}
+      \verb https://www.iso.org/standard/82875.html
+      \endverb
+    \endentry
+    \entry{iso27002_2022}{standard}{}{}
+      \name{author}{2}{}{%
+        {{hash=7058e4bd76f877c52b621c942b30613c}{%
+           family={{International Organization for Standardization}},
+           familyi={I\bibinitperiod}}}%
+        {{hash=1bfbc8812fd493bd4a6c196b196d1291}{%
+           family={{International Electrotechnical Commission}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {International Organization for Standardization}%
+      }
+      \strng{namehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{fullhash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{fullhashraw}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{bibnamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorbibnamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authornamehash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorfullhash}{64f571336774620bb71aeea10e0e7eb7}
+      \strng{authorfullhashraw}{64f571336774620bb71aeea10e0e7eb7}
+      \field{extraname}{3}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{2}
+      \field{number}{ISO/IEC 27002:2022}
+      \field{title}{Information security, cybersecurity and privacy protection --- Information security controls}
+      \field{urlday}{29}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.iso.org/standard/75652.html
+      \endverb
+      \verb{url}
+      \verb https://www.iso.org/standard/75652.html
       \endverb
     \endentry
     \entry{Visconti2024zeroknowledge}{inproceedings}{}{}
@@ -1282,8 +1457,8 @@
       \strng{authornamehash}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
       \strng{authorfullhash}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
       \strng{authorfullhashraw}{4bdb09c710bf81b5ab7bf0f4f9b05df7}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The main goal of the EU GDPR is to protect personal data of individuals within the EU. This is expressed in several rights and, among them, in this work we focus on the Right to Erasure, more commonly known as the Right to Be Forgotten (RtBF). There is an intriguing debate about the affordable costs and the actual technical feasibility of satisfying the RtBF in digital platforms. We note that some digital platforms process personal data in order to derive and store correlated data raising two main issues: 1) removing personal data could create inconsistencies in the remaining correlated data; 2) correlated data could also be personal data. As such, in some cases, erasing personal data can trigger an avalanche on the remaining information stored in the platform. Addressing the above issues can be very challenging in particular when a digital platform has been originally built without embedding in its design specific methodologies to deal with the RtBF. This work aims at illustrating concrete scenarios where the RtBF is technically hard to guarantee with traditional techniques. On the positive side, we show how zero-knowledge (ZK) proofs can be leveraged to design affordable solutions in various use cases, especially when considered at design time. ZK proofs can be instrumental for compliance to the RtBF revolutionizing the current approaches to design compliant systems. Concretely, we show an assessment scheme allowing to check compliance with the RtBF leveraging the power of ZK proofs. We analyze the above assessment scheme considering specific hard-to-address use cases.}
@@ -1359,8 +1534,8 @@
       \strng{authornamehash}{6fc5a2d14a123e1979df6c984c45f71a}
       \strng{authorfullhash}{2aad35b520bf2ca8f5960def6342d3b7}
       \strng{authorfullhashraw}{2aad35b520bf2ca8f5960def6342d3b7}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Access}
@@ -1393,8 +1568,8 @@
       \strng{authornamehash}{1afb0c907437f715d458ae076bcf6e83}
       \strng{authorfullhash}{1afb0c907437f715d458ae076bcf6e83}
       \strng{authorfullhashraw}{1afb0c907437f715d458ae076bcf6e83}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Law, Technology and Humans}
@@ -1433,8 +1608,8 @@
       \strng{authornamehash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
       \strng{authorfullhash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
       \strng{authorfullhashraw}{7c900c4bd9b1021b9a4daf46a89f2ff9}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{International Journal of Law and Policy}

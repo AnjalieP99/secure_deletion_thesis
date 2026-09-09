@@ -1,2 +1,15 @@
 \chapter{Conclusions and Future Work}
 \label{sec:conclusions-future-work}
+
+\section{Conclusions}
+
+\section{Future Work}
+
+Future research should repeat the experiments using direct native connections. The NVMe SSD should be connected directly through a PCIe or M.2 interface, while the SATA 
+SSD should be connected directly to a native SATA port without a USB-to-SATA adapter. The same dataset, filesystem, deletion procedure, TRIM conditions, recovery tools, 
+fill levels, and recovery delays should then be applied to the directly connected devices. his design would help distinguish the effect of the SSD controller from the 
+effect of the bridge. It would also allow the same SSD to be tested through different connection paths, reducing the risk that device model differences are mistaken for 
+interface effects. Future work should include more SSD models, different bridge chipsets, direct and USB-connected configurations, multiple filesystems, and longer 
+observation periods. Recovery should also be attempted using more than one forensic method, including specialised laboratory techniques where available. These changes 
+would improve the external validity of the framework and help determine whether atypical recovery results arise from SSD implementation, bridge behaviour, filesystem 
+configuration, or the limits of the recovery procedure.

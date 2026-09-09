@@ -1,2 +1,37 @@
 \chapter{Discussion of Findings}
 \label{sec:interpretation-findings}
+
+This chapter discusses the findings obtained from the experimental evaluation of secure deletion techniques in modern storage environments. The discussion relates the 
+experimental observations to the research questions concerning data recoverability, TRIM behaviour, execution time, filesystem mechanisms, storage-device variation, 
+and the limitations of host-side verification.
+
+The central finding is that secure deletion cannot be evaluated reliably by observing only the successful completion of a deletion command. The experiments demonstrate 
+that the outcome observed by the host depends on the interaction between the filesystem, the storage interface, the controller, the Flash Translation Layer, and the 
+forensic recovery procedure. Therefore, the results should be interpreted in terms of observed host-side recoverability, rather than as direct proof of the physical 
+state of the NAND cells.
+
+\section{Summary of Main Findings}
+The first experiment demonstrated that deletion changed the ext4 filesystem metadata significantly. The deleted inode had a size of zero, a block count of zero, no 
+remaining links, and an empty extent structure. These observations confirm that the file was logically unlinked and that the filesystem no longer maintained usable 
+block references to the deleted file.
+The journal analysis showed that deletion-related metadata was recorded in the filesystem journal, but the journal did not contain the actual file data. The recovery 
+attempt using ext4magic was unsuccessful, and direct inspection of the previously allocated blocks showed only zero bytes. However, the zero values cannot by themselves 
+prove that the NAND cells were physically erased. They may represent physical erasure, controller-level zero return, or another abstraction at the storage interface. 
+The stronger conclusion is that the deleted data was not recoverable through the host-side block-access procedure used in the experiment.
+
+\section{Limitations of the Study}
+
+The first limitation concerns the number and diversity of storage devices. The experiments used two approximately 128 GB SSDs, one NVMe device and one SATA device. The 
+results therefore cannot be generalised to all SSDs, manufacturers, firmware versions, capacities, or interface implementations.
+
+A significant limitation of the study is the use of USB bridge hardware between the host system and both SSDs. The NVMe SSD was connected through a JMicron JMS583 USB 
+enclosure, while the SATA SSD was connected through a USB-to-SATA adapter. These devices introduced additional firmware and command-translation layers into the storage 
+path. The NVMe enclosure initially did not expose TRIM support to Ubuntu. Discard or unmap behaviour had to be explicitly enabled before the host reported discard 
+capability. This demonstrates that the presence of a physical connection between the host and SSD does not guarantee correct forwarding of discard commands. The bridge 
+may have affected both the recovery results and the measured execution times. For example, the 0\% recovery observed for the TRIM-enabled NVMe condition may be 
+associated with successful command forwarding, controller-level masking, or physical processing by the SSD. The low and similar recovery rates observed on the SATA SSD 
+may likewise have been influenced by the SATA bridge or by the way it handled TRIM-related requests. The experiment cannot determine which of these explanations is 
+correct because commands were not captured at the bridge-to-device boundary and the NAND state was not directly examined. Therefore, the bridge should be treated as a 
+potential confounding variable rather than as a confirmed cause of the results. This limitation also affects comparisons between the two SSDs. The observed differences 
+cannot be attributed exclusively to NVMe and SATA interfaces because the devices were accessed through different connection paths. The findings are valid for the tested 
+configurations, but they should not be generalised without additional experiments using direct native SATA and PCle connections.

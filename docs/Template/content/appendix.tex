@@ -1,15 +1,915 @@
-% appendix
 \chapter[Appendix A]{Appendix A}
 \label{sec:appendix}
 
-\lstdefinelanguage{JavaScript}{
-  keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, const, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
-  morecomment=[l]{//},
-  morecomment=[s]{/*}{*/},
-  morestring=[b]',
-  morestring=[b]",
-  sensitive=true
-}
+\section{Device Specifications}
+
+\subsection{Host system}
+
+\begin{verbatim}
+hostnamectl
+Static hostname: anji-Nitro-AN515-58
+Icon name: computer-laptop
+Chassis: laptop
+Machine ID: 07bcf4e12b18401998b1ced41087efdf
+Boot ID: df0e8cb23e204d1080c42530bfeb49ad
+Operating System: Ubuntu 26.04 LTS
+
+Kernel: Linux 7.0.0-28-generic
+Architecture: x86-64
+Hardware Vendor: Acer
+Hardware Model: Nitro AN515-58
+Hardware SKU: 0000000000000000
+Hardware Version: V2.21
+Firmware Version: V2.21
+Firmware Date: Tue 2026-06-09
+Firmware Age: 1month 4w
+\end{verbatim}
+
+\subsection{Test Drive 1: NVMe SSD}
+\begin{verbatim}
+sudo smartctl -a /dev/sda
+
+smartctl 7.5 2025-04-30 r5714[x86_64-linux-7.0.0-28-generic](local build)
+Copyright(C)2002-25, Bruce Allen, Christian Franke,www.smartmontools.org
+
+=== START OF INFORMATION SECTION ===
+Model Number:                       PSELN128GA87MC0
+Serial Number:                      0524115009487
+Firmware Version:                   HPE4BP01
+PCI Vendor/Subsystem ID:            0x1987
+IEEE OUI Identifier:                0x6479a7
+Controller ID:                      1
+NVMe Version:                       1.4
+Number of Namespaces:               1
+Namespace 1 Size/Capacity:          128,035,676,160 [128 GB]
+Namespace 1 Formatted LBA Size:     512
+Namespace 1 IEEE EUI-64:            6479a7 8d8f00250f
+Local Time is:                      Thu Aug  6 12:04:21 2026 CEST
+Firmware Updates (0x04):            2 Slots
+Optional Admin Commands (0x0017):   Security Format Frmw_DL Self_Test
+Optional NVM Commands (0x0056):Wr_Unc DS_Mngmt Sav/Sel_Feat Timestmp
+Log Page Attributes (0x1e):Cmd_Eff_Lg Ext_Get_Lg Telmtry_Lg Pers_Ev_Lg
+Maximum Data Transfer Size:64 Pages
+Warning  Comp. Temp. Threshold:     83 Celsius
+Critical Comp. Temp. Threshold:     85 Celsius
+
+Supported Power States
+St Op     Max   Active     Idle   RL RT WL WT  Ent_Lat  Ex_Lat
+0 +     4.30W       -        -    0  0  0  0        0       0
+1 +     3.00W       -        -    1  1  1  1        0       0
+2 +     1.50W       -        -    2  2  2  2        0       0
+3 -   0.1000W       -        -    3  3  3  3     5000   10000
+4 -   0.0025W       -        -    4  4  4  4     5000   45000
+
+Supported LBA Sizes (NSID 0x1)
+Id Fmt  Data  Metadt  Rel_Perf
+0 +     512       0         1
+1 -    4096       0         0
+
+=== START OF SMART DATA SECTION ===
+SMART overall-health self-assessment test result: PASSED
+
+SMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)
+Critical Warning:                   0x00
+Temperature:                        57 Celsius
+Available Spare:                    100%
+Available Spare Threshold:          5%
+Percentage Used:                    0%
+Data Units Read:                    1,417,462 [725 GB]
+Data Units Written:                 393,172 [201 GB]
+Host Read Commands:                 11,854,846
+Host Write Commands:                2,109,150
+Controller Busy Time:               36
+Power Cycles:                       72
+Power On Hours:                     11
+Unsafe Shutdowns:                   24
+Media and Data Integrity Errors:    0
+Error Information Log Entries:      64
+Warning  Comp. Temperature Time:    0
+Critical Comp. Temperature Time:    0
+Temperature Sensor 1:               57 Celsius
+\end{verbatim}
+
+\subsection{Test Drive 2: SATA SSD}
+\begin{verbatim}
+sudo hdparm -I /dev/sdb
+
+/dev/sdb:
+
+ATA device, with non-removable media
+Model Number:       EDILOCA  ES106 128GB
+
+Serial Number:      26060047623000204
+
+Firmware Revision:  HC2705H3
+Media Serial Num:
+
+Media Manufacturer:
+Transport:Serial, ATA8-AST,SATA 1.0a,SATA II Extensions,SATA Rev 2.5,SATA Rev 2.6,SATA Rev 3.0
+Standards:
+Used: unknown (minor revision code 0x0110)
+Supported: 9 8 7 6 5
+Likely used: 9
+Configuration:
+Logical		max	current
+cylinders	16383	16383
+heads		16	16
+sectors/track	63	63
+--
+CHS current addressable sectors:    16514064
+LBA    user addressable sectors:   250069680
+LBA48  user addressable sectors:   250069680
+Logical  Sector size:                   512 bytes
+Physical Sector size:                   512 bytes
+Logical Sector-0 offset:                  0 bytes
+device size with M = 1024*1024:      122104 MBytes
+device size with M = 1000*1000:      128035 MBytes (128 GB)
+cache/buffer size  = unknown
+Form Factor: 2.5 inch
+Nominal Media Rotation Rate: Solid State Device
+Capabilities:
+LBA, IORDY(can be disabled)
+Queue depth: 32
+Standby timer values: spec'd by Standard, no device specific minimum
+R/W multiple sector transfer: Max = 8 Current = 1
+DMA: mdma0 mdma1 mdma2 udma0 udma1 udma2 udma3 udma4 udma5 *udma6
+Cycle time: min=120ns recommended=120ns
+PIO: pio0 pio1 pio2 pio3 pio4
+Cycle time: no flow control=120ns  IORDY flow control=120ns
+Commands/features:
+Enabled	Supported:
+*	SMART feature set
+Security Mode feature set
+*	Power Management feature set
+*	Write cache
+*	Look-ahead
+*	WRITE_BUFFER command
+*	READ_BUFFER command
+*	NOP cmd
+*	48-bit Address feature set
+*	Mandatory FLUSH_CACHE
+*	FLUSH_CACHE_EXT
+*	SMART error logging
+*	SMART self-test
+*	General Purpose Logging feature set
+*	WRITE_{DMA|MULTIPLE}_FUA_EXT
+*	64-bit World wide name
+*	{READ,WRITE}_DMA_EXT_GPL commands
+*	Gen1 signaling speed (1.5Gb/s)
+*	Gen2 signaling speed (3.0Gb/s)
+*	Gen3 signaling speed (6.0Gb/s)
+*	Native Command Queueing (NCQ)
+*	Phy event counters
+*	Host automatic Partial to Slumber transitions
+*	Device automatic Partial to Slumber transitions
+*	READ_LOG_DMA_EXT equivalent to READ_LOG_EXT
+DMA Setup Auto-Activate optimization
+*	Software settings preservation
+*	SANITIZE feature set
+*	BLOCK_ERASE_EXT command
+*	WRITE BUFFER DMA command
+*	READ BUFFER DMA command
+*	Data Set Management TRIM supported (limit 8 blocks)
+Security:
+Master password revision code = 65534
+supported
+not	enabled
+not	locked
+not	frozen
+not	expired: security count
+supported: enhanced erase
+2min for SECURITY ERASE UNIT. 2min for ENHANCED SECURITY ERASE UNIT.
+Logical Unit WWN Device Identifier:0000000000000000
+NAA		: 0
+IEEE OUI	: 000000
+Unique ID	: 000000000
+Checksum: correct
+\end{verbatim}
+
+
+\section{Experiment 1}
+
+\begin{verbatim}
+
+sudo mkdir -p /mnt/test/test_data
+sudo openssl rand -out "/mnt/test/test_data/
+inode_test001.dat" 104857600
+
+
+sudo find "/mnt/test/test_data" -type f -exec stat -c '%n 
+| Inode: %i' {} \;
+/mnt/test/test_data/inode_test001.dat | Inode: 6291458
+
+sudo dumpe2fs -h /dev/sda1 | grep -E "Journal|Inode"
+
+sudo rm -rf "/mnt/test/test_data"/*
+
+sudo debugfs -R "stat <6291458>" /dev/sda1
+
+sudo dumpe2fs -h /dev/sda1 | grep -E "Journal|Inode"
+
+sudo dumpe2fs -h /dev/sda1 | grep -E "Journal|Inode"
+
+sudo ext4magic /dev/sda1 -j /dev/sda1 -I 6291458 -d /tmp/recovery/
+
+sudo ext4magic /dev/sda1 -j /dev/sda1 -I 6291458 -B 620 -d 
+/tmp/recovery/
+
+sudo debugfs /dev/sda1
+debugfs: ncheck 6291458
+
+sudo debugfs -R "imap <6291458>" /dev/sda1
+
+sudo debugfs -R "logdump" /dev/sda1
+sudo debugfs -R "logdump -a" /dev/sda1
+
+sudo dd if=/dev/sda1 bs=4096 skip=33388 count=1 2>/dev/null | xxd 
+| head -20
+sudo dd if=/dev/sda1 bs=4096 skip=33389 count=1 2>/dev/null | xxd 
+| head -20
+
+sudo dd if=/dev/sda1 of=~/inode_analysis/journal_tx61.bin bs=4096 
+skip=15237743 count=1
+sudo dd if=~/inode_analysis/journal_tx61.bin 
+of=~/inode_analysis/inode_tx61.bin bs=1 skip=256 count=256
+\end{verbatim}
+
+\section{Experiment 2}
+\subsection{Experimental Setup}
+\begin{verbatim}
+ # 1. Unmount if mounted
+sudo umount /dev/sda1 2>/dev/null
+
+# 2. Wipe the drive (quick wipe)
+sudo dd if=/dev/zero of=/dev/sda bs=1M count=100 status=progress
+
+# 3. Create GPT partition table
+sudo parted /dev/sda mklabel gpt
+
+# 4. Create single ext4 partition
+sudo parted /dev/sda mkpart primary ext4 0% 100%
+
+# 5. Reload partition table
+sudo partprobe /dev/sda
+sleep 2
+
+# 6. Format as ext4
+sudo mkfs.ext4 -F /dev/sda1
+
+# 7. Create mount point
+sudo mkdir -p /mnt/{MountPoint}
+
+\end{verbatim}
+
+\subsection{Trim-on and Trim-off Conditions}
+\begin{verbatim}
+
+# TRIM ON
+sudo mount -o discard /dev/sda1 /mnt/{MountPoint}
+
+# TRIM OFF
+sudo mount -o nodiscard /dev/sda1 /mnt/{MountPoint}
+
+\end{verbatim}
+
+\subsection{Data Generation Script}
+
+\begin{lstlisting}[language=bash, caption={Data Generation Script}]
+
+#!/bin/bash
+# Data generation script
+
+MOUNT_POINT=$1
+DATASET_NUM=$2
+UNIQUE_ID=$(openssl rand -hex 8)
+
+FOLDER_NAME="TEST_DATA_${DATASET_NUM}_${UNIQUE_ID}"
+mkdir -p "${MOUNT_POINT}/${FOLDER_NAME}"
+
+# File 1: Small text file (51 signatures)
+cat > "${MOUNT_POINT}/${FOLDER_NAME}/small.txt" << ENDTEXT
+UNIQUE_SIGNATURE_DS${DATASET_NUM}_SMALL
+$(for i in {1..50}; do echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_SMALL"; done)
+ENDTEXT
+
+# File 2: Medium text file (5,001 signatures)
+cat > "${MOUNT_POINT}/${FOLDER_NAME}/medium.txt" << ENDTEXT
+UNIQUE_SIGNATURE_DS${DATASET_NUM}_MEDIUM
+$(for i in {1..5000}; do echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_MEDIUM"; done)
+ENDTEXT
+
+# File 3: Large binary file (10MB + 1 signature)
+dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/large.bin" bs=1M count=10 status=none
+echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_LARGE" >> "${MOUNT_POINT}/${FOLDER_NAME}/large.bin"
+
+# File 4: 500 small text files (500 signatures)
+for i in {1..500}; do
+    echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_SMALL_${i}" > "${MOUNT_POINT}/${FOLDER_NAME}/tiny_${i}.txt"
+done
+
+# File 5: Binary image file (no signatures)
+dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/image.jpg" bs=1K count=50 status=none
+
+# File 6: Binary PDF file (no signatures)
+dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/document.pdf" bs=1K count=30 status=none
+
+# Create checksum file for verification
+md5sum "${MOUNT_POINT}/${FOLDER_NAME}"/* > "${MOUNT_POINT}/${FOLDER_NAME}/checksums_${DATASET_NUM}.md5"
+
+echo "Created dataset $DATASET_NUM in ${MOUNT_POINT}/${FOLDER_NAME}"
+
+\end{lstlisting}
+
+\subsection{Command List}
+\subsubsection*{Phase A: TRIM ON Procedure}
+\begin{enumerate}
+    
+\item{Mount with TRIM enabled:}
+
+\begin{verbatim}
+sudo mount -o discard /dev/sda1 /mnt/ssd_test
+\end{verbatim}
+
+\item{Create Datasets 1-5 with unique signatures:}
+
+\begin{verbatim}
+for i in {1..5}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Delete Datasets 2 and 4:}
+
+\begin{verbatim}
+sudo rm -rf /mnt/ssd_test/TEST_DATA_2_*
+sudo rm -rf /mnt/ssd_test/TEST_DATA_4_*
+\end{verbatim}
+
+\item{Force TRIM:}
+
+\begin{verbatim}
+sudo fstrim -v /mnt/ssd_test
+\end{verbatim}
+
+\item{Create Overwrite Datasets 6-8:}
+
+\begin{verbatim}
+for i in {6..8}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Unmount the drive:}
+
+\begin{verbatim}
+sudo umount /mnt/ssd_test
+\end{verbatim}
+
+\end{enumerate}
+
+\subsubsection*{Phase B: TRIM OFF Procedure}
+
+\begin{enumerate}
+    
+\item{Mount with TRIM enabled:}
+
+\begin{verbatim}
+sudo mount -o discard /dev/sda1 /mnt/ssd_test
+\end{verbatim}
+
+\item{Create Datasets 1-5 with unique signatures:}
+
+\begin{verbatim}
+for i in {1..5}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Delete Datasets 2 and 4:}
+
+\begin{verbatim}
+sudo rm -rf /mnt/ssd_test/TEST_DATA_2_*
+sudo rm -rf /mnt/ssd_test/TEST_DATA_4_*
+\end{verbatim}
+
+\item{Force TRIM:}
+
+\begin{verbatim}
+sudo fstrim -v /mnt/ssd_test
+\end{verbatim}
+
+\item{Create Overwrite Datasets 6-8:}
+
+\begin{verbatim}
+for i in {6..8}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Unmount the drive:}
+
+\begin{verbatim}
+sudo umount /mnt/ssd_test
+\end{verbatim}
+
+\end{enumerate}
+
+\subsubsection*{Phase B: TRIM OFF Procedure}
+\begin{enumerate}
+
+\item{Mount without TRIM:}
+
+\begin{verbatim}
+sudo mount -o nodiscard /dev/sda1 /mnt/ssd_test
+\end{verbatim}
+
+\item{Create Datasets 9-13:}
+
+\begin{verbatim}
+for i in {9..13}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Delete Datasets 10 and 12:}
+
+\begin{verbatim}
+sudo rm -rf /mnt/ssd_test/TEST_DATA_10_*
+sudo rm -rf /mnt/ssd_test/TEST_DATA_12_*
+\end{verbatim}
+
+\item{NO TRIM - deliberately skipped}
+
+\item{Create Overwrite Datasets 14-16:}
+
+\begin{verbatim}
+for i in {14..16}; do
+    ./create_dataset.sh /mnt/ssd_test $i
+done
+\end{verbatim}
+
+\item{Unmount the drive:}
+
+\begin{verbatim}
+sudo umount /mnt/ssd_test
+\end{verbatim}
+
+\end{enumerate}
+
+\begin{verbatim}
+for i in {1..16}; do
+count=$(grep -r "UNIQUE_SIGNATURE_DS${i}_". 2>/dev/null | wc -l)
+echo "Dataset $i: $count files found"
+done
+\end{verbatim}
+
+Limitations and workarounds:
+\begin{enumerate}
+    \item Identify the USB enclosure's chip and obtain its vendor and product ID using the command:
+        \begin{verbatim}
+        lsusb
+        \end{verbatim}
+
+    \item Created udev rule to enable unmap
+        \begin{verbatim}
+        sudo nano /etc/udev/rules.d/90-usb-discard.rules
+        echo 'ACTION=="add|change", ATTRS{idVendor}=="152d", 
+        ATTRS{idProduct}=="a583", SUBSYSTEM=="scsi_disk", 
+        ATTR{provisioning_mode}="unmap"' | sudo tee 
+        /etc/udev/rules.d/90-usb-discard.rules
+        \end{verbatim}
+
+    \item Reloaded udev rules and replugged the device
+        \begin{verbatim}
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger
+        \end{verbatim}
+
+    \item Verified TRIM was recognized. \texttt{DISC-GRAN and DISC-MAX} values should be non-zero. 
+        \begin{verbatim}
+        lsblk --discard
+        # DISC-GRAN=4K, DISC-MAX=4G (TRIM recognized)
+        \end{verbatim}
+
+\end{enumerate}
+
+\section{Experiment 3: Full Script}
+
+\begin{lstlisting}[language=bash, caption={PHASE 1: wipe drive and prepare for experiment}]
+
+# ============================================
+# PHASE 1: wipe drive
+# ============================================
+
+TEST_DEVICE="/dev/sda"
+MOUNT_POINT="/mnt/test_ssd"
+
+echo ""
+echo "=== PHASE 1: Wipe Drive ==="
+echo "WARNING: This will erase ALL data on $TEST_DEVICE"
+read -p "Type 'y' to continue: " confirm
+
+if [ "$confirm" != "y" ]; then
+    echo "Aborted."
+    exit 1
+fi
+
+
+sudo umount $MOUNT_POINT 2>/dev/null
+echo "Overwriting $TEST_DEVICE with zeros..."
+sudo dd if=/dev/zero of=$TEST_DEVICE bs=1M count=100 status=progress
+
+echo "Creating partition table..."
+sudo parted -s $TEST_DEVICE mklabel gpt
+sudo parted -s $TEST_DEVICE mkpart primary ext4 0% 100%
+sudo mkfs.ext4 -F ${TEST_DEVICE}1
+
+sudo mkdir -p $MOUNT_POINT
+sudo mount ${TEST_DEVICE}1 $MOUNT_POINT
+sudo chmod 777 $MOUNT_POINT
+echo "Wipe complete"
+echo "Trigger udev rules to enable trim"
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash, caption={PHASE 2: Configure andFill Drive to Target Utilisation Level}]
+# ============================================
+# SIMPLE CONFIGURATION
+# ============================================
+
+LOG_DIR="$HOME/trim_experiment/logs_nvme"
+TEST_DIR="$MOUNT_POINT/test_data"
+FILLER_DIR="$MOUNT_POINT/filler_data"
+
+echo "Input Fill Level:"
+read -p "Fill level (%): " FILL_LEVEL_INPUT
+
+# test parameters
+FILL_LEVEL=$FILL_LEVEL_INPUT                
+RECOVERY_WAITS=(0 5 15 30)            
+ITERATIONS=${#RECOVERY_WAITS[@]}
+
+echo ""
+echo "Configuration:"
+echo "  Fill level: ${FILL_LEVEL}%"
+echo "  Test data: ${TEST_DATA_SIZE_MB}MB"
+echo "  Recovery waits: ${RECOVERY_WAITS[@]} minutes"
+echo "  Total iterations: ${ITERATIONS}"
+echo ""
+
+mkdir -p $LOG_DIR
+sudo mkdir -p $TEST_DIR $FILLER_DIR 
+
+
+# ============================================
+# PHASE 2: Fill Drive to FILL_LEVEL%
+# ============================================
+
+echo ""
+echo "=== PHASE 2: Fill Drive to ${FILL_LEVEL}% ==="
+
+# Calculate how much to fill
+TOTAL_KB=$(df --output=size "$MOUNT_POINT" | tail -1)
+USED_KB=$(df --output=used "$MOUNT_POINT" | tail -1)
+TARGET_KB=$((TOTAL_KB * FILL_LEVEL / 100))
+FILL_KB=$((TARGET_KB - USED_KB))
+
+echo "Need to write $((FILL_KB / 1024)) MB to reach ${FILL_LEVEL}%"
+
+# Create filler files
+written_kb=0
+file_count=0
+while [ $written_kb -lt $FILL_KB ]; do
+    file_name="$FILLER_DIR/filler_$(printf "%04d" $file_count).dat"
+    this_size=$((FILL_KB - written_kb))
+    if [ $this_size -gt $((1024 * 100)) ]; then  # 100MB chunks
+        this_size=$((1024 * 100))
+    fi
+    
+    sudo dd if=/dev/urandom of="$file_name" bs=1K count=$this_size status=none
+    written_kb=$((written_kb + this_size))
+    file_count=$((file_count + 1))
+    
+    echo -ne "\r  Progress: $((written_kb * 100 / FILL_KB))%"
+done
+echo ""
+echo "Created $file_count filler files"
+
+# Check actual fill level
+NEW_USED=$(df --output=used "$MOUNT_POINT" | tail -1)
+NEW_PERCENT=$((NEW_USED * 100 / TOTAL_KB))
+echo "Actual fill level: ${NEW_PERCENT}%"
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash, caption={PHASE 3-6: Main Experiment Loop}]
+# ============================================
+# MAIN EXPERIMENT LOOP - Each iteration tests complete cycle
+# ============================================
+
+echo ""
+echo "=== PHASE 3-6: MAIN EXPERIMENT ($ITERATIONS iterations) ==="
+echo "Each iteration: Create -> Delete -> TRIM -> Recover"
+echo ""
+
+# Initialize results files
+if [ ! -f "$LOG_DIR/experiment_results.csv" ]; then
+    echo "run_timestamp,iteration,wait_minutes,fill_level,real_time,user_time,sys_time,trimmed_bytes,recovered_files" > $LOG_DIR/experiment_results.csv
+fi
+
+# Main loop - one iteration per recovery wait time
+for ITER in $(seq 1 $ITERATIONS); do
+    # Get the wait time for THIS iteration (0-indexed array)
+    WAIT_INDEX=$((ITER - 1))
+    CURRENT_WAIT=${RECOVERY_WAITS[$WAIT_INDEX]}
+    
+    echo "=========================================="
+    echo "ITERATION $ITER of $ITERATIONS - Wait: ${CURRENT_WAIT} minutes"
+    echo "=========================================="
+    
+# ============================================
+# PHASE 3: Create Test Data
+# ============================================
+
+echo ""
+echo "=== [ITER $ITER - PHASE 3]: Create Test Data ==="
+
+# Create UNIQUE test data for THIS iteration
+UNIQUE_ID=$(openssl rand -hex 8)
+ITER_TEST_DIR="$TEST_DIR/TEST_DATA_${ITER}_${UNIQUE_ID}"
+sudo mkdir -p "$ITER_TEST_DIR"
+
+echo "Creating dataset in: $ITER_TEST_DIR"
+echo ""
+
+# ============================================
+# FILE 1: Small text file
+# ============================================
+
+echo "Creating small text file..."
+
+{
+    echo "UNIQUE_SIGNATURE_DS${ITER}_SMALL"
+    for i in {1..50}; do
+        echo "UNIQUE_SIGNATURE_DS${ITER}_SMALL"
+    done
+} | sudo tee "$ITER_TEST_DIR/small.txt" > /dev/null
+
+echo "small.txt created"
+
+
+# ============================================
+# FILE 2: Medium text file
+# ============================================
+
+echo "Creating medium text file..."
+
+{
+    echo "UNIQUE_SIGNATURE_DS${ITER}_MEDIUM"
+    for i in {1..5000}; do
+        echo "UNIQUE_SIGNATURE_DS${ITER}_MEDIUM"
+    done
+} | sudo tee "$ITER_TEST_DIR/medium.txt" > /dev/null
+echo "medium.txt created"
+
+
+# ============================================
+# FILES 3-7: LARGE VALID ZIP FILES
+# Approximately 1 GiB each
+# ============================================
+
+echo ""
+echo "Creating large ZIP dataset (~2.5 GiB each)..."
+
+
+    TEMP_FILE="$ITER_TEST_DIR/.temporary_data.bin"
+    ZIP_FILE="$ITER_TEST_DIR/large_archive.zip"
+
+    sudo dd if=/dev/urandom \
+        of="$TEMP_FILE" \
+        bs=1M \
+        count=2560 \
+        status=progress
+
+  
+    echo "UNIQUE_SIGNATURE_DS${ITER}_LARGE" | \
+        sudo tee -a "$TEMP_FILE" > /dev/null
+
+    sudo zip -0 -q "$ZIP_FILE" "$TEMP_FILE"
+
+    # Remove the temporary uncompressed file.
+    sudo rm -f "$TEMP_FILE"
+
+
+echo ""
+echo "Created large ZIP archive"
+
+
+# ============================================
+# FILE 8: MANY SMALL TEXT FILES
+# ============================================
+
+echo ""
+echo "Creating 500 small text files..."
+
+for i in {1..500}; do
+
+    sudo bash -c "echo 'UNIQUE_SIGNATURE_DS${ITER}_SMALL_${i}' > '$ITER_TEST_DIR/tiny_${i}.txt'"
+
+done
+
+echo "Created 500 tiny text files"
+
+
+# ============================================
+# FILE 9: VALID JPEG IMAGE
+# ============================================
+
+echo ""
+echo "Creating JPEG file..."
+
+# Minimal valid 1x1 JPEG image.
+JPEG_BASE64="/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAP/////////////////////////////////
+/////////////////////////////////////////////////////2wBDAf/////////////////////
+/////////////////////////////////////////////////////////////////wAARCAABAAEDASI
+AAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAX/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAI
+QAxAAAAH/AP/EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEAAT8Af//EABQRAQAAAAAAAAAAAAAAAAA
+AABD/2gAIAQIBAT8Af//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8Af//Z"
+
+echo "$JPEG_BASE64" | base64 -d | sudo tee "$ITER_TEST_DIR/image.jpg" > /dev/null
+
+# Add a dataset-specific text signature after the JPEG.
+# This does not affect the JPEG header and gives us a searchable
+# experiment-specific marker.
+echo "UNIQUE_SIGNATURE_DS${ITER}_IMAGE" | \
+    sudo tee -a "$ITER_TEST_DIR/image.jpg" > /dev/null
+
+echo "image.jpg created"
+
+
+# ============================================
+# FILE 10: VALID PDF
+# ============================================
+
+echo ""
+echo "Creating PDF file..."
+
+sudo bash -c "cat > '$ITER_TEST_DIR/document.pdf' << ENDPDF
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 120 >>
+stream
+BT
+/F1 24 Tf
+100 700 Td
+(UNIQUE_SIGNATURE_DS${ITER}_PDF) Tj
+0 -40 Td
+(Experimental secure deletion dataset) Tj
+ET
+endstream
+endobj
+xref
+0 5
+0000000000 65535 f
+0000000009 00000 n
+0000000058 00000 n
+0000000115 00000 n
+0000000210 00000 n
+trailer
+<< /Size 5 /Root 1 0 R >>
+startxref
+380
+%%EOF
+ENDPDF"
+
+echo "document.pdf created"
+
+# ============================================
+# FILE 11: CHECKSUMS
+# ============================================
+
+echo ""
+echo "Computing MD5 checksums..."
+
+sudo bash -c "find '$ITER_TEST_DIR' -maxdepth 1 -type f \
+    ! -name 'checksums_${ITER}.md5' \
+    -exec md5sum {} \; | sort > '$ITER_TEST_DIR/checksums_${ITER}.md5'"
+
+echo "MD5 checksums saved"
+
+# ============================================
+# DATASET SIZE / FILE COUNT
+# ============================================
+
+FILE_COUNT=$(sudo find "$ITER_TEST_DIR" -type f | wc -l)
+DATASET_SIZE=$(sudo du -sh "$ITER_TEST_DIR" | cut -f1)
+
+echo ""
+echo "=========================================="
+echo "DATASET ${ITER} CREATED"
+echo "=========================================="
+echo "Location:     $ITER_TEST_DIR"
+echo "Dataset size: $DATASET_SIZE"
+echo "File count:   $FILE_COUNT"
+echo "=========================================="
+
+# ============================================
+# PHASE 4: Delete Test Data
+# ============================================
+
+echo ""
+echo "=== [ITER $ITER - PHASE 4]: Delete Test Data ==="
+
+BEFORE=$(find "$ITER_TEST_DIR" -type f | wc -l)
+echo "Deleting $BEFORE test files..."
+sudo rm -rf "$ITER_TEST_DIR"/*
+sync
+sleep 5
+echo "Test data deleted"
+
+
+
+# ============================================
+# PHASE 5: Measure TRIM Latency
+# ============================================
+
+echo ""
+echo "=== [ITER $ITER - PHASE 5]: Measure TRIM Latency ==="
+
+    
+    # Clear caches
+    sync && echo 3 | sudo tee /proc/sys/vm/drop_caches > /dev/null
+    
+    # Run fstrim with timing
+    LOG_FILE="$LOG_DIR/trim_${FILL_LEVEL}_iter${ITER}_$(date +%H%M%S).log"
+    /usr/bin/time -v sudo fstrim -v "$MOUNT_POINT" 2>&1 | tee "$LOG_FILE"
+    
+    # Extract timing
+    REAL_TIME=$(grep "Elapsed" "$LOG_FILE" | awk '{print $NF}')
+    USER_TIME=$(grep "User time" "$LOG_FILE" | awk '{print $NF}')
+    SYS_TIME=$(grep "System time" "$LOG_FILE" | awk '{print $NF}')
+    TRIMMED=$(grep -o "[0-9]* bytes" "$LOG_FILE" | tail -1 | sed 's/ bytes//')
+    echo "    Real: ${REAL_TIME}s, Trimmed: ${TRIMMED}B"
+ 
+  
+
+# ============================================
+# PHASE 6: Attempt Recovery at CURRENT_WAIT
+# ============================================
+
+echo ""
+echo "=== [ITER $ITER - PHASE 6]: Recovery Attempts ==="
+echo "  Waiting ${CURRENT_WAIT} minutes before recovery..."
+
+
+    # Wait the specified time
+    if [ $CURRENT_WAIT -gt 0 ]; then
+        echo "    Waiting ${CURRENT_WAIT} minutes..."
+        sleep $((CURRENT_WAIT * 60))
+    fi
+    
+    # Try recovery with foremost
+    RECOVERY_DIR="$LOG_DIR/recovered_${FILL_LEVEL}_iter${ITER}_${CURRENT_WAIT}min"
+    mkdir -p "$RECOVERY_DIR"
+    
+    # Use foremost to recover deleted files (quick)
+    echo "    Running foremost analysis..."
+    sudo foremost -i /dev/sda1 -o "$RECOVERY_DIR" -t all 
+    
+    # Count recovered files (simplified - check if any files appear)
+    RECOVERED=0
+    if [ -d "$RECOVERY_DIR" ]; then
+        RECOVERED=$(find "$RECOVERY_DIR" -type f ! -name "audit.txt" 2>/dev/null | wc -l)
+    fi
+    
+    echo "    Recovered: $RECOVERED files"
+    
+# Capture timestamp for this run
+    RUN_TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+
+
+echo "$RUN_TIMESTAMP,$ITER,$CURRENT_WAIT,$FILL_LEVEL,$REAL_TIME,$USER_TIME,$SYS_TIME,$TRIMMED,$RECOVERED" >> $LOG_DIR/experiment_results.csv
+
+
+    echo ""
+    echo "Iteration $ITER complete (waited ${CURRENT_WAIT} minutes)"
+    echo "---"
+    
+    # Small delay between iterations
+    sleep 2
+done
+
+\end{lstlisting}
+
 
 % %\lstinputlisting[]{} % for source code files directly
 % % lstlisting environment for direct inclusion

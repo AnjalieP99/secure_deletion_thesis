@@ -1064,11 +1064,7 @@
       \field{labeltitlesource}{title}
       \field{howpublished}{Official Journal of the European Union, L119}
       \field{title}{Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 (General Data Protection Regulation)}
-      \field{urlday}{29}
-      \field{urlmonth}{8}
-      \field{urlyear}{2026}
       \field{year}{2016}
-      \field{urldateera}{ce}
       \verb{urlraw}
       \verb https://eur-lex.europa.eu/eli/reg/2016/679/oj
       \endverb
@@ -1267,12 +1263,8 @@
       \field{day}{13}
       \field{month}{10}
       \field{title}{Electrical and Electronic Waste and Data Protection}
-      \field{urlday}{29}
-      \field{urlmonth}{8}
-      \field{urlyear}{2026}
       \field{year}{2008}
       \field{dateera}{ce}
-      \field{urldateera}{ce}
       \verb{urlraw}
       \verb https://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/1583482
       \endverb
@@ -1302,12 +1294,8 @@
       \field{day}{5}
       \field{month}{12}
       \field{title}{Come rottamare il pc in tutta tranquillità. Le indicazioni del Garante per la cancellazione sicura dei dati}
-      \field{urlday}{29}
-      \field{urlmonth}{8}
-      \field{urlyear}{2026}
       \field{year}{2008}
       \field{dateera}{ce}
-      \field{urldateera}{ce}
       \verb{urlraw}
       \verb https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/1571960
       \endverb
@@ -1343,11 +1331,7 @@
       \field{month}{1}
       \field{number}{ISO/IEC 27040:2024}
       \field{title}{Information technology --- Security techniques --- Storage security}
-      \field{urlday}{29}
-      \field{urlmonth}{8}
-      \field{urlyear}{2026}
       \field{year}{2024}
-      \field{urldateera}{ce}
       \verb{urlraw}
       \verb https://www.iso.org/standard/80194.html
       \endverb
@@ -1383,11 +1367,7 @@
       \field{month}{10}
       \field{number}{ISO/IEC 27001:2022}
       \field{title}{Information security, cybersecurity and privacy protection --- Information security management systems --- Requirements}
-      \field{urlday}{29}
-      \field{urlmonth}{8}
-      \field{urlyear}{2026}
       \field{year}{2022}
-      \field{urldateera}{ce}
       \verb{urlraw}
       \verb https://www.iso.org/standard/82875.html
       \endverb
@@ -1423,11 +1403,7 @@
       \field{month}{2}
       \field{number}{ISO/IEC 27002:2022}
       \field{title}{Information security, cybersecurity and privacy protection --- Information security controls}
-      \field{urlday}{29}
-      \field{urlmonth}{8}
-      \field{urlyear}{2026}
       \field{year}{2022}
-      \field{urldateera}{ce}
       \verb{urlraw}
       \verb https://www.iso.org/standard/75652.html
       \endverb
@@ -1608,8 +1584,8 @@
       \strng{authornamehash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
       \strng{authorfullhash}{7c900c4bd9b1021b9a4daf46a89f2ff9}
       \strng{authorfullhashraw}{7c900c4bd9b1021b9a4daf46a89f2ff9}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{International Journal of Law and Policy}

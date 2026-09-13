@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.23)  9 SEP 2026 17:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.23)  13 SEP 2026 16:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1265,15 +1265,16 @@ Package biblatex Info: Automatic encoding selection.
 \openout4 = `thesis.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'thesis.bbl' found.
- (./thesis.bbl)
+Package biblatex Info: ... file 'thesis.bbl' not found.
+
+No file thesis.bbl.
 Package biblatex Info: Reference section=0 on input line 35.
 Package biblatex Info: Reference segment=0 on input line 35.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: longtable package is loaded.
- (c:/texlive/2025/texmf-dist/tex/latex/caption/ltcaption.sty
+(c:/texlive/2025/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: supertabular package is loaded.
@@ -1375,7 +1376,7 @@ Package translations Info: loading dictionary `translations-basic-dictionary' fo
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<images/logo/polito_logo_2021_blu-2-2.jpg, id=264, 845.3181pt x 326.4195pt>
+<images/logo/polito_logo_2021_blu-2-2.jpg, id=268, 845.3181pt x 326.4195pt>
 File: images/logo/polito_logo_2021_blu-2-2.jpg Graphic file (type jpg)
 <use images/logo/polito_logo_2021_blu-2-2.jpg>
 Package pdftex.def Info: images/logo/polito_logo_2021_blu-2-2.jpg  used on input line 6.
@@ -1507,13 +1508,44 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ] (./common/post_summary_config.tex) (./content/chapters/chapter1.tex
 Chapter 1.
 
+LaTeX Warning: Citation 'reardon2013sok' on page 1 undefined on input line 12.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 1 undefined on input line 20.
+
+
+LaTeX Warning: Citation 'MITstudy2003' on page 1 undefined on input line 31.
+
+
+LaTeX Warning: Citation 'NetGuardia2026' on page 1 undefined on input line 34.
+
+
 
 [1
 
 
 
 ]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Warning: Citation 'Verizon2024DBIR' on page 2 undefined on input line 38.
+
+
+LaTeX Warning: Citation 'Blancco2026' on page 2 undefined on input line 41.
+
+
+LaTeX Warning: Citation 'MITstudy2003' on page 2 undefined on input line 44.
+
+
+LaTeX Warning: Citation 'ComplianceHub2026' on page 2 undefined on input line 49.
+
+
+LaTeX Warning: Citation 'Goodin2022' on page 2 undefined on input line 56.
+
+
+LaTeX Warning: Citation 'SEC2022' on page 2 undefined on input line 60.
+
+
+LaTeX Warning: Citation 'CybersecurityDive2022' on page 2 undefined on input line 61.
 
 
 
@@ -1521,25 +1553,224 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [3]
 
+LaTeX Warning: Citation 'aronsson2025secure' on page 4 undefined on input line 122.
+
+
+LaTeX Warning: Citation 'homaidi2009data' on page 4 undefined on input line 125.
+
+
+LaTeX Warning: Citation 'homaidi2009data' on page 4 undefined on input line 131.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 4 undefined on input line 136.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 4 undefined on input line 142.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 4 undefined on input line 144.
+
+
+
 [4]
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 5 undefined on input line 154.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 5 undefined on input line 154.
+
+
+LaTeX Warning: Citation 'onarlioglu2018_3' on page 5 undefined on input line 158.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 5 undefined on input line 160.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 5 undefined on input line 166.
+
+
+LaTeX Warning: Citation 'zhang2018ensuring' on page 5 undefined on input line 169.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 5 undefined on input line 175.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 5 undefined on input line 178.
+
+
+Underfull \vbox (badness 6477) has occurred while \output is active []
+
+
 
 [5{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}]
 
+LaTeX Warning: Citation 'homaidi2009data' on page 6 undefined on input line 186.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 6 undefined on input line 190.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 6 undefined on input line 190.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 6 undefined on input line 196.
+
+
+LaTeX Warning: Citation 'homaidi2009data' on page 6 undefined on input line 196.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 6 undefined on input line 200.
+
+
+LaTeX Warning: Citation 'ahn2021forensics' on page 6 undefined on input line 200.
+
+
+LaTeX Warning: Citation 'zhang2018ensuring' on page 6 undefined on input line 204.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 6 undefined on input line 210.
+
+
+LaTeX Warning: Citation 'ahn2021forensics' on page 6 undefined on input line 214.
+
+
+Underfull \vbox (badness 2538) has occurred while \output is active []
+
+
+
 [6]
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 7 undefined on input line 223.
+
+
+LaTeX Warning: Citation '3dnandwang2018' on page 7 undefined on input line 223.
+
+
+LaTeX Warning: Citation 'antiforensics2016' on page 7 undefined on input line 237.
+
+
+LaTeX Warning: Citation 'zhang2018ensuring' on page 7 undefined on input line 237.
+
+
+LaTeX Warning: Citation 'Fukami2023' on page 7 undefined on input line 244.
+
+
+LaTeX Warning: Citation 'ahn2022security' on page 7 undefined on input line 250.
+
+
 
 [7]
 
+LaTeX Warning: Citation 'ahn2019schemes' on page 8 undefined on input line 262.
+
+
+LaTeX Warning: Citation 'ahn2022security' on page 8 undefined on input line 262.
+
+
+LaTeX Warning: Citation 'reardon2013sok' on page 8 undefined on input line 284.
+
+
+LaTeX Warning: Citation 'trimwearlevelling2019' on page 8 undefined on input line 284.
+
+
+
 [8]
+
+LaTeX Warning: Citation 'reardon2013sok' on page 9 undefined on input line 291.
+
+
+LaTeX Warning: Citation 'antiforensics2016' on page 9 undefined on input line 298.
+
+
+LaTeX Warning: Citation 'antiforensics2016' on page 9 undefined on input line 304.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 9 undefined on input line 314.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 9 undefined on input line 325.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [9]
 
+LaTeX Warning: Citation 'duplicateschen2022' on page 10 undefined on input line 331.
+
+
+LaTeX Warning: Citation 'onarlioglu2018_3' on page 10 undefined on input line 334.
+
+
+LaTeX Warning: Citation 'antiforensics2016' on page 10 undefined on input line 338.
+
+
+LaTeX Warning: Citation 'antiforensics2016' on page 10 undefined on input line 354.
+
+
+
 [10]
+
+LaTeX Warning: Citation 'antiforensics2016' on page 11 undefined on input line 361.
+
+
+LaTeX Warning: Citation 'antiforensics2016' on page 11 undefined on input line 384.
+
+
+Underfull \vbox (badness 2111) has occurred while \output is active []
+
+
 
 [11]
 
+LaTeX Warning: Citation 'Bonetti2014' on page 12 undefined on input line 407.
+
+
+LaTeX Warning: Citation 'trimwearlevelling2019' on page 12 undefined on input line 407.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 12 undefined on input line 420.
+
+
+LaTeX Warning: Citation 'onarlioglu2018_3' on page 12 undefined on input line 420.
+
+
+
 [12]
 
+LaTeX Warning: Citation 'ahn2021forensics' on page 13 undefined on input line 433.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 13 undefined on input line 444.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 13 undefined on input line 452.
+
+
+LaTeX Warning: Citation 'ahn2021forensics' on page 13 undefined on input line 468.
+
+
+
 [13]
+
+LaTeX Warning: Citation 'ahn2021forensics' on page 14 undefined on input line 479.
+
+
+LaTeX Warning: Citation 'duplicateschen2022' on page 14 undefined on input line 483.
+
+
+LaTeX Warning: Citation 'zhang2018ensuring' on page 14 undefined on input line 484.
+
+
+LaTeX Warning: Citation 'antiforensics2016' on page 14 undefined on input line 493.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 14 undefined on input line 496.
+
+
+
+[14]
 Underfull \hbox (badness 10000) in paragraph at lines 512--512
 []|\T1/lmr/m/n/12 (+20) Logical san-i-ti-za-
  []
@@ -1604,14 +1835,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 512--512
 []|\T1/lmr/m/n/12 (+20) Physical de-struc-
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[14]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 519.
- (c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
+(c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 Package microtype Info: Loading generic protrusion settings for font family
@@ -1621,6 +1846,16 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 
 [15]
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 16 undefined on input line 545.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 16 undefined on input line 552.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 16 undefined on input line 560.
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 576--576
 []|\T1/lmr/m/n/12 (+20) Derived from user
  []
@@ -1644,15 +1879,48 @@ Underfull \hbox (badness 2735) in paragraph at lines 576--576
 
 [16]
 
+LaTeX Warning: Citation 'aronsson2025secure' on page 17 undefined on input line 583.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 17 undefined on input line 597.
+
+
+
 [17]
 
-[18]) (./content/chapters/chapter2.tex
+LaTeX Warning: Citation 'aronsson2025secure' on page 18 undefined on input line 603.
 
-[19]
+
+LaTeX Warning: Citation 'wang2020challenges' on page 18 undefined on input line 609.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 18 undefined on input line 613.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 18 undefined on input line 615.
+
+
+LaTeX Warning: Citation 'reardon2013sok' on page 18 undefined on input line 621.
+
+
+LaTeX Warning: Citation 'zhang2018ensuring' on page 18 undefined on input line 624.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 18 undefined on input line 627.
+
+
+LaTeX Warning: Citation 'holepunch' on page 18 undefined on input line 627.
+
+) (./content/chapters/chapter2.tex
+
+[18]
 Chapter 2.
 
+LaTeX Warning: Citation 'SystematicReview' on page 19 undefined on input line 28.
 
-[20
+
+
+[19
 
 ]
 Underfull \hbox (badness 1142) in paragraph at lines 46--46
@@ -1675,14 +1943,28 @@ Underfull \hbox (badness 5652) in paragraph at lines 46--46
  []
 
 
+LaTeX Warning: Citation 'reardon2013sok' on page 20 undefined on input line 57.
+
+
+
+[20]
+
+LaTeX Warning: Citation 'reardon2013sok' on page 21 undefined on input line 72.
+
+
 
 [21]
 
 [22]
 
-[23]
+LaTeX Warning: Citation '3dnandwang2018' on page 23 undefined on input line 165.
 
-[24]
+
+LaTeX Warning: Citation 'ahn2019schemes' on page 23 undefined on input line 170.
+
+
+
+[23]
 Overfull \hbox (1.23207pt too wide) in alignment at lines 228--234
  [] [] [] [] 
  []
@@ -1709,10 +1991,12 @@ Overfull \hbox (1.23207pt too wide) in alignment at lines 247--270
 
 
 
-[25]
+[24]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
+
+[25]
 
 [26]
 
@@ -1721,8 +2005,6 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [28]
 
 [29]
-
-[30]
 LaTeX Font Info:    Calculating math sizes for size <10.95007> on input line 441.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10.95007> on input line 441.
@@ -1790,121 +2072,241 @@ Overfull \hbox (1.58194pt too wide) in paragraph at lines 495--495
 \T1/lmr/m/n/10.95007 (-20) operational |
  []
 
-[31
+[30
 
-] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43]
+] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42]
 
-[44]
+[43]
 
-[45
+[44
 
 ]
 
-[46]
+[45]
 Underfull \vbox (badness 2111) has occurred while \output is active []
+
+
+
+[46]
+
+LaTeX Warning: Citation 'reardon2013sok' on page 47 undefined on input line 634.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 47 undefined on input line 637.
+
+
+LaTeX Warning: Citation 'wang2020challenges' on page 47 undefined on input line 639.
+
+
+LaTeX Warning: Citation '3dnandwang2018' on page 47 undefined on input line 642.
+
+
+LaTeX Warning: Citation 'gdpr2016' on page 47 undefined on input line 672.
 
 
 
 [47]
 
-[48]
+LaTeX Warning: Citation 'Politou2018' on page 48 undefined on input line 681.
+
+
+LaTeX Warning: Citation 'Politou2018' on page 48 undefined on input line 686.
+
+
+LaTeX Warning: Citation 'Shastri2019gdpr' on page 48 undefined on input line 690.
+
+
+LaTeX Warning: Citation 'AlgorithmicDestruction' on page 48 undefined on input line 698.
+
+
+LaTeX Warning: Citation 'vanOoijen2019' on page 48 undefined on input line 699.
+
+
+LaTeX Warning: Citation 'AlgorithmicDestruction' on page 48 undefined on input line 703.
+
+
 Underfull \vbox (badness 2111) has occurred while \output is active []
+
+
+
+[48]
+
+LaTeX Warning: Citation 'garante2008_electronic_waste' on page 49 undefined on input line 714.
+
+
+LaTeX Warning: Citation 'garante2008_secure_deletion' on page 49 undefined on input line 717.
+
+
+LaTeX Warning: Citation 'iso27040_2024' on page 49 undefined on input line 719.
+
+
+LaTeX Warning: Citation 'iso27001_2022' on page 49 undefined on input line 723.
+
+
+LaTeX Warning: Citation 'iso27002_2022' on page 49 undefined on input line 727.
 
 
 
 [49]
 
+LaTeX Warning: Citation 'gdpr2016' on page 50 undefined on input line 739.
+
+
+
 [50]
+
+LaTeX Warning: Citation 'Visconti2024zeroknowledge' on page 51 undefined on input line 767.
+
+
+LaTeX Warning: Citation 'Visconti2024zeroknowledge' on page 51 undefined on input line 773.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 51 undefined on input line 778.
+
+
+LaTeX Warning: Citation 'Casino2022Research' on page 51 undefined on input line 787.
+
+
+LaTeX Warning: Citation 'Casino2022Research' on page 51 undefined on input line 791.
+
+
 
 [51]
 
-[52]
-
-[53]) (./content/chapters/chapter3.tex
-
-[54]
-Chapter 3.
+LaTeX Warning: Citation 'Ontanu2023' on page 52 undefined on input line 796.
 
 
-[55
+LaTeX Warning: Citation 'AllahRakha2024' on page 52 undefined on input line 802.
 
-]
 
-[56]
+LaTeX Warning: Citation 'Birrell2024SoK' on page 52 undefined on input line 811.
 
-[57]
+
+LaTeX Warning: Citation 'Birrell2024SoK' on page 52 undefined on input line 816.
+
+
+LaTeX Warning: Citation 'AlgorithmicDestruction' on page 52 undefined on input line 820.
+
+
+LaTeX Warning: Citation 'holepunch' on page 52 undefined on input line 823.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
+
+[52]
+
+LaTeX Warning: Citation 'reardon2013sok' on page 53 undefined on input line 832.
+
+
+LaTeX Warning: Citation 'holepunch' on page 53 undefined on input line 834.
+
+
+LaTeX Warning: Citation 'Birrell2024SoK' on page 53 undefined on input line 838.
+
+
+LaTeX Warning: Citation 'Shastri2019gdpr' on page 53 undefined on input line 842.
+
+
+LaTeX Warning: Citation 'Visconti2024zeroknowledge' on page 53 undefined on input line 847.
+
+
+LaTeX Warning: Citation 'Casino2022Research' on page 53 undefined on input line 850.
+
+
+LaTeX Warning: Citation 'aronsson2025secure' on page 53 undefined on input line 852.
+
+) (./content/chapters/chapter3.tex
+
+[53]
+Chapter 3.
+
+
+[54
+
+]
+
+[55]
+
+[56]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[57]
 
 [58]
 
 [59]
-
-[60]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[61]
+[60]
 
-[62]
+[61]
 Underfull \vbox (badness 5274) has occurred while \output is active []
 
 
 
-[63{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+[62{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+
+[63]
 
 [64]
+Underfull \hbox (badness 2799) in paragraph at lines 350--352
+[]\T1/lmr/bx/n/12 (+20) ATA SAN-I-TIZE \T1/lmr/m/n/12 (+20) (\T1/lmtt/m/n/12 hdparm --sanitize-crypto-scramble \T1/lmr/m/n/12 (+20) and \T1/lmtt/m/n/12 hdparm
+ []
 
-[65]) (./content/chapters/chapter4.tex
+) (./content/chapters/chapter4.tex
 
-[66]
+[65]
 Chapter 4.
 
 
-[67
+[66
 
 ]
+
+[67]
 
 [68]
 
 [69]
-
-[70]
 Overfull \hbox (38.68254pt too wide) in paragraph at lines 154--154
 []\T1/lmtt/m/n/12 sudo dd if=/dev/sda1 bs=4096 skip=33388 count=1 2>/dev/null| xxd| head -20 |
  []
 
 
 
-[71]
+[70]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[72]
-<images/nvme_mean_recov.png, id=948, 1003.8303pt x 426.393pt>
+[71]
+<images/nvme_mean_recov.png, id=789, 1003.8303pt x 426.393pt>
 File: images/nvme_mean_recov.png Graphic file (type png)
 <use images/nvme_mean_recov.png>
 Package pdftex.def Info: images/nvme_mean_recov.png  used on input line 229.
 (pdftex.def)             Requested size: 334.60422pt x 142.12848pt.
 
 
-[73 <./images/nvme_mean_recov.png>]
+[72 <./images/nvme_mean_recov.png>]
 
-[74]
-<images/sata_mean_recov.png, id=962, 1003.8303pt x 426.393pt>
+[73]
+<images/sata_mean_recov.png, id=801, 1003.8303pt x 426.393pt>
 File: images/sata_mean_recov.png Graphic file (type png)
 <use images/sata_mean_recov.png>
 Package pdftex.def Info: images/sata_mean_recov.png  used on input line 300.
 (pdftex.def)             Requested size: 334.60422pt x 142.12848pt.
 
 
-[75 <./images/sata_mean_recov.png>]
+[74 <./images/sata_mean_recov.png>]
 
-[76]
-<images/sdv.png, id=973, 714.7503pt x 426.393pt>
+[75]
+<images/sdv.png, id=813, 714.7503pt x 426.393pt>
 File: images/sdv.png Graphic file (type png)
 <use images/sdv.png>
 Package pdftex.def Info: images/sdv.png  used on input line 356.
@@ -1914,15 +2316,27 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[77]
+[76]
 
-[78 <./images/sdv.png>]
+[77 <./images/sdv.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[78]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
 [79]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 488--488
+[]|\T1/lmtt/m/n/12 SECURITY_SET_PASS:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 488--488
+\T1/lmtt/m/n/12 Inappropriate ioctl
+ []
 
 
 
@@ -1934,15 +2348,26 @@ Chapter 5.
 
 [82
 
-]) (./content/chapters/chapter6.tex
+]
 
 [83]
+Underfull \vbox (badness 2503) has occurred while \output is active []
+
+
+
+[84]
+
+[85]) (./content/chapters/chapter6.tex
+
+[86]
 Chapter 6.
-) (./content/appendix.tex
+)
 
-[84
+[87
 
-]
+] (./content/appendix.tex
+
+[88]
 Appendix A.
 
 Overfull \hbox (32.50754pt too wide) in paragraph at lines 32--32
@@ -1956,7 +2381,7 @@ Overfull \hbox (26.34654pt too wide) in paragraph at lines 33--33
 
 
 
-[85
+[89
 
 ]
 Overfull \hbox (7.82153pt too wide) in paragraph at lines 49--49
@@ -1978,14 +2403,14 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[86]
+[90]
 Overfull \hbox (162.1896pt too wide) in paragraph at lines 108--108
 []\T1/lmtt/m/n/12 Transport:Serial, ATA8-AST,SATA 1.0a,SATA II Extensions,SATA Rev 2.5,SATA Rev 2.6,SATA Rev 3.0[] |
  []
 
 
 
-[87]
+[91]
 Overfull \hbox (1.64653pt too wide) in paragraph at lines 133--133
 []\T1/lmtt/m/n/12 Standby timer values: spec'd by Standard, no device specific minimum[] |
  []
@@ -1995,16 +2420,16 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[88]
+[92]
 Overfull \hbox (1.64653pt too wide) in paragraph at lines 181--181
 []\T1/lmtt/m/n/12 2min for SECURITY ERASE UNIT. 2min for ENHANCED SECURITY ERASE UNIT.[] |
  []
 
 
 
-[89]
+[93]
 
-[90] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+[94] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 ) (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
@@ -2012,32 +2437,15 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 277.
 
 
-[91]
-
-[92]
-
-[93]
-
-[94]
-
 [95]
 
 [96]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 [97]
 
 [98]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 [99]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 [100]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -2045,45 +2453,39 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [101]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 [102]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[103])
+[103]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [104]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[105
 
 
-]
+[105]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [106]
-
-[107]
-
-Package biblatex Warning: No driver for 'standard'.
-(biblatex)                Using fallback driver on input line 129.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Package biblatex Warning: No driver for 'standard'.
-(biblatex)                Using fallback driver on input line 129.
 
-
+[107])
 
 [108]
 
-Package biblatex Warning: No driver for 'standard'.
-(biblatex)                Using fallback driver on input line 129.
+LaTeX Warning: Empty bibliography on input line 129.
 
-
-
-[109] (./thesis.aux)
+(./thesis.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -2092,28 +2494,36 @@ L3 programming layer <2025-09-02>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: F0BC85ADC8C9C677B255B9C0A340DC85;13900.
+(rerunfilecheck)             Checksum: 2F8DB0A6F98F745A67D96E4A64C32762;14345.
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                thesis
+(biblatex)                and rerun LaTeX afterwards.
+
 Package logreq Info: Writing requests to 'thesis.run.xml'.
 \openout1 = `thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47914 strings out of 467748
- 953560 string characters out of 5431137
- 2404118 words of memory out of 5000000
- 74772 multiletter control sequences out of 15000+600000
- 776032 words of font info for 302 fonts, out of 8000000 for 9000
+ 47614 strings out of 467748
+ 942483 string characters out of 5431137
+ 2402159 words of memory out of 5000000
+ 74557 multiletter control sequences out of 15000+600000
+ 773011 words of font info for 277 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 138i,15n,135p,2648b,3000s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{lstnumber.A.4.305} has been referenced but does not exist, replaced by a fixed one
-
+ 138i,15n,135p,2648b,2975s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmro10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on thesis.pdf (120 pages, 2962139 bytes).
+Output written on thesis.pdf (119 pages, 2936707 bytes).
 PDF statistics:
- 1997 PDF objects out of 2073 (max. 8388607)
- 1820 compressed objects within 19 object streams
- 779 named destinations out of 1000 (max. 500000)
- 85537 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 1667 PDF objects out of 1728 (max. 8388607)
+ 1495 compressed objects within 15 object streams
+ 746 named destinations out of 1000 (max. 500000)
+ 85545 words of extra memory for PDF output out of 89155 (max. 10000000)
 

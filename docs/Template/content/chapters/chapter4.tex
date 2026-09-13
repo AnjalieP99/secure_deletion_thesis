@@ -358,7 +358,7 @@ underestimate the recoverability of deleted data.
     \label{fig:sdv}
 \end{figure}
 
-
+\subsection*{Interpretation of the recovery results}
 The results provide evidence that the nominal TRIM-enabled condition substantially reduced the recovery of deleted dataset signatures on both storage devices. The 
 reduction was complete for the NVMe deleted datasets and almost complete for the SATA deleted datasets. In contrast, disabling TRIM allowed substantial recovery on the 
 NVMe SSD and limited, but occasionally significant, recovery on the SATA SSD.
@@ -451,3 +451,54 @@ host-observed execution time.
 Overall, the results indicate that, under the tested conditions, the elapsed time between TRIM and forensic recovery did not produce an observable change in 
 recoverability during the 30-minute observation period. The results also show that the host-visible execution time of TRIM varied according to the amount of data being 
 discarded and the state of the storage device.
+
+\subsection{Experiment 4: Cryptographic Erase Attempt}
+
+\begin{table}[H]
+    \centering
+    \caption{Results of ATA Sanitization Command Attempts}
+    \label{tab:ata-sanitize-results}
+    
+    \begin{tabularx}{\textwidth}{c X X}
+        \toprule
+        \textbf{Command} & \textbf{Output} & \textbf{Interpretation} \\
+        \midrule
+        
+        \makecell[l]{\texttt{hdparm --security-}\\
+                     \texttt{erase}} &
+        \texttt{SECURITY\_SET\_PASS: Inappropriate ioctl for device} &
+        Command rejected by kernel/bridge \\
+        
+        \makecell[l]{\texttt{hdparm --sanitize-}\\
+                     \texttt{crypto-scramble}} &
+        No output &
+        Command not forwarded or acknowledged \\
+        
+        \makecell[l]{\texttt{hdparm --sanitize-}\\
+                     \texttt{block-erase}} &
+        No output &
+        Command not forwarded or acknowledged \\
+        
+        \makecell[l]{\texttt{hdparm --sanitize-}\\
+                     \texttt{status}} &
+        No output &
+        Status query not forwarded \\
+        
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+
+None of the cryptographic erase commands produced a confirmation message or a status report. The \texttt{--security-erase} command failed explicitly with 
+\texttt{Inappropriate ioctl for device}, indicating that the kernel or the USB bridge rejected the ATA Security command before it reached the drive. The 
+\texttt{--sanitize-*} commands produced no output at all, which is a different failure mode: the command was accepted by the command-line tool but produced no 
+confirmation that it was received or processed by the drive.
+
+Because the drive's identify data confirmed support for both the \texttt{Security Mode} and \texttt{SANITIZE} feature sets, the failure cannot be attributed to a lack
+of drive capability. The most plausible explanation is that the USB-to-SATA bridge did not forward these commands to the drive. This is consistent with the earlier 
+observation that the bridge required explicit udev configuration to forward TRIM/UNMAP commands, and it extends that finding to a broader class of drive-level 
+sanitization commands.
+
+The experiment therefore produced a negative result: cryptographic erase could not be tested through the USB bridge. However, this negative result is itself a finding, 
+because it demonstrates that the connection path can silently block drive-level sanitization commands. The absence of an error message for the \texttt{SANITIZE} 
+commands is particularly significant: a user might reasonably interpret the lack of output as a successful operation when in fact no sanitization occurred.

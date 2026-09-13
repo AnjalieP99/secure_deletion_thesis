@@ -11,6 +11,8 @@ forensic recovery procedure. Therefore, the results should be interpreted in ter
 state of the NAND cells.
 
 \section{Summary of Main Findings}
+
+\subsection*{Experiment 1}
 The first experiment demonstrated that deletion changed the ext4 filesystem metadata significantly. The deleted inode had a size of zero, a block count of zero, no 
 remaining links, and an empty extent structure. These observations confirm that the file was logically unlinked and that the filesystem no longer maintained usable 
 block references to the deleted file.
@@ -18,6 +20,78 @@ The journal analysis showed that deletion-related metadata was recorded in the f
 attempt using ext4magic was unsuccessful, and direct inspection of the previously allocated blocks showed only zero bytes. However, the zero values cannot by themselves 
 prove that the NAND cells were physically erased. They may represent physical erasure, controller-level zero return, or another abstraction at the storage interface. 
 The stronger conclusion is that the deleted data was not recoverable through the host-side block-access procedure used in the experiment.
+
+\subsection*{Experiment 2}
+Experiment 2 compared data recovery under TRIM-enabled and TRIM-disabled conditions on an NVMe SSD and a SATA SSD. The results demonstrated that the recovery 
+outcome depended on both the TRIM condition and the storage device.
+
+The positive-control datasets were recovered at or near the expected level on both SSDs. This confirms that the recovery procedure was capable of identifying the 
+embedded dataset signatures when the data remained available. The recovery of the kept datasets also provides confidence that the zero or near-zero results observed 
+for the deleted datasets were not caused simply by a complete failure of the recovery tool. 
+The nominal TRIM-enabled condition produced the lowest recovery rates. On the NVMe SSD, both deleted datasets, DS2 and DS4, produced zero recovered signatures in all 
+five runs. On the SATA SSD, DS2 and DS4 produced only a small number of signatures during the first two runs and no signatures in the remaining runs. Their mean 
+recovery rates were approximately 0.30\% and 0.33\%, respectively. 
+
+The nominal TRIM-disabled condition produced a substantially different result on the NVMe SSD. DS10 produced a mean recovery rate of 79.60\%, while DS12 produced a mean 
+recovery rate of 60.00\%. These values demonstrate that a considerable proportion of the deleted signatures remained observable through the host-side recovery procedure 
+when the explicit TRIM operation was not performed. 
+
+The SATA SSD showed lower recovery under the nominal TRIM-disabled condition. DS10 produced a mean recovery rate of only 0.22\%, while DS12 produced a mean recovery rate 
+of 18.05\%. The result for DS12 was strongly affected by one run in which 4,487 of the expected 5,052 signatures were recovered. The remaining four runs produced either 
+72 signatures or no signatures. This shows that the mean recovery rate alone does not fully describe the behaviour of the device. Individual run results are necessary 
+to identify the considerable variation between repetitions. 
+
+The results indicate that TRIM was associated with a strong reduction in host-side recovery on both devices. However, the effect was not identical across the NVMe and 
+SATA SSDs. The NVMe SSD retained substantially more recoverable data under the nominal TRIM-disabled condition, whereas the SATA SSD showed limited and inconsistent 
+recovery. This difference suggests that the storage controller, firmware, device state, and connection path influenced the persistence of the deleted data.
+
+The standard deviation results support this interpretation. The NVMe results showed standard deviations of approximately 44.50 percentage points for DS10 and 54.77 
+percentage points for DS12. The SATA results showed a standard deviation of approximately 39.57 percentage points for DS12. These high values were caused by large 
+differences between repeated runs, including runs with almost complete recovery and runs with no recovery. 
+
+Experiment 2 therefore does not support the assumption that a TRIM-disabled SSD will always retain the same amount of recoverable data. Instead, the results demonstrate 
+that recoverability is variable and device-specific. The nominal TRIM condition provided a useful experimental distinction, but the observed results cannot be attributed 
+exclusively to the operating-system setting because the two SSDs used different physical devices and different USB connection paths.
+
+
+\subsection*{Experiment 4: Cryptographic Erase Attempt}
+The cryptographic erase experiment produced a negative result that is itself informative. Neither the \texttt{ATA Security Erase} command nor the \texttt{ATA SANITIZE} 
+commands could be executed through the USB-to-SATA bridge. The \texttt{--security-erase} command failed with \texttt{Inappropriate ioctl for device}, which is the 
+standard kernel response when an ioctl is not supported by the underlying device or driver. The \texttt{--sanitize-*} commands produced no output at all, suggesting 
+that the bridge did not forward them and did not return an error.
+
+This finding extends the connection-path limitation identified in Experiment 2. In that experiment, the USB-NVMe enclosure required explicit udev configuration before 
+TRIM/UNMAP commands were forwarded. The SATA SSD, accessed through a different USB-to-SATA adapter, showed inconsistent TRIM behaviour. Experiment 4 shows that the same 
+class of limitation applies to \texttt{ATA Security} and \texttt{SANITIZE} commands: these commands are not reliably forwarded by USB bridges.
+
+The implication is that drive-level sanitization commands cannot be assumed to execute correctly when a USB bridge is present in the connection path. Organisations 
+attempting to sanitize SSDs through USB adapters may believe the operation succeeded when in fact the command was never delivered to the drive. This is a practical 
+verification failure that compounds the broader verifiability crisis discussed in Section 2.3.
+
+The experiment also illustrates a distinction between two failure modes. The \texttt{--security-erase} command produced an explicit error, which at least informed the 
+user that the operation had not been performed. The \texttt{--sanitize-*} commands produced no output, leaving the user with no indication of success or failure. The 
+second mode is more dangerous because it can be mistaken for success. A more robust sanitization procedure would require confirmation from the drive itself, not merely 
+the absence of an error message from the host-side tool.
+
+
+\subsection*{Legal and Compliance Implications}
+The experimental results show why the completion status returned by a storage device cannot automatically be treated as conclusive proof of secure deletion. The thesis 
+identifies a verification gap across several deletion techniques and notes that cryptographic erasure, controller-level commands, and other methods may provide limited 
+visibility into the physical state of the medium. This does not make accountability impossible. It means that a controller must combine technical evidence with 
+governance evidence and must avoid making claims stronger than the evidence supports.
+
+The experiments can therefore support legal compliance in three ways. First, they can help determine whether a deletion method is suitable for a particular storage 
+technology. Second, they can identify conditions under which a successful command may not correspond to complete sanitisation. Third, they can define the limitations 
+that must be disclosed and managed when the controller documents the deletion process.
+
+The appropriate compliance statement is consequently not that a controller has proved the physical destruction of every copy in every possible state. It is that the 
+controller used a method appropriate to the medium and risk, executed it under controlled conditions, verified the result to the extent technically possible, addressed 
+known copies and exceptions, and retained sufficient evidence to demonstrate that the erasure obligation was handled responsibly.
+
+This distinction also explains why the absence of an independent verification method is itself a result with legal relevance. Where the technical evidence is weak, the 
+controller may need to use a stronger sanitisation method, such as cryptographic erasure with reliable key-management evidence, device-level sanitisation, or physical 
+destruction. A controller should not rely solely on a logical deletion event or an unverified vendor success signal where the consequences of residual data exposure are 
+significant.
 
 \section{Limitations of the Study}
 
@@ -35,3 +109,4 @@ correct because commands were not captured at the bridge-to-device boundary and 
 potential confounding variable rather than as a confirmed cause of the results. This limitation also affects comparisons between the two SSDs. The observed differences 
 cannot be attributed exclusively to NVMe and SATA interfaces because the devices were accessed through different connection paths. The findings are valid for the tested 
 configurations, but they should not be generalised without additional experiments using direct native SATA and PCle connections.
+

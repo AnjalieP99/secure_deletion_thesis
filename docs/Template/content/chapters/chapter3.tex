@@ -282,18 +282,11 @@ reported to quantify variability.
 The same experimental procedure, dataset-generation script, TRIM configuration, deletion procedure, and recovery procedure were applied to both storage devices. 
 Results were recorded separately for each device to account for differences in device implementation and controller behaviour.
 
-\subsection*{Limitations and Workarounds}
-
-\textbf{TRIM was not Recognized on USB Enclosure}: \\
-Initially, Ubuntu did not recognize TRIM support on the USB NVMe enclosure. This was because USB enclosure was unable to automatically pass the TRIM command to the NVMe 
-SSD. The Kernel had to be explicitly configured to enable the \texttt{unmap} feature, which is the SCSI equivalent of TRIM.
-
-
 \subsection{Experiment 3: Testing Recoverability at different fill levels and times intervals}
 
 Experiment 2 was repeated with the addition of a time delay between deletion and recovery to investigate how recoverability changed over time. The experiment was 
 conducted at different fill levels of the SSD to assess whether the amount of free space affected the persistence of deleted data. The experiment also recorded the 
-execution time of the fstrim operation in order to characterize the host-visible latency associated with issuing discard requests to the storage device. The below 
+execution time of the fstrim operation in order to characterize the host-visible latency associated with issuing discard requests to the storage device. An automated
 script was used to automate the process of wiping the drive,creating datasets, deleting them, waiting for a specified time interval, and then attempting recovery. 
 
 The experiment was performed using a controlled test environment in which the storage device was formatted with the ext4 filesystem. Before each experimental sequence, 
@@ -326,9 +319,9 @@ The experiment recorded the following variables for each iteration:
 \begin{enumerate}
     
 \item \textbf{Filesystem fill level}: representing the proportion of the filesystem occupied before the experimental dataset was created.
+\item \textbf{Recovery delay}: representing the time between completion of TRIM and the beginning of the forensic recovery attempt.
 \item \textbf{TRIM execution time}: including real, user and system time reported by /usr/bin/time.
 \item \textbf{Amount of storage reported as trimmed}: by fstrim.
-\item \textbf{Recovery delay}: representing the time between completion of TRIM and the beginning of the forensic recovery attempt.
 \item \textbf{Number of recovered files}: as reported by the recovery output.
 \end{enumerate}
 
@@ -345,3 +338,21 @@ of the recoverability of deleted data under TRIM-enabled and TRIM-disabled condi
 Five seperate runs were performed for each storage device, fill level, and TRIM condition. The repeated runs were intended to assess whether the results were reproducible
 or whether the storage devices produced variable outcomes under nominally identical conditions. Each run used the same dataset allocation, deletion procedure, and recovery method.
 
+\subsection{Experiment 4: Cryptographic Erase Attempt}
+Following the TRIM and recovery experiments, an attempt was made to test drive-level sanitization using the ATA command set. The objective was to evaluate whether 
+cryptographic erase and block erase sanitization commands could be executed through the tested connection path, and to compare their effectiveness against TRIM-based 
+deletion.
+
+Two command sets were attempted:
+
+\begin{enumerate}
+    \item \textbf{ATA Security Erase} (\texttt{hdparm --security-erase}), which invokes the legacy ATA Security feature set.
+    \item \textbf{ATA SANITIZE} (\texttt{hdparm --sanitize-crypto-scramble} and \texttt{hdparm --sanitize-block-erase}), which invokes the newer \texttt{SANITIZE} 
+    feature set introduced in ATA ACS-4.
+\end{enumerate}
+
+Before each attempt, the drive's identify data was examined using \texttt{hdparm -I} to confirm support for the relevant feature sets. The SATA SSD reported support for 
+both the \texttt{Security Mode} feature set and the \texttt{SANITIZE} feature set, including \texttt{BLOCK\_ERASE\_EXT}.
+
+The commands were issued with the \texttt{--yes-i-know-what-i-am-doing} flag, which is required by \texttt{hdparm} to acknowledge the destructive nature of the operation. 
+Status queries were attempted using \texttt{hdparm --sanitize-status} to determine whether any sanitize operation had been accepted by the drive.

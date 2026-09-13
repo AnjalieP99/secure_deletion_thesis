@@ -13,3 +13,9 @@ interface effects. Future work should include more SSD models, different bridge 
 observation periods. Recovery should also be attempted using more than one forensic method, including specialised laboratory techniques where available. These changes 
 would improve the external validity of the framework and help determine whether atypical recovery results arise from SSD implementation, bridge behaviour, filesystem 
 configuration, or the limits of the recovery procedure.
+
+Future work should also evaluate cryptographic erase and block erase sanitization commands using direct native connections. The present study was unable to test these 
+commands because the USB bridge did not forward them to the drive. Repeating the experiment with the SATA SSD connected directly to a native SATA port would allow the 
+effectiveness and latency of ATA Security Erase, SANITIZE Crypto Scramble, and SANITIZE Block Erase to be measured and compared against TRIM and overwriting. The same 
+applies to the NVMe SSD, which should be tested through a direct M.2 or PCIe connection using the \texttt{nvme sanitize} command. These experiments would complete the 
+comparison matrix by adding measured results for the drive-level sanitization techniques that are currently discussed only theoretically in Chapter 2.

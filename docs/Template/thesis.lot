@@ -6,16 +6,17 @@
 \contentsline {table}{\numberline {1.1}{\ignorespaces Comparison of NIST SP 800-88 Sanitization Levels}}{15}{table.caption.6}%
 \contentsline {table}{\numberline {1.2}{\ignorespaces The Key Hierarchy Within an NVMe SED}}{17}{table.caption.7}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Summary of Anti-Forensic Techniques}}{21}{table.caption.8}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Secure Deletion Approaches by System Layer}}{26}{table.2.2}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Comprehensive Comparison of Secure Deletion Approaches for Flash Storage}}{31}{table.2.3}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Summary of Anti-Forensic Techniques}}{20}{table.caption.8}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Secure Deletion Approaches by System Layer}}{25}{table.2.2}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Comprehensive Comparison of Secure Deletion Approaches for Flash Storage}}{30}{table.2.3}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Dataset Allocation for the TRIM Recovery Experiment}}{62}{table.caption.27}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Dataset Allocation for the TRIM Recovery Experiment}}{61}{table.caption.27}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Data Recovery Results After TRIM on NVMe SSD}}{73}{table.caption.39}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Data Recovery Results After TRIM on SATA SSD}}{75}{table.caption.42}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Recovery Results}}{80}{table.caption.46}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Recovery Time Results}}{81}{table.caption.47}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Data Recovery Results After TRIM on NVMe SSD}}{72}{table.caption.38}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Data Recovery Results After TRIM on SATA SSD}}{74}{table.caption.41}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Recovery Results}}{79}{table.caption.46}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Recovery Time Results}}{80}{table.caption.47}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Results of ATA Sanitization Command Attempts}}{80}{table.caption.48}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

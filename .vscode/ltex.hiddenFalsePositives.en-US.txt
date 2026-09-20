@@ -1,0 +1,2 @@
+{"rule":"SMALL_NUMBER_OF","sentence":"^\\QThe deleted datasets under the nominal TRIM-enabled condition produced only a small number of signatures in the first two runs and no signatures in the remaining three runs.\\E$"}
+{"rule":"SMALL_NUMBER_OF","sentence":"^\\QBy comparison, the standard deviation for DS10 was only approximately 0.50 percentage points because the dataset produced a small number of signatures in only the first run and zero signatures thereafter.\\E$"}

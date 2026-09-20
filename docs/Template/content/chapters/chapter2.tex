@@ -21,11 +21,11 @@ technical and ethical challenges that surround secure deletion.
 The field of digital forensics is founded on the assumption that traces of user activity persist 
 within digital systems and can be extracted for analysis and attribution. Anti-Forensics 
 challenges this assumption by allowing the deliberate use of various techniques, procedures, 
-tools and stratergies to obstruct the collection of digital evidences from a computer system. The 
+tools and strategies to obstruct the collection of digital evidences from a computer system. The 
 main objective of these methodologies are to hinder Data Collection and impede Forensic 
 investigations. These techniques aim to obscure, alter, or destroy digital evidence in ways that 
 reduce the likelihood of recovery or interpretation. Anti-Forensics Techniques can be categorized 
-into four distinct categories based on their approach: \textbf{data hiding, artefact deletion, obfuscation of traces, and attacks on forensic tools and methods.} \cite{SystematicReview} 
+into four distinct categories based on their approach: \textbf{data hiding, artifact deletion, obfuscation of traces, and attacks on forensic tools and methods.} \cite{SystematicReview} 
 
 \begin{table}[htbp]
     \centering
@@ -108,9 +108,9 @@ At this layer, the device driver cannot distinguish between valid data and delet
 guidance from higher layers — a limitation that motivates the cross-layer approaches described in 
 latter section.
 
-\subsubsection{File System Layer: In-Place Updates}
+\subsubsection{filesystem Layer: In-Place Updates}
 For physical media whose device driver supports in-place updates (primarily magnetic hard drives), 
-secure deletion can be integrated directly into the file system:
+secure deletion can be integrated directly into the filesystem:
 
 \begin{itemize}
     \item \textbf{ext2 secure-deletion patch} : Adds a sensitive attribute for files. When a 
@@ -125,17 +125,17 @@ secure deletion can be integrated directly into the file system:
     affected files into a special secure-deletion directory where a background process (e.g., shred) 
     sanitizes them.
 
-    \item \textbf{Purgefs} : A file-system extension for any block-based file system that overwrites 
+    \item \textbf{Purgefs} : A filesystem extension for any block-based filesystem that overwrites 
     blocks when they are returned to the free list, supporting per-file sensitivity flags.
 
-    \item \textbf{Versioning file systems} : Uses all-or-nothing cryptographic transforms: each data 
+    \item \textbf{Versioning filesystems} : Uses all-or-nothing cryptographic transforms: each data 
     block is expanded into an encrypted block plus a key-sized tag. Deleting a file version requires 
     overwriting only the version's tags, leaving the shared encrypted data block intact but 
     undecipherable.
 
 \end{itemize}
 
-\subsubsection{File System Layer: No In-Place Updates}
+\subsubsection{filesystem Layer: No In-Place Updates}
 For flash memory and other media that do not permit in-place updates, overwriting is not a viable 
 strategy. These approaches instead work within the constraint that data can only be destroyed by 
 erasing an entire erase unit:
@@ -146,7 +146,7 @@ erasing an entire erase unit:
     overhead.
 
     \item \textbf{Batched compaction} : Accumulate deletions and compact all affected erase units 
-    intermittently, amortizing the erasure cost. Log-structured file systems already perform a 
+    intermittently, amortizing the erasure cost. Log-structured filesystems already perform a 
     similar technique (garbage collection), but prioritize space reclamation over deletion latency.
 
     \item \textbf{Per-file encryption} : Encrypts each file with a unique key stored in 
@@ -172,7 +172,7 @@ erasing an entire erase unit:
 
 
 \subsubsection{Application Layer}
-User-level approaches interact only through a POSIX-compliant file-system interface. They are easy to 
+User-level approaches interact only through a POSIX-compliant filesystem interface. They are easy to 
 deploy but have the least control over the physical medium:
 \begin{itemize}
     \item \textbf{Secure Erase utility (UCSD)} : A user-level application that invokes the hardware 
@@ -181,16 +181,16 @@ deploy but have the least control over the physical medium:
 
     \item \textbf{File-overwriting tools (srm, wipe, shred)}: Open the file from user space, overwrite 
     its contents multiple times with insensitive data (zeros, random patterns), then unlink. These tools 
-    fail silently on file systems that do not perform in-place updates, such as journaling or 
-    log-structured file systems.
+    fail silently on filesystems that do not perform in-place updates, such as journaling or 
+    log-structured filesystems.
 
-    \item \textbf{Free-space filling tools} Fill all unused blocks of the file system, thereby 
+    \item \textbf{Free-space filling tools} Fill all unused blocks of the filesystem, thereby 
     overwriting any deleted data that still resides in free blocks. Cost is proportional to free space; 
     on flash media, the high wear from filling can be mitigated by perpetually maintaining free space 
     within a target range.
 
     \item \textbf{Database secure deletion} MySQL and SQLite offer compile-time or run-time options to 
-    overwrite deleted records with zeros. However, this relies on the underlying file system to ensure 
+    overwrite deleted records with zeros. However, this relies on the underlying filesystem to ensure 
     that overwritten data is actually replaced at the physical level — an assumption that does not always 
     hold.
 
@@ -199,17 +199,17 @@ deploy but have the least control over the physical medium:
     key in the next time interval — the first cryptographic secure-deletion scheme.
 \end{itemize}
 \subsubsection{Cross-Layer Approaches}
-These approaches, as described in Chapter 1, bridge the file system and device-driver layers by passing 
+These approaches, as described in Chapter 1, bridge the filesystem and device-driver layers by passing 
 information about deleted blocks downward, enabling efficient sanitization at layers that otherwise 
 lack the semantics to identify deleted data:
 \begin{itemize}
-    \item \textbf{ TRIM (ATA DATA SET MANAGEMENT)} : The file system notifies the SSD controller about 
+    \item \textbf{ TRIM (ATA DATA SET MANAGEMENT)} : The filesystem notifies the SSD controller about 
     logical blocks that no longer store valid data. Originally designed as a performance optimization 
     (to prevent flash thrashing), TRIM gives the controller knowledge of which blocks are discardable. 
     However, TRIM is asynchronous — the OS receives no confirmation of physical erasure — and it provides 
     no mechanism to restrict notification to sensitive blocks only.
 
-    \item \textbf{TrueErase}: Adds a dedicated communication channel between the file system and the device 
+    \item \textbf{TrueErase}: Adds a dedicated communication channel between the filesystem and the device 
 driver. Unlike TRIM, TrueErase only notifies the driver about blocks belonging to files explicitly marked 
 as sensitive, and it triggers immediate sanitization rather than deferring to the controller's scheduler.
 
@@ -277,9 +277,9 @@ must consider.
 
 \subsubsection{Layer of Implementation}
 The layer at which a secure deletion technique operates fundamentally shapes its capabilities, each 
-abstraction layer between the user and the physical medium complicates secure deletion in a different 
-way: the controller may remap LBAs to hide bad blocks, the FTL performs out-of-place updates 
-that preserve old versions, the file system may journal writes that retain stale copies, and the OS 
+abstraction layer between the user and the physical medium complicates secure deletion differently: 
+the controller may remap LBAs to hide bad blocks, the FTL performs out-of-place updates 
+that preserve old versions, the filesystem may journal writes that retain stale copies, and the OS 
 cache may hold sensitive data in memory long after the file is unlinked. The choice of layer embodies 
 a fundamental trade-off — lower layers provide the strongest irrecoverability guarantee because no 
 abstraction stands between the deletion action and the storage cells, but they operate at full-device 
@@ -296,7 +296,7 @@ negligibly small latency,  while a delayed approach defers physical erasure to a
 collection or compaction cycle. On flash-based storage, this distinction is most visible in the zombie 
 time — the interval between when the FTL marks address mappings as invalid and when garbage collection 
 physically erases the NAND cells. During the zombie time, the data remains fully intact and recoverable 
-through low-level access, even though the file system and the OS consider it deleted.4 The duration of 
+through low-level access, even though the filesystem and the OS consider it deleted.4 The duration of 
 the zombie time is highly workload-dependent: under read-heavy workloads, the free-block pool remains 
 ample and garbage collection may never activate the blocks containing deleted pages, making the zombie 
 time effectively unbounded. Latency is therefore not a fixed property of a deletion mechanism but 
@@ -322,7 +322,7 @@ triggering further read-copy-erase cycles that amplify wear still more.
 Whether deletion guarantees survive power loss or system crash. In cryptographic secure-deletion schemes, 
 the key state (master key, key-encryption-key hierarchy, or PPRF state) and the on-disk data it protects 
 must remain in sync at all times: if a crash occurs after a key is rotated but before the on-disk key 
-table is updated, the file system is left with encrypted data whose decryption key is permanently lost 
+table is updated, the filesystem is left with encrypted data whose decryption key is permanently lost 
 or, worse, with stale keys that still grant access to supposedly deleted files. ERASER, the prior 
 state-of-the-art, suffers from precisely this problem — after a crash during master-key rotation, 
 laboratory experiments show that up to 64 files may become irrevocably lost or recoverable due to 
@@ -447,28 +447,28 @@ Analog sanitization & Device / FTL & Page & ~390 $\mu$s to ~1 ms per page & Low:
 Down-bit programming & Device / FTL & Page (MLC/TLC) & <500 $\mu$s per page (single operation) & Very low: TLC→SLC conversion requires one program operation; no erase needed & None: Power loss during mode conversion leaves page in undefined state & Low: Residual Vt distribution may still reveal original data pattern; forensic detection possible &  No: Not standard-approved; research only \\
 \midrule
 % Row 5
-TRIM (standard) & OS → FTL & LBA range (block) & Unbounded (seconds to indefinite – zombie time) & None : TRIM itself adds no writes; GC adds WAF 1.1–3× depending on workload & None: TRIM commands are asynchronous; power loss erases pending TRIM queue; data remains on NAND & None: Host receives no confirmation; controller may ignore TRIM entirely; no way to verify physical erasure &  No: Clear level only (NIST SP 800-88); does not guarantee physical removal \\
+TRIM (standard) & OS → FTL & LBA range (block) & Unbounded (seconds to indefinite - zombie time) & None : TRIM itself adds no writes; GC adds WAF 1.1-3x depending on workload & None: TRIM commands are asynchronous; power loss erases pending TRIM queue; data remains on NAND & None: Host receives no confirmation; controller may ignore TRIM entirely; no way to verify physical erasure &  No: Clear level only (NIST SP 800-88); does not guarantee physical removal \\
 \midrule
 % Row 6
-ZK-TRIM Immediate & FTL & Block & Bounded by GC execution time (I/O penalty: 68× normal operation)  & High: Compulsory garbage collection on every TRIM; forces valid page migration even when free blocks available  & None: Power loss during compulsory GC leaves victim block in partially erased state & None: Same as standard TRIM – no confirmation of physical erasure &  No: Research only; not deployed in commercial drives \\
+ZK-TRIM Immediate & FTL & Block & Bounded by GC execution time (I/O penalty: 68x normal operation)  & High: Compulsory garbage collection on every TRIM; forces valid page migration even when free blocks available  & None: Power loss during compulsory GC leaves victim block in partially erased state & None: Same as standard TRIM – no confirmation of physical erasure &  No: Research only; not deployed in commercial drives \\
 \midrule
 % Row 7
-ZK-TRIM Suspension & FTL & Block & Bounded  & Medium: ~60× I/O penalty compared to normal operation; fewer GC events than Immediate mode  & None: Power loss during suspension window or GC leaves data recoverable & None: Same as standard TRIM – no confirmation &  No: Research only; not deployed \\
+ZK-TRIM Suspension & FTL & Block & Bounded  & Medium: ~60x I/O penalty compared to normal operation; fewer GC events than Immediate mode  & None: Power loss during suspension window or GC leaves data recoverable & None: Same as standard TRIM – no confirmation &  No: Research only; not deployed \\
 \midrule
 % Row 8
-Secure Erase (ATA/ eMMC) & Controller & Block / Device & 2.5–8 seconds (device-level)  & Medium: Full block erase of every block; no valid page migration needed; one erase cycle per block  & None: Power loss during erase leaves some blocks erased, others untouched – inconsistent state & Low: Vendor-dependent; some drives return all-zero reads without physical erase (controller masking) ; no independent verification &  Partial: Clear level only (NIST SP 800-88); not Purge\\
+Secure Erase (ATA/ eMMC) & Contro- ller & Block / Device & 2.5-8 seconds (device-level)  & Medium: Full block erase of every block; no valid page migration needed; one erase cycle per block  & None: Power loss during erase leaves some blocks erased, others untouched – inconsistent state & Low: Vendor-dependent; some drives return all-zero reads without physical erase (controller masking) ; no independent verification &  Partial: Clear level only (NIST SP 800-88); not Purge\\
 \midrule
 % Row 9
-NVMe Sanitize Block Erase & Controller & Device & 5–8 seconds (small drive) to tens of minutes (1 TB+)  & Medium: One erase cycle per block; no valid page migration needed & None: Power loss during erase leaves device in inconsistent state; NVMe spec defines no recovery semantics & Low: Controller may report success without physical erase (masking); returns all-zero reads as abstraction layer lie  &  Yes: Purge level (NIST SP 800-88, IEEE 2883-2022) \\
+NVMe Sanitize Block Erase & Contro- ller & Device & 5-8 seconds (small drive) to tens of minutes (1 TB+)  & Medium: One erase cycle per block; no valid page migration needed & None: Power loss during erase leaves device in inconsistent state; NVMe spec defines no recovery semantics & Low: Controller may report success without physical erase (masking); returns all-zero reads as abstraction layer lie  &  Yes: Purge level (NIST SP 800-88, IEEE 2883-2022) \\
 \midrule
 % Row 10
-NVMe Sanitize Crypto Erase (key discard) & Controller & Device & ~0.22 seconds (capacity-independent)  & None: No NAND write operations; only key register overwritten  & Vulnerable: Power loss during key register write leaves old key partially overwritten; undefined behavior; no recovery spec  & None: Host receives completion status but cannot confirm key was destroyed; controller may preserve key in debug area or retired key table  &  Yes: Purge level (NIST SP 800-88, IEEE 2883-2022)  \\
+NVMe Sanitize Crypto Erase (key discard) & Contro- ller & Device & ~0.22 seconds (capacity-independent)  & None: No NAND write operations; only key register overwritten  & Vulnerable: Power loss during key register write leaves old key partially overwritten; undefined behavior; no recovery spec  & None: Host receives completion status but cannot confirm key was destroyed; controller may preserve key in debug area or retired key table  &  Yes: Purge level (NIST SP 800-88, IEEE 2883-2022)  \\
 \midrule
 % Row 11
-NVMe Sanitize Crypto Erase (full re-encryption) & Controller & Device & Minutes to hours (capacity-dependent)  & High: Rewrites every user block (decrypt with old MEK, encrypt with new MEK, write back) & Vulnerable: Power loss during re-encryption leaves some blocks with old key, some with new key – data may be partially unrecoverable or corrupt  & Low: Host sees completion but cannot verify each block was re-encrypted; controller may skip blocks  &  Yes: Purge level (vendor-dependent implementation) \\
+NVMe Sanitize Crypto Erase (full re-encryption) & Contro- ller & Device & Minutes to hours (capacity-dependent)  & High: Rewrites every user block (decrypt with old MEK, encrypt with new MEK, write back) & Vulnerable: Power loss during re-encryption leaves some blocks with old key, some with new key – data may be partially unrecoverable or corrupt  & Low: Host sees completion but cannot verify each block was re-encrypted; controller may skip blocks  &  Yes: Purge level (vendor-dependent implementation) \\
 \midrule
 % Row 12
-Cryptographic Erasure (per-block key) & OS / FS & Block / File & Milliseconds (key deletion only) & None: Key deletion only; no NAND writes & None: Power loss during key table update leaves key references inconsistent & None: No mechanism to confirm key was destroyed; key may remain in memory or swap  &  Yes: Purge level if key destruction is verifiable (assumption only)  \\
+Cryptogra- phic Erasure (per-block key) & OS / FS & Block / File & Milliseconds (key deletion only) & None: Key deletion only; no NAND writes & None: Power loss during key table update leaves key references inconsistent & None: No mechanism to confirm key was destroyed; key may remain in memory or swap  &  Yes: Purge level if key destruction is verifiable (assumption only)  \\
 \midrule
 % Row 13
 Eraser (tree-based CE) & Block device / Kernel & File & <1 second (branch revocation)  & None: Key operations only; no additional NAND writes beyond metadata  & Weak: TPM desync on crash; post-crash experiments show up to 64 files lost when master key rotation desynchronizes from on-disk file key table  & None: TPM black box; host cannot confirm master key was revoked; no audit trail  &  Partial: Meets Purge cryptographically but crash vulnerability creates compliance risk under GDPR Article 17  \\
@@ -480,16 +480,16 @@ Holepunch (PPRF-based CE) & Block device / Kernel & File & ~0.22 seconds (punctu
 TrueErase (cross-layer) & FS + Driver & File & Fast (immediate at driver notification)  & Low: Selective notification; only sensitive files trigger immediate actions; no blanket TRIM  & None: Power loss during driver notification leaves file in indeterminate state & None: No verification mechanism proposed  &  Partial: No standard approval; cross-layer approach not recognized by NIST  \\
 \midrule
 % Row 16
-SAFE (controller-level) & Controller & Device & Slow (multi-step: key erase + block erase + pattern write + re-erase)  & High: Triple erase  & Limited: Power loss during multi-step sequence leaves device inconsistent; verification pattern may be partially written  & Medium: Verification pattern written and checked; controller can attest completion; host can read pattern to confirm  &  Yes: Purge level + verifiable; but device-only \\
+SAFE (controller-level) & Contro- ller & Device & Slow (multi-step: key erase + block erase + pattern write + re-erase)  & High: Triple erase  & Limited: Power loss during multi-step sequence leaves device inconsistent; verification pattern may be partially written  & Medium: Verification pattern written and checked; controller can attest completion; host can read pattern to confirm  &  Yes: Purge level + verifiable; but device-only \\
 \midrule
 % Row 17
-RedFlash (OOB duplicate chain) & FTL / Controller & Page / Block & Medium (chain traversal + erase; no specific benchmark)  & Medium: Additional OOB writes to maintain duplicate chain; each write adds metadata  & None: Power loss during chain update leaves duplicates untracked; OOB metadata may be corrupted  & None: No verification mechanism; depends on correct chain traversal  &  No: Research only; not deployed  \\
+RedFlash (OOB duplicate chain) & FTL / Contro- ller & Page / Block & Medium (chain traversal + erase; no specific benchmark)  & Medium: Additional OOB writes to maintain duplicate chain; each write adds metadata  & None: Power loss during chain update leaves duplicates untracked; OOB metadata may be corrupted  & None: No verification mechanism; depends on correct chain traversal  &  No: Research only; not deployed  \\
 \midrule
 % Row 18
-Secure Copy-Back & FTL / Controller & Page & Low (single program operation)  & Low: No extra erase; programs source page with random data or deletion pulses  & None: Power loss during source page programming leaves partial destruction & None: No verification that source page was actually sanitized  &  No: Research only; not deployed  \\
+Secure Copy-Back & FTL / Contro- ller & Page & Low (single program operation)  & Low: No extra erase; programs source page with random data or deletion pulses  & None: Power loss during source page programming leaves partial destruction & None: No verification that source page was actually sanitized  &  No: Research only; not deployed  \\
 \midrule
 % Row 19
-SAS Deletion (scrub-aware) & FTL / Controller & Page / Block & Optimized: 82\% reduction in scrubbing latency (~70 µs per page)  & Controlled: Scrub budget limits total scrubs per block; valid page migration when budget exceeded  & None: Same as scrubbing – power loss leaves indeterminate state & Medium: Cell-count verification possible; Vt distribution analysis  &  No: Research only; not standard-approved  \\
+SAS Deletion (scrub-aware) & FTL / Contro- ller & Page / Block & Optimized: 82\% reduction in scrubbing latency (~70 µs per page)  & Controlled: Scrub budget limits total scrubs per block; valid page migration when budget exceeded  & None: Same as scrubbing – power loss leaves indeterminate state & Medium: Cell-count verification possible; Vt distribution analysis  &  No: Research only; not standard-approved  \\
 \midrule
 % Row 19
 Physical destruction & Physical & Device & Permanent (seconds to minutes, irreversible) & N/A: Device destroyed; no further writes possible & N/A: Device non-operational after destruction & High: Physical inspection can confirm destruction (e.g., crushed, shredded, incinerated) &  Yes: Destroy level (NIST SP 800-88, IEEE 2883-2022)  \\
@@ -508,7 +508,7 @@ The secure deletion literature spans a wide range of approaches and evaluation m
 across the literature reveals patterns and several persistent challenges in secure deletion 
 techniques, particularly in modern storage environments. 
 
-\textbf{Layer Seperation Problem} : 
+\textbf{Layer Separation Problem} : 
 
 Secure deletion in a modern storage system is fundamentally 
 complicated by the layered architecture through which data passes. Each layer - application, file 
@@ -516,7 +516,7 @@ system, block device, controller (FTL), and physical medium -- provides its own 
 layer above and introduces its own abstraction over the layer below. At the physical layer one can 
 ensure true irrecoverability, but at the user layer one can easily identify which data object to 
 delete. The two capabilities never coincide at the same layer. The FTL abstracts NAND flash behind 
-a standard block-device interface so that traditional file systems remain compatible, but this 
+a standard block-device interface so that traditional filesystems remain compatible, but this 
 same abstraction hides the physical state of data from the host. When raw flash is accessed 
 directly, a different controller interface is exposed; when accessed through an FTL, overwriting a 
 logical block does not replace its physical content -- it creates two versions, one of which 
@@ -527,7 +527,7 @@ deletion in one layer cannot eliminate data because leakage may persist in the o
 is no one ideal layer for secure deletion because the criteria are in tension. Low-layer approaches 
 (controller-level block erasure) require fewer assumptions about the interface's behavior and 
 provide physical irrecoverability, but cannot select individual data objects for deletion. 
-High-layer approaches (file-system-level or cryptographic erasure) let users clearly mark which 
+High-layer approaches (filesystem level or cryptographic erasure) let users clearly mark which 
 data to delete, but must trust that the layers beneath faithfully execute the instruction. This is 
 not an implementation bug; it is a structural property of layered storage architectures, and no 
 single-layer solution can close it.
@@ -577,7 +577,7 @@ minutes, hours, or longer. Purging and ballooning techniques address this by del
 the device with junk data to force GC, but the erasing time scales with device capacity and write 
 speed. Performance overhead is not limited to erasure-based methods, even scrubbing incurs a 
 performance decrease due to overhead. Every performance-enhancing mechanism inside SSDs is 
-counterproductive to secure deletion guarantees.The pattern is clear: at one end, cryptographic 
+counterproductive to secure deletion guarantees. The pattern is clear: at one end, cryptographic 
 erasure achieves sub-second deletion latency regardless of device usage but provides no physical 
 guarantee. At the other end, immediate-mode compulsory GC provides bounded physical erasure but 
 at a 68x I/O penalty. There is currently no technique that achieves both bounded physical erasure 
@@ -622,7 +622,7 @@ that scale, crash events during the deletion window are a statistical certainty 
 corner case. Regulatory standards that specify a deletion outcome but not the reliability of the 
 deletion process create a dangerous gap: a provider can certify compliance based on policy while 
 the technical mechanism silently fails under crash conditions. Shastri et al.'s identification of 
-six GDPR anti-patterns in cloud-scale systems -- storing data without clear deletion timelines, 
+six GDPR antipatterns in cloud-scale systems -- storing data without clear deletion timelines, 
 reusing data indiscriminately, and risk-agnostic data processing -- reinforces that achieving 
 regulatory compliance requires systemic architectural changes, not point solutions. Crash 
 consistency is a prime example of a systemic architectural requirement that regulation has not yet 
@@ -657,7 +657,7 @@ collected, consent has been withdrawn and no other legal ground applies, the dat
 unlawfully processed, or erasure is required by Union or Member State law. The right is not absolute 
 and the Article 17(3) provides exceptions where continued processing is necessary for freedom of expression 
 and information, compliance with a legal obligation, the performance of a task in the public interest, 
-public-health reasons, archiving or research purposes, or the establishment, exercise, or defence of legal 
+public-health reasons, archiving or research purposes, or the establishment, exercise, or defense of legal 
 claims. Recital 65 explains that the right to erasure is particularly relevant where continued retention 
 infringes the GDPR or other applicable law. It also confirms that further retention may remain lawful 
 where it is necessary to protect competing interests, including freedom of expression and information, 
@@ -668,7 +668,7 @@ other controllers, to inform them of the request to erase links, copies, or repl
 Article 5(2) is the point at which the legal framework becomes directly relevant to secure deletion. It 
 requires the controller to be responsible for, and able to demonstrate compliance with, the GDPR principles. 
 This accountability obligation must be read together with the storage-limitation principle in Article 5(1)(e) 
-and the requirement in Article 32 to implement technical and organisational measures appropriate to the risks 
+and the requirement in Article 32 to implement technical and organizational measures appropriate to the risks 
 of processing \cite{gdpr2016}. The GDPR therefore establishes an obligation to erase personal data when the legal 
 conditions are satisfied, but it does not define a single technical meaning of “erasure.” It does not require every 
 controller to use overwriting, cryptographic erasure, block erasure, or physical destruction in every case. The 
@@ -684,7 +684,7 @@ data protection frameworks, and obligates controllers to take reasonable steps, 
 measures, to inform other controllers processing the data of the erasure request. Politou et al. 
 argue that enforcement is feasible provided that implementation guidelines and low-level business 
 specifications are put in place in a clear, cross-platform manner \cite{Politou2018}.
-Shastri et al. (2019) identify six GDPR anti-patterns arising from the design and operation of 
+Shastri et al. (2019) identify six GDPR antipatterns arising from the design and operation of 
 modern cloud-scale systems: storing data without a clear timeline for deletion, reusing data 
 indiscriminately, creating walled gardens and black markets, risk-agnostic data processing, hiding 
 data breaches, and making unexplainable decisions \cite{Shastri2019gdpr}. They highlight that 
@@ -707,18 +707,18 @@ The lifecycle of storage equipment creates a separate and concrete deletion risk
 controller while still containing recoverable personal data in user-accessible space, remapped blocks, reserved areas, temporary 
 files, or other parts of the storage architecture. Disposal and reuse must therefore be treated as data-protection operations 
 rather than as ordinary asset-management activities. The Italian Garante addressed this issue in its provision of 13 October 
-2008 concerning electrical and electronic waste and the security of personal data. The Garante required organisations that dispose 
-of, reuse, or recycle equipment containing personal data to adopt suitable measures to prevent unauthorised access. For reuse or 
+2008 concerning electrical and electronic waste and the security of personal data. The Garante required organizations that dispose 
+of, reuse, or recycle equipment containing personal data to adopt suitable measures to prevent unauthorized access. For reuse or 
 recycling, the equipment must contain no personal data that remain present or intelligible. The measures may include secure erasure, 
 making the data unintelligible, or physical destruction of the relevant media, taking account of the state of the art and the 
-sensitivity of the information \cite{garante2008_electronic_waste}. The Garante’s accompanying practical guidance also emphasises 
+sensitivity of the information \cite{garante2008_electronic_waste}. The Garante’s accompanying practical guidance also emphasizes 
 that ordinary operating-system deletion is not sufficient for secure disposal. It describes secure erasure, overwriting, degaussing
  where appropriate, and physical destruction as possible measures, depending on the type of medium and the required level of 
  protection \cite{garante2008_secure_deletion}. ISO/IEC 27040:2024 provides a more current technical framework for storage 
  security. It covers the protection of storage devices and media, related management activities, applications and services, and the 
  period during which equipment remains in use and after its end of use or end of life \cite{iso27040_2024}. The standard is therefore 
  relevant to the  selection and documentation of deletion methods across different storage technologies, including storage devices whose 
- internal  behaviour is not fully visible to the host system. ISO/IEC 27001:2022 Annex A control 7.14 addresses the secure disposal or 
+ internal  behavior is not fully visible to the host system. ISO/IEC 27001:2022 Annex A control 7.14 addresses the secure disposal or 
  reuse of equipment. Its requirement is that equipment containing storage media be verified to ensure that sensitive data and licensed 
  software have been removed or securely overwritten before disposal or reuse \cite{iso27001_2022}. The control is significant because it expressly 
  includes verification. A deletion command or a user-interface message indicating completion should not automatically be treated as 
@@ -726,9 +726,9 @@ that ordinary operating-system deletion is not sufficient for secure disposal. I
  accurately. ISO/IEC 27001 defines requirements for an information-security management system, whereas ISO/IEC 27002 provides guidance on 
  information-security controls, including the control corresponding to secure disposal or reuse \cite{iso27002_2022}. Compliance with an ISO 
  standard does not, by itself, establish compliance with the GDPR. The standards provide a risk-management and control framework that may 
- help a controller demonstrate appropriate technical and organisational measures.The importance of this guidance for modern flash storage 
+ help a controller demonstrate appropriate technical and organizational measures. The importance of this guidance for modern flash storage 
  is not that its older overwriting examples remain universally appropriate. Rather, it demonstrates that disposal requires a deliberate and 
- technically suitable sanitisation decision.
+ technically suitable sanitization decision.
 
 \subsection{Accountability and evidencing deletion}
 The technical results of this thesis become legally significant through Article 5(2). If no deletion method can always be verified independently 
@@ -745,7 +745,7 @@ processor-held copies were located.
 
 \item The controller assessed whether Article 17 applied and recorded any applicable exception under Article 17(3).
 
-\item The controller selected a sanitisation method appropriate to the storage medium, the sensitivity of the data, the threat model, and 
+\item The controller selected a sanitization method appropriate to the storage medium, the sensitivity of the data, the threat model, and 
 the intended disposal or reuse of the equipment.
 
 \item The deletion operation produced an authenticated record identifying the relevant asset, the deletion scope, the method used, the time 
@@ -836,7 +836,7 @@ file-granularity deletion is achievable with acceptable performance overhead \ci
 On the tension side, regulatory mandates require timely and demonstrable deletion, but technical 
 constraints often prevent this. Large cloud providers describe deletion as an iterative process 
 that can take up to 180 days due to data replication and backup cycles \cite{Birrell2024SoK}, far 
-exceeding the timelines implied by Article 17 of the GDPR. The six GDPR anti-patterns identified by 
+exceeding the timelines implied by Article 17 of the GDPR. The six GDPR antipatterns identified by 
 Shastri et al. (2019) in cloud-scale systems — storing data without clear deletion timelines, 
 reusing data indiscriminately, and risk-agnostic data processing, among others — suggest that 
 achieving regulatory compliance requires systemic architectural changes rather than point solutions \cite{Shastri2019gdpr}.

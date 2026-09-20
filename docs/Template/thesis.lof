@@ -6,9 +6,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Mean Recovery on NVMe SSD}}{72}{figure.caption.39}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Mean Recovery on SATA SSD}}{74}{figure.caption.42}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Standard Deviation of Recovery on NVMe and SATA SSDs}}{77}{figure.caption.44}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Mean Recovery on NVMe SSD}}{73}{figure.caption.39}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Mean Recovery on SATA SSD}}{75}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Standard Deviation of Recovery on NVMe and SATA SSDs}}{78}{figure.caption.44}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Trim latency across runs}}{83}{figure.caption.51}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Mean time for trim execution across fill levels and wait times}}{84}{figure.caption.52}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Mean recovery on NVMe and SATA SSDs with TRIM disabled}}{86}{figure.caption.56}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

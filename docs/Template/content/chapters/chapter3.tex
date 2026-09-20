@@ -8,7 +8,7 @@ consistently it behaves across storage devices, and what limitations affect veri
 Secure deletion is difficult to evaluate because the deletion request issued by the operating system does not necessarily correspond 
 to the physical removal of data from the storage medium. In NAND flash storage, the Flash Translation Layer (FTL) maps logical block 
 addresses to physical pages and performs operations such as wear leveling, garbage collection, and out-of-place updates. These 
-processes may create or preserve physical copies of data that are no longer visible through the file system. Consequently, a file may 
+processes may create or preserve physical copies of data that are no longer visible through the filesystem. Consequently, a file may 
 appear to have been deleted at the file-system level while remnants remain recoverable at lower storage layers.
 
 Previous experimental studies have used different devices, workloads, deletion procedures, recovery methods, and performance metrics. 
@@ -25,7 +25,7 @@ between storage devices.
 \section{Research Objectives}
 The aim of this thesis is to develop an experimental framework to evaluate the effectiveness, performance, and practical limitations of 
 secure deletion techniques in modern storage environments. Although many secure deletion mechanisms have been proposed in the literature, 
-their behavior in real-world systems is difficult to verify because of the abstraction layers introduced by file systems, flash 
+their behavior in real-world systems is difficult to verify because of the abstraction layers introduced by filesystems, flash 
 translation layers (FTLs), and storage controllers. This work therefore focuses on outcomes that are observable and measurable from the 
 host perspective.
 
@@ -39,7 +39,7 @@ The objectives of this study are:
     cryptographic erase operations.
     \item To examine how filesystem and storage-layer behavior, such as journaling and FTL remapping, influences the effectiveness of 
     secure deletion.
-    \item To analyse differences in secure deletion behavior across consumer and enterprise storage devices.
+    \item To analyze differences in secure deletion behavior across consumer and enterprise storage devices.
     \item To identify the practical limitations of host-side verification and establish a methodology for evaluating secure deletion techniques 
     under realistic operating conditions.
 
@@ -59,7 +59,7 @@ filesystem utilization levels?
 
 \textbf{RQ4:} How do filesystem mechanisms and flash translation layer behavior affect the effectiveness of secure deletion techniques?
 
-\textbf{RQ5:} How does secure deletion behavior vary across different SSD implementations and vendors?
+\textbf{RQ5:} How does secure deletion behavior vary across different SSD vendor-and-connection-path configurations?
 
 \textbf{RQ6:} What are the practical limitations of verifying secure deletion from the host side, and how can these limitations be incorporated 
 into an experimental evaluation framework?
@@ -72,7 +72,7 @@ into an experimental evaluation framework?
 
 The experiments were conducted using an Acer Nitro AN515-58 laptop operating as the host system. The system ran Ubuntu 26.04 LTS with a Linux 
 7.0.0-28-generic kernel on an x86-64 architecture. The host system firmware version was recorded as V2.21. The use of a consistent host 
-operating system and kernel was intended to reduce variation in file-system behaviour, device-driver operation, command execution, and 
+operating system and kernel was intended to reduce variation in filesystem behavior, device-driver operation, command execution, and 
 communication with the storage devices. The host system provided the operating environment through which the deletion commands, device-inspection 
 utilities, system-management commands, and storage-analysis procedures were executed. The experiments were performed using administrative privileges 
 where required because device-level inspection and sanitization commands cannot normally be executed by an unprivileged user.
@@ -91,7 +91,7 @@ Revision 3.0. The device had a capacity of approximately 128 GB, a 2.5-inch form
 included the ATA SANITIZE feature set, the BLOCK ERASE EXT command, Data Set Management TRIM support, and enhanced security erase support. The two devices 
 were used to examine whether differences in storage interface, device implementation, firmware, and supported sanitization commands affected deletion latency 
 and post-deletion data recoverability. The devices were not treated as interchangeable. Results were recorded separately for each model because storage 
-behaviour varied between controller implementations, firmware versions, capacities, and device interfaces. This device will be referred to as the \textbf{SATA SSD} in the remainder 
+behavior varied between controller implementations, firmware versions, capacities, and device interfaces. This device will be referred to as the \textbf{SATA SSD} in the remainder 
 of this thesis and it was connected to the host system using a USB 3.0 to SATA adapter.
 
 The connection path between the host system and each SSD formed an additional component of the experimental environment. Since the NVMe SSD was not compatible with the 
@@ -102,20 +102,20 @@ may be translated into an equivalent command, partially forwarded, delayed, modi
 communicate with the bridge using a command such as SCSI UNMAP, while the bridge is responsible for translating that request into the command format understood by the 
 underlying SATA or NVMe device. 
 
-The influence of this connection path became evident during the preparation of the NVMe experiment. Ubuntu did not initially recognise discard support through the USB 
-enclosure. The enclosure required an explicit configuration that enabled the relevant unmap behaviour. After the configuration was applied, the discard capability was 
+The influence of this connection path became evident during the preparation of the NVMe experiment. Ubuntu did not initially recognize discard support through the USB 
+enclosure. The enclosure required an explicit configuration that enabled the relevant unmap behavior. After the configuration was applied, the discard capability was 
 verified using the reported discard-granularity and discard-maximum values. The verification confirmed that the host system exposed a discard capability through the 
 connection path. However, this verification did not independently demonstrate that every discard request was received and processed by the SSD controller, nor did it 
 confirm that the controller physically erased the corresponding NAND pages. The reported capability should therefore be interpreted as evidence of host-visible command 
 support rather than proof of end-to-end TRIM or UNMAP execution. This issue is particularly relevant when comparing the NVMe and SATA results. Differences in recovery 
 may have resulted from the SSD controller and firmware, but they may also have been influenced by the USB enclosure, the USB-to-SATA adapter, command translation, 
-driver behaviour, or the manner in which each bridge handled discard requests. The connection path was therefore retained as a methodological limitation and treated as 
+driver behavior, or the manner in which each bridge handled discard requests. The connection path was therefore retained as a methodological limitation and treated as 
 a potential source of variability.
 
 
 \section{Experiments Conducted}
 
-\subsection{Experiment 1: TRIM and Filesystem-Level Data Recoverability}
+\subsection{Experiment 1: TRIM and filesystem-Level Data Recoverability}
 
 This experiment was conducted to investigate the effect of the TRIM operation on the recoverability of deleted data at the filesystem level. The objective was to 
 determine whether information associated with a deleted file remained accessible through filesystem metadata, inode structures, the ext4 journal, or the previously 
@@ -125,7 +125,7 @@ the state of the filesystem before and after deletion and TRIM.
 
 A 100 MB test file containing random, non-compressible data was created on an ext4 filesystem using a 4096-byte block size. The inode number, file size, block 
 allocation, filesystem journal state, and superblock information were recorded before deletion. The test file was then deleted using the rm command, followed by 
-synchronisation and an explicit fstrim operation. The following tools were used for analysis:
+synchronization and an explicit fstrim operation. The following tools were used for analysis:
 
 \begin{itemize}
     \item {ext4magic}: A recovery tool capable of extracting deleted files from ext3/ext4 filesystems using journal data
@@ -139,7 +139,7 @@ synchronisation and an explicit fstrim operation. The following tools were used 
 
 The investigation consisted of four complementary stages.
 First, the inode was examined using debugfs. The analysis recorded whether the inode remained allocated, whether the block pointers were still present, whether the size 
-and block count had changed, and whether the inode remained associated with a pathname. Second, the ext4 journal was examined using dumpe2fs and debugfs. The purpose was 
+and block count had changed, and whether the inode remained associated with a path name. Second, the ext4 journal was examined using dumpe2fs and debugfs. The purpose was 
 to determine whether the deletion operation had been recorded in the journal and whether the journal contained file data or only metadata updates. Third, recovery was 
 attempted using ext4magic. The tool was directed to the relevant inode and, in a secondary attempt, to the journal start block. This allowed the experiment to test 
 whether the journal contained sufficient information to reconstruct the deleted file. Fourth, the previously allocated data blocks were read directly using dd and 
@@ -154,7 +154,7 @@ the number of dataset-specific signatures recovered under TRIM-enabled and TRIM-
 the Ubuntu host machine using and tests were performed on the NVMe and SATA SSDs. Before each experimental run, the beginning of the storage device was overwritten with 
 zeros to remove existing partition and filesystem structures and the device was prepared with a new GPT partition table and ext4 filesystem.
 
-Discard behaviour was controlled using the filesystem mount options \texttt{discard} and \texttt{nodiscard}. The TRIM-enabled condition used the discard mount option, 
+Discard behavior was controlled using the filesystem mount options \texttt{discard} and \texttt{nodiscard}. The TRIM-enabled condition used the discard mount option, 
 while the TRIM-disabled condition used nodiscard. In the TRIM-enabled condition, an explicit fstrim operation was also performed after deletion.
 
 The experiment was repeated five times for each storage configuration. The repeated runs were intended to assess whether the results were reproducible or whether the 
@@ -177,13 +177,13 @@ The experiment therefore treated the following as independent or controlled fact
 The connection path was included as an important methodological variable because neither SSD was connected directly through a native PCIe or SATA interface. The NVMe 
 device was accessed through a JMicron JMS583 USB enclosure, while the SATA device was accessed through a USB-to-SATA adapter. The host-level confirmation did not 
 independently prove that every discard request was correctly forwarded to the SSD controller. It confirmed only that the operating system exposed a discard-capable 
-path. The effective TRIM condition should therefore be understood as the behaviour of the complete host, driver, USB transport, bridge, and SSD configuration.
+path. The effective TRIM condition should therefore be understood as the behavior of the complete host, driver, USB transport, bridge, and SSD configuration.
 
 \subsection*{Dataset Generation and Allocation}
 
 To enable precise measurement of data recovery, a custom data generation script was developed. The script created unique, searchable signatures within each dataset, allowing 
 recovery success to be quantified by counting the number of signatures found after deletion. Each dataset used a dataset-specific signature identifier, allowing recovered 
-content to be attributed to its original dataset and enabling recovery to be quantified consistently across experimental conditions.Each dataset contained repeated-signature 
+content to be attributed to its original dataset and enabling recovery to be quantified consistently across experimental conditions. Each dataset contained repeated-signature 
 text files, multiple small text files, binary files containing embedded signatures, and checksum information. The mixture was intended to test recovery of both text-based evidence and binary content. 
 
 The experiment included three categories of datasets:
@@ -255,13 +255,13 @@ For each run, the following procedure was applied:
 
 PhotoRec was used to attempt recovery of deleted datasets. PhotoRec is a widely used open-source data recovery tool that can recover lost files from various storage 
 devices. The recovery process involved scanning the entire SSD for recoverable files and searching for the unique signatures embedded in the datasets. 
-PhotoRec performes full file carving based on file headers and footers and is able to recover complete files regardless of the filesystem. It is interactive and 
+PhotoRec performs full file carving based on file headers and footers and is able to recover complete files regardless of the filesystem. It is interactive and 
 requires user input to specify the source device, file types to recover, and destination for recovered files. PhotoRec was configured to scan the whole partition rather 
 than only unallocated space. Scanning the whole partition is necessary when the filesystem may be corrupted or when deleted data may reside in areas not marked as 
-unallocated . This approach maximises the chance of recovering residual data from previously allocated blocks. And Recovered files were written to a separate storage 
+unallocated. This approach maximizes the chance of recovering residual data from previously allocated blocks. And Recovered files were written to a separate storage 
 device within the host system's internal storage to prevent overwriting the target SSD
 
-Since PhotoRec cannot recover original filenames or filesystem metadata , identification of recovered content relied entirely on the embedded signatures. After PhotoRec 
+Since PhotoRec cannot recover original filenames or filesystem metadata, identification of recovered content relied entirely on the embedded signatures. After PhotoRec 
 completed the recovery process, the recovered files were analyzed to determine the presence of the unique signatures from the deleted datasets. The number of 
 successfully recovered signatures was recorded for each dataset, allowing for a quantitative assessment of data recoverability under different TRIM conditions.
 
@@ -277,17 +277,17 @@ calculated as:
 A recovery rate of 100\% indicates that all expected signature occurrences were identified in the recovery output, whereas a recovery rate of 0\% indicates that no 
 matching signatures were identified. The metric represents host-side recovery by the specified forensic procedure and should not be interpreted as a direct measurement 
 of the physical state of NAND flash. Recovery rates were calculated as the mean number of recovered signatures across the five runs, with standard deviation 
-reported to quantify variability.
+reported quantifying variability.
 
 The same experimental procedure, dataset-generation script, TRIM configuration, deletion procedure, and recovery procedure were applied to both storage devices. 
-Results were recorded separately for each device to account for differences in device implementation and controller behaviour.
+Results were recorded separately for each device to account for differences in device implementation and controller behavior.
 
 \subsection{Experiment 3: Testing Recoverability at different fill levels and times intervals}
 
 Experiment 2 was repeated with the addition of a time delay between deletion and recovery to investigate how recoverability changed over time. The experiment was 
 conducted at different fill levels of the SSD to assess whether the amount of free space affected the persistence of deleted data. The experiment also recorded the 
 execution time of the fstrim operation in order to characterize the host-visible latency associated with issuing discard requests to the storage device. An automated
-script was used to automate the process of wiping the drive,creating datasets, deleting them, waiting for a specified time interval, and then attempting recovery. 
+script was used to automate the process of wiping the drive, creating datasets, deleting them, waiting for a specified time interval, and then attempting recovery. 
 
 The experiment was performed using a controlled test environment in which the storage device was formatted with the ext4 filesystem. Before each experimental sequence, 
 the device was unmounted and the beginning of the device was overwritten with zeros before a new GPT partition table and ext4 filesystem were created. The experimental 
@@ -295,9 +295,9 @@ filesystem was subsequently mounted at the designated test mount point. The expe
 the initial 100 MiB overwrite did not constitute a complete physical wipe of the entire SSD.
 
 
-Prior to the recovery experiment, the filesystem was filled to a specified target utilisation level. The amount of filler data was calculated from the filesystem capacity 
-and the selected fill percentage, after which random data was written in chunks of up to 100 MB until the target utilisation level was reached. The resulting filesystem 
-utilisation was recorded before the experimental dataset was created. A dataset of approximately 2.5 GB was then generated for each experimental iteration. Each dataset 
+Prior to the recovery experiment, the filesystem was filled to a specified target utilization level. The amount of filler data was calculated from the filesystem capacity 
+and the selected fill percentage, after which random data was written in chunks of up to 100 MB until the target utilization level was reached. The resulting filesystem 
+utilization was recorded before the experimental dataset was created. A dataset of approximately 2.5 GB was then generated for each experimental iteration. Each dataset 
 consisted of multiple file types, including text files, a large ZIP archive, numerous small text files, a JPEG image, and a PDF document. Dataset-specific identifiers 
 were embedded within the generated files to enable the experimental data to be distinguished from unrelated recovered content. The dataset also included a checksum file 
 generated from the experimental files. This provided a reference for the original dataset contents and supported subsequent verification of recovered data.
@@ -309,7 +309,7 @@ deletion, the filesystem was subjected to an explicit fstrim operation. Before m
 cleared. The fstrim command was executed using /usr/bin/time -v, allowing the elapsed, user and system execution times to be recorded. The amount of storage reported as 
 trimmed by the command was also recorded. Following the TRIM operation, forensic recovery was attempted after a predefined waiting period. The experiment used different 
 recovery delays to examine whether the passage of time following TRIM affected the amount of data observable through the recovery procedure. The configured waiting 
-periods were 0, 5, 15 and 30 minutes. At each recovery point, the foremost forensic recovery tool was executed against the test partition using all supported file types. 
+periods were 0, 5, 15 and 30 minutes. At each recovery point, Foremost and PhotoRec forensic recovery tools were executed against the test partition using all supported file types. 
 The number of recovered files was then recorded in a CSV results file together with the iteration number, waiting period, filesystem fill level, measured TRIM execution 
 times and the amount of data reported as trimmed.
 
@@ -318,7 +318,7 @@ The experiment recorded the following variables for each iteration:
 
 \begin{enumerate}
     
-\item \textbf{Filesystem fill level}: representing the proportion of the filesystem occupied before the experimental dataset was created.
+\item \textbf{filesystem fill level}: representing the proportion of the filesystem occupied before the experimental dataset was created.
 \item \textbf{Recovery delay}: representing the time between completion of TRIM and the beginning of the forensic recovery attempt.
 \item \textbf{TRIM execution time}: including real, user and system time reported by /usr/bin/time.
 \item \textbf{Amount of storage reported as trimmed}: by fstrim.
@@ -332,10 +332,10 @@ measurement of physical data-erasure latency. For each recovery delay, the recov
 were then compared across the different waiting periods.
 
 The experiment was repeated under Trim off conditions to provide a baseline for comparison. In the TRIM-disabled condition, the same dataset creation, deletion, and 
-recovery procedures were applied, but no fstrim operation was performed. The filesystem was filled to the same target utilisation levels, and the same recovery delays 
+recovery procedures were applied, but no fstrim operation was performed. The filesystem was filled to the same target utilization levels, and the same recovery delays 
 were applied. The recovered output was analyzed in the same manner, and the number of recovered files was recorded for each recovery delay. This allowed a direct comparison
 of the recoverability of deleted data under TRIM-enabled and TRIM-disabled conditions, as well as an assessment of how recovery changed over time following deletion.
-Five seperate runs were performed for each storage device, fill level, and TRIM condition. The repeated runs were intended to assess whether the results were reproducible
+Five separate runs were performed for each storage device, fill level, and TRIM condition. The repeated runs were intended to assess whether the results were reproducible
 or whether the storage devices produced variable outcomes under nominally identical conditions. Each run used the same dataset allocation, deletion procedure, and recovery method.
 
 \subsection{Experiment 4: Cryptographic Erase Attempt}

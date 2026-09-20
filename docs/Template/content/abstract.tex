@@ -2,24 +2,24 @@
 
 
 Within the branch of Anti-Forensics, secure deletion has emerged as a critical component in cybersecurity,
-regulatory compliance and digital Forensics. While standard deletion operations remove file-system
+regulatory compliance and digital Forensics. While standard deletion operations remove filesystem
 references without erasing the underlying data,  secure deletion techniques aim to ensure that data
 is made irrecoverable. This Thesis presents an experimental framework for evaluating the effectiveness, performance, and observability 
 of secure deletion techniques in modern solid-state drives. The framework addresses the lack of standardized 
 and reproducible evaluation methods by considering measurable factors such as post-deletion data 
 recoverability, deletion latency, timing variability and verification limitations. The experimental study  
-evaluates data recoverability after TRIM, conventional overwriting, and drive-level sanitization at different 
-time intervals. The experiments also examine how filesystem journaling, overwrite operations under Flash 
-Translation Layer remapping, workload intensity, drive fill level, and vendor-specific controller behaviour 
-influence deletion outcomes. The results are analysed to identify the reliability, limitations, and security 
+evaluates data recoverability after TRIM operations at different time intervals, and examines the execution 
+and verification of drive-level sanitization commands. The experiments also examine how filesystem journaling, 
+overwrite operations under Flash Translation Layer remapping, drive fill level, and vendor-specific controller 
+behavior influence deletion outcomes. The results are analyzed to identify the reliability, limitations, and security 
 implications of current deletion mechanisms, and to determine how effectively they support verifiable and 
-standards-aligned data sanitization. In addition to the technical evaluation, this thesis also explore the 
+standards-aligned data sanitization. In addition to the technical evaluation, this thesis also explores the 
 regulatory and legal implications of secure deletion practices, particularly in the context of data protection 
 laws and individual privacy rights. By establishing a reproducible evaluation methodology, this work contributes a 
 foundation for systematically assessing secure deletion techniques and bridging the gap between technical 
 capabilities and regulatory compliance requirements.
 
-The importance of secure deletion is highlighed in cases where sensitive 
+The importance of secure deletion is highlighted in cases where sensitive 
 information, such as personal data, financial records, or confidential business information, expected 
 by users to be permanently removed, can be recovered by malicious actors or forensic investigators. This 
 disconnect between user expectation and technical reality has led to a cascade of high-profile data 
@@ -30,6 +30,6 @@ These mechanisms can preserve residual copies of deleted data even after deletio
 have been performed.
 
 
-\vspace{0.5cm}
+\vspace{0.3cm}
 
-\textbf{Keywords} : \textit{secure data deletion; NAND flash memory; solid-state drives; Flash Translation Layer; data remanence; data sanitization; cryptographic erasure; block erasure; deletion verification; regulatory compliance.}
+\textbf{Keywords} : \textit{secure data deletion; NAND flash memory; solid-state drives; Flash Translation Layer; data remanence; data sanitization; cryptographic erasure; deletion verification; regulatory compliance.}

@@ -6,17 +6,20 @@
 \contentsline {table}{\numberline {1.1}{\ignorespaces Comparison of NIST SP 800-88 Sanitization Levels}}{15}{table.caption.6}%
 \contentsline {table}{\numberline {1.2}{\ignorespaces The Key Hierarchy Within an NVMe SED}}{17}{table.caption.7}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Summary of Anti-Forensic Techniques}}{20}{table.caption.8}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Secure Deletion Approaches by System Layer}}{25}{table.2.2}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Comprehensive Comparison of Secure Deletion Approaches for Flash Storage}}{30}{table.2.3}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Summary of Anti-Forensic Techniques}}{21}{table.caption.8}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Secure Deletion Approaches by System Layer}}{26}{table.2.2}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Comprehensive Comparison of Secure Deletion Approaches for Flash Storage}}{31}{table.2.3}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Dataset Allocation for the TRIM Recovery Experiment}}{61}{table.caption.27}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Dataset Allocation for the TRIM Recovery Experiment}}{62}{table.caption.27}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Data Recovery Results After TRIM on NVMe SSD}}{72}{table.caption.38}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Data Recovery Results After TRIM on SATA SSD}}{74}{table.caption.41}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Recovery Results}}{79}{table.caption.46}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Recovery Time Results}}{80}{table.caption.47}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Results of ATA Sanitization Command Attempts}}{80}{table.caption.48}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Data Recovery Results After TRIM on NVMe SSD}}{73}{table.caption.38}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Data Recovery Results After TRIM on SATA SSD}}{75}{table.caption.41}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Mann--Whitney U test and 95\% bootstrap CI for NVMe vs. SATA recovery rates}}{79}{table.caption.45}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Mean Recovery Results for TRIM ON Condition at Different Fill Levels and Recovery Intervals}}{81}{table.caption.48}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Execution Time of the Initial \texttt {fstrim} Operation Across Five Runs}}{82}{table.caption.50}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Mann--Whitney U test and Kruskal--Wallis trend test by device and recovery tool}}{85}{table.caption.54}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Kruskal--Wallis test for fill-level trend within each device}}{85}{table.caption.55}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Results of ATA Sanitization Command Attempts}}{87}{table.caption.57}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

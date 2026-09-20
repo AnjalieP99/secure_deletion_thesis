@@ -1303,7 +1303,7 @@
       \verb https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/1571960
       \endverb
     \endentry
-    \entry{iso27040_2024}{standard}{}{}
+    \entry{iso27040_2024}{misc}{}{}
       \name{author}{2}{}{%
         {{hash=7058e4bd76f877c52b621c942b30613c}{%
            family={{International Organization for Standardization}},
@@ -1339,7 +1339,7 @@
       \verb https://www.iso.org/standard/80194.html
       \endverb
     \endentry
-    \entry{iso27001_2022}{standard}{}{}
+    \entry{iso27001_2022}{misc}{}{}
       \name{author}{2}{}{%
         {{hash=7058e4bd76f877c52b621c942b30613c}{%
            family={{International Organization for Standardization}},
@@ -1375,7 +1375,7 @@
       \verb https://www.iso.org/standard/82875.html
       \endverb
     \endentry
-    \entry{iso27002_2022}{standard}{}{}
+    \entry{iso27002_2022}{misc}{}{}
       \name{author}{2}{}{%
         {{hash=7058e4bd76f877c52b621c942b30613c}{%
            family={{International Organization for Standardization}},

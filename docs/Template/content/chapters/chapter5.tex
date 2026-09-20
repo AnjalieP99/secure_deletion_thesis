@@ -2,7 +2,7 @@
 \label{sec:interpretation-findings}
 
 This chapter discusses the findings obtained from the experimental evaluation of secure deletion techniques in modern storage environments. The discussion relates the 
-experimental observations to the research questions concerning data recoverability, TRIM behaviour, execution time, filesystem mechanisms, storage-device variation, 
+experimental observations to the research questions concerning data recoverability, TRIM behavior, execution time, filesystem mechanisms, storage-device variation, 
 and the limitations of host-side verification.
 
 The central finding is that secure deletion cannot be evaluated reliably by observing only the successful completion of a deletion command. The experiments demonstrate 
@@ -38,7 +38,7 @@ when the explicit TRIM operation was not performed.
 
 The SATA SSD showed lower recovery under the nominal TRIM-disabled condition. DS10 produced a mean recovery rate of only 0.22\%, while DS12 produced a mean recovery rate 
 of 18.05\%. The result for DS12 was strongly affected by one run in which 4,487 of the expected 5,052 signatures were recovered. The remaining four runs produced either 
-72 signatures or no signatures. This shows that the mean recovery rate alone does not fully describe the behaviour of the device. Individual run results are necessary 
+72 signatures or no signatures. This shows that the mean recovery rate alone does not fully describe the behavior of the device. Individual run results are necessary 
 to identify the considerable variation between repetitions. 
 
 The results indicate that TRIM was associated with a strong reduction in host-side recovery on both devices. However, the effect was not identical across the NVMe and 
@@ -53,6 +53,61 @@ Experiment 2 therefore does not support the assumption that a TRIM-disabled SSD 
 that recoverability is variable and device-specific. The nominal TRIM condition provided a useful experimental distinction, but the observed results cannot be attributed 
 exclusively to the operating-system setting because the two SSDs used different physical devices and different USB connection paths.
 
+\subsection*{Experiment 3: Testing Recoverability at different fill levels and times intervals}
+
+\subsubsection*{TRIM ON Condition}
+
+Experiment 3 examined whether filesystem utilization and the time interval between TRIM and forensic recovery influenced the recoverability of deleted data. The 
+experiment used 25\%, 75\%, and 90\% filesystem fill levels, recovery delays of 0, 5, 15, and 30 minutes, and five repeated runs on both the NVMe and SATA SSDs.
+
+No files were recovered in any of the 120 recorded observations. The recovered-file count remained zero for every device, fill level, recovery delay, and experimental 
+run. Therefore, within the 30-minute observation period, neither filesystem utilization nor the elapsed time after TRIM produced a measurable change in host-side 
+recoverability.
+
+The zero recovery result at the immediate measurement point is particularly significant. It indicates that the selected forensic recovery procedure did not identify the 
+deleted dataset immediately after the explicit TRIM operation. The later 5-, 15-, and 30-minute recovery attempts did not produce an additional reduction because the 
+measured recovery outcome was already zero at the initial point.
+
+The TRIM latency results showed a different pattern. The first TRIM operation in each experimental sequence was substantially slower than the subsequent operations. The 
+mean initial TRIM time was 19.71 seconds for the NVMe SSD and 7.90 seconds for the SATA SSD. After the initial operation, the mean execution time decreased to 
+approximately 1.33 seconds for the NVMe SSD and 1.02 seconds for the SATA SSD. 
+
+The latency did not increase systematically with filesystem utilization. The NVMe SSD recorded its highest initial mean at 75\% utilization, at 29.76 seconds, rather 
+than at 90\% utilization. The SATA SSD produced more closely grouped initial means of 8.60 seconds at 25\%, 7.29 seconds at 75\%, and 7.80 seconds at 90\% utilization. 
+This indicates that filesystem utilization alone did not determine TRIM execution time.
+
+The results also demonstrate that TRIM latency was device-specific. The NVMe SSD was slower and more variable than the SATA SSD during the initial TRIM operations. 
+However, this difference cannot be attributed exclusively to the NVMe and SATA interfaces because the devices were accessed through different USB connection paths. The 
+observed latency therefore reflects the combined behavior of the storage device, controller, filesystem, operating system, and connection hardware.
+
+The results should not be interpreted as direct evidence of physical NAND erasure. The experiment measured host-visible recoverability and host-visible TRIM execution 
+time. A recovery result of zero indicates that the selected forensic procedure did not identify the test data, but it does not prove that all physical copies were 
+destroyed inside the SSD.
+
+\subsubsection*{TRIM OFF Condition}
+
+The TRIM-disabled condition of Experiment 3 produced a substantially different outcome. Non-zero mean recovery was recorded in every device, fill level, and tool 
+combination. On the NVMe SSD, mean recovery per run ranged from 2.30 to 7.05 files for Foremost and from 3.85 to 9.05 files for PhotoRec across the three fill levels. 
+On the SATA SSD, the corresponding ranges were 2.85 to 3.50 files for Foremost and 4.75 to 7.00 files for PhotoRec. Recovery was observed at every recovery delay, 
+including the immediate attempt performed directly after deletion, indicating that deleted data remained recoverable through the selected forensic procedure from the 
+moment of deletion without any waiting period.
+
+The TRIM-disabled results also revealed dependencies that were not observable under the TRIM-enabled condition. PhotoRec produced a higher mean recovery than Foremost 
+in all six device and fill level combinations and was the only tool to recover the deleted text files, indicating that measured recoverability is dependent on the 
+recovery procedure employed. The effect of filesystem utilization was device-specific rather than uniform: mean recovery increased monotonically with fill level on the 
+NVMe SSD, whereas the SATA SSD showed no consistent trend. Recovery was also highly variable between repeated runs, with standard deviations of the same order as the 
+means, reinforcing the observation that host-side recoverability is not a deterministic property of the deletion operation.
+
+The comparison between the two conditions of Experiment 3 strengthens the interpretation of the zero-recovery result. The TRIM-enabled and TRIM-disabled procedures 
+differed only in the explicit fstrim operation performed after deletion; the dataset creation, deletion command, filesystem, devices, and recovery tools were identical. 
+The complete absence of recovery under the TRIM-enabled condition and the presence of recovery under the TRIM-disabled condition therefore support the attribution of 
+the zero result to the TRIM operation itself, rather than to the deletion procedure or to a failure of the recovery tools.
+
+The TRIM-disabled recovery output additionally contained residual content from earlier iterations. Content deleted in a previous iteration was recovered during 
+subsequent iterations, and content associated with the 25\% fill level was recovered during sequences performed at 75\% and 90\% utilization. This persistence occurred 
+despite the zero-overwrite performed on the device between experimental runs, indicating that a host-level overwrite did not eliminate all recoverable remnants. The 
+experiment could not determine whether this resulted from Flash Translation Layer remapping of the overwritten logical addresses or from incomplete coverage of the 
+overwrite procedure.
 
 \subsection*{Experiment 4: Cryptographic Erase Attempt}
 The cryptographic erase experiment produced a negative result that is itself informative. Neither the \texttt{ATA Security Erase} command nor the \texttt{ATA SANITIZE} 
@@ -61,10 +116,10 @@ standard kernel response when an ioctl is not supported by the underlying device
 that the bridge did not forward them and did not return an error.
 
 This finding extends the connection-path limitation identified in Experiment 2. In that experiment, the USB-NVMe enclosure required explicit udev configuration before 
-TRIM/UNMAP commands were forwarded. The SATA SSD, accessed through a different USB-to-SATA adapter, showed inconsistent TRIM behaviour. Experiment 4 shows that the same 
+TRIM/UNMAP commands were forwarded. The SATA SSD, accessed through a different USB-to-SATA adapter, showed inconsistent TRIM behavior. Experiment 4 shows that the same 
 class of limitation applies to \texttt{ATA Security} and \texttt{SANITIZE} commands: these commands are not reliably forwarded by USB bridges.
 
-The implication is that drive-level sanitization commands cannot be assumed to execute correctly when a USB bridge is present in the connection path. Organisations 
+The implication is that drive-level sanitization commands cannot be assumed to execute correctly when a USB bridge is present in the connection path. Organizations 
 attempting to sanitize SSDs through USB adapters may believe the operation succeeded when in fact the command was never delivered to the drive. This is a practical 
 verification failure that compounds the broader verifiability crisis discussed in Section 2.3.
 
@@ -81,7 +136,7 @@ visibility into the physical state of the medium. This does not make accountabil
 governance evidence and must avoid making claims stronger than the evidence supports.
 
 The experiments can therefore support legal compliance in three ways. First, they can help determine whether a deletion method is suitable for a particular storage 
-technology. Second, they can identify conditions under which a successful command may not correspond to complete sanitisation. Third, they can define the limitations 
+technology. Second, they can identify conditions under which a successful command may not correspond to complete sanitization. Third, they can define the limitations 
 that must be disclosed and managed when the controller documents the deletion process.
 
 The appropriate compliance statement is consequently not that a controller has proved the physical destruction of every copy in every possible state. It is that the 
@@ -89,18 +144,130 @@ controller used a method appropriate to the medium and risk, executed it under c
 known copies and exceptions, and retained sufficient evidence to demonstrate that the erasure obligation was handled responsibly.
 
 This distinction also explains why the absence of an independent verification method is itself a result with legal relevance. Where the technical evidence is weak, the 
-controller may need to use a stronger sanitisation method, such as cryptographic erasure with reliable key-management evidence, device-level sanitisation, or physical 
+controller may need to use a stronger sanitization method, such as cryptographic erasure with reliable key-management evidence, device-level sanitization, or physical 
 destruction. A controller should not rely solely on a logical deletion event or an unverified vendor success signal where the consequences of residual data exposure are 
 significant.
+
+The experimental results illustrate this concretely: in the TRIM-disabled condition of Experiment 3, data that had been deleted through the ordinary filesystem deletion command remained recoverable using standard carving tools at every tested utilisation level and delay. A logical deletion event alone therefore does not constitute adequate evidence of erasure where residual-data risk is significant.
+
+\section{Discussion in Relation to the Research Questions}
+
+\subsection*{Research Question 1: To what extent do different secure deletion techniques prevent post-deletion recovery?}
+
+The results show that the extent to which deletion prevented recovery depended on the level at which the deletion operation acted and on the storage device being tested. 
+At the filesystem level, Experiment 1 showed that deletion removed the inode references, cleared the block count, removed directory links, and prevented recovery 
+through the tested ext4 metadata structures. At the host level, the previously allocated blocks returned only zero bytes, and ext4magic could not reconstruct the file. 
+
+Experiment 2 showed that the TRIM-enabled condition prevented the recovery of deleted signatures through the selected forensic procedure. This effect was complete for 
+the NVMe deleted datasets and almost complete for the SATA deleted datasets. By contrast, disabling TRIM resulted in substantial recovery on the NVMe SSD and limited but 
+inconsistent recovery on the SATA SSD.
+
+The results therefore indicate that TRIM can be effective in reducing host-side recoverability, but it should not be treated as a universal guarantee of secure deletion. 
+Its effectiveness depends on how the operating system, filesystem, connection path, SSD controller, and firmware process the discard request.
+
+Experiment 3 provides corroborating evidence under a different protocol, in which a single deleted dataset per iteration was tested at controlled fill levels of 25\%, 
+75\%, and 90\% across repeated runs. When the explicit TRIM operation was omitted, deleted data remained recoverable at every utilization level and at every recovery 
+delay, including immediate recovery. The results also qualify what prevention of recovery means in practice: the outcome was dependent on the forensic tool employed, 
+with PhotoRec recovering content, including text files, that Foremost did not identify. Recovery prevention should therefore be understood as relative to the recovery 
+procedure used rather than as an absolute property of the deleted data.
+
+\subsection*{Research Question 2: How does recoverability change over time following TRIM?}
+Experiment 3 found no measurable change in host-side recoverability during the 30-minute observation period. The recovery count was zero at all four measurement points, 
+immediately after TRIM and after 5, 15, and 30 minutes, across the 25\%, 75\%, and 90\% fill levels on both SSDs. This result was consistent across all five repeated 
+runs.
+
+The result suggests that, under the tested conditions, the selected forensic recovery procedure could not identify the deleted data immediately after TRIM. The latter 
+waiting periods did not produce any additional reduction in the measured recovery outcome because the initial recovery result was already zero. Thus, the experiment 
+did not provide evidence of a gradual decline in host-side recoverability between zero and 30 minutes.
+
+However, the result should not be interpreted as proof that physical erasure occurred instantaneously. The forensic procedure observed only the logical block-access 
+path exposed to the host.  The TRIM-disabled condition of the same experiment completes this picture. When no TRIM operation was issued, recoverability did not decay 
+over the observation period; deleted data was recovered at all four delay points, including the immediate attempt. Taken together, the two conditions indicate that the 
+TRIM operation, rather than the elapsed time after deletion, was the factor that determined the recovery outcome in this experiment. The cross-iteration remnants 
+recovered in the TRIM-disabled condition add another temporal dimension: data deleted earlier in an experimental sequence remained recoverable at later measurement 
+points, and remnants associated with earlier fill levels were recovered during subsequent sequences. The SSD controller may have erased the relevant pages, returned zeroed data for invalidated blocks, delayed physical erasure, or managed the 
+data through internal remapping. The experiment could not distinguish between these controller-level mechanisms. 
+
+The results also indicate that filesystem utilization did not alter the observed recovery outcome. Recovery remained zero at both the lowest tested utilization, 25\%, 
+and the highest tested utilization, 90\%. This suggests that the amount of free space did not produce a measurable difference in host-side recovery after the explicit 
+TRIM operation. The conclusion is limited to the tested devices, connection paths, filesystem, forensic tool, and 30-minute observation period.
+
+The findings contrast with Experiment 2, where disabling TRIM allowed substantial recovery on the NVMe SSD and limited but inconsistent recovery on the SATA SSD. The 
+comparison supports the conclusion that the explicit TRIM operation was associated with the absence of host-side recovery in Experiment 3. It does not establish that 
+TRIM universally destroys all physical copies of deleted data on all SSDs.
+
+\subsection*{Research Question 3: What are the latency characteristics and performance variability of TRIM?}
+Experiment 3 demonstrated that TRIM execution time was dominated by the first TRIM operation in each experimental sequence. The initial operation was considerably slower 
+than the subsequent operations on both storage devices. Across all fill levels, the mean initial execution time was 19.71 seconds on the NVMe SSD and 7.90 seconds on 
+the SATA SSD. Subsequent operations averaged 1.33 seconds and 1.02 seconds respectively. 
+
+Figure \ref{fig:trim-latency} illustrates this pattern through the large first-iteration bars followed by much shorter bars for iterations 2, 3, and 4. The pattern is 
+visible at all three fill levels. At 75\% utilization, for example, the NVMe mean decreased from 29.76 seconds during the first iteration to 2.77, 1.25, and 1.40 seconds 
+during the later iterations. The SATA mean at the same fill level decreased from 7.29 seconds to 0.83, 0.79, and 0.99 seconds.
+
+Figure \ref{fig:storage-fill-vs-wait-time} presents the same pattern as heatmaps. The darker cells in the first column represent the longer initial TRIM operations, 
+while the lighter cells in the later columns represent the shorter subsequent operations. The figure also shows that the later values do not follow a consistent 
+increasing or decreasing trend as the nominal waiting period increases. For example, the NVMe values at 25\% utilization are 0.87, 0.75, and 1.63 seconds for the 5-, 
+15-, and 30-minute conditions. This variation is non-monotonic rather than a clear time-dependent trend.
+
+The waiting-period columns must be interpreted carefully. The recovery delay was applied after the TRIM command, and the 0-, 5-, 15-, and 30-minute conditions 
+corresponded to successive iterations in the experimental sequence. Therefore, the results cannot establish that the recovery delay caused the differences in TRIM 
+execution time. The more defensible interpretation is that the initial operation was slower, while later operations were faster but retained some run-to-run variation.
+filesystem utilization also did not produce a monotonic latency relationship. The highest NVMe mean occurred at 75\% utilization, not 90\%, while the SATA means remained 
+relatively similar across the three fill levels. This indicates that TRIM latency was influenced by more than the percentage of occupied filesystem space. The amount of 
+data reported as trimmed, the arrangement of discarded ranges, controller-level processing, and the internal state of the storage device may all have contributed to the 
+observed duration.
+
+The error bars in Figure \ref{fig:trim-latency} further show that the initial operations had greater variability than the later operations, particularly on the NVMe SSD. 
+This supports the conclusion that TRIM performance was not completely deterministic. The latency measured by the host represents the duration of the discard operation 
+visible through the tested connection path, not the time required for the SSD to physically erase all underlying NAND pages.
+
+\subsection*{Research Question 4: How do filesystem mechanisms and Flash Translation Layer behavior affect deletion effectiveness?}
+Experiment 1 demonstrated that the filesystem can remove logical references to a file without providing direct information about the physical state of the underlying 
+storage. The inode and journal retained evidence of the deletion operation, but the file data itself was not present in the examined journal structures. This 
+demonstrates that filesystem-level evidence can confirm logical deletion while remaining insufficient to confirm physical sanitization. 
+
+The SSD controller and Flash Translation Layer introduce another level of abstraction. The filesystem operates using logical block addresses, while the FTL determines 
+how those logical addresses are mapped to physical flash pages. As a result, a host-side command may change the logical status of a block without providing the host 
+with direct visibility of the underlying physical pages.
+
+This distinction explains why zero recovery cannot automatically be interpreted as proof of physical erasure. The controller may erase the relevant pages, return 
+zeroed data for invalidated blocks, delay physical erasure, or manage the data through internal remapping. The experiments could measure the outcome visible through 
+the host, but they could not determine which controller-level process produced that outcome.
+
+Experiment 3 provided a direct empirical illustration of this abstraction. In the TRIM-disabled condition, content from earlier experimental iterations was recovered 
+despite a host-level overwrite of the device with zeros between runs. A host-side overwrite issues writes through the same logical block interface as the filesystem and 
+is therefore subject to the same FTL mediation as the original data. The persistence of recoverable remnants after the overwrite is consistent with the logical 
+addresses having been remapped rather than physically erased, although an incomplete overwrite cannot be excluded as an alternative explanation. This observation 
+supports the broader conclusion that host-level overwrite techniques cannot guarantee the erasure of data on flash-based storage.
+
+\subsection*{Research Question 5: How does secure deletion behavior vary across SSD vendor-and-connection-path configurations?}
+The comparison between the NVMe and SATA SSDs shows clear variation between storage devices. Under the nominal TRIM-disabled condition, the NVMe SSD produced recovery 
+rates of 79.60\% and 60.00\% for the two deleted datasets. The SATA SSD produced recovery rates of only 0.22\% and 18.05\% for the corresponding datasets. 
+
+This difference cannot be explained by the TRIM setting alone. The devices differed not only in interface but in controller, firmware, and - critically - in the USB 
+bridge used to connect each device to the host: the NVMe SSD through a JMicron JMS583 enclosure, the SATA SSD through a separate USB-to-SATA adapter. Because bridge and 
+vendor/interface co-vary in this experimental design, they are not separable from the recovery results obtained here. What was measured is therefore better described as 
+the behavior of two vendor-plus-bridge combinations rather than of NVMe and SATA as interfaces in the abstract. The results are reported and interpreted under this 
+reading throughout the remainder of this section: they demonstrate that secure-deletion behavior is not portable across tested configurations, without asserting that 
+the interface type (NVMe vs SATA) is itself the causal factor. 
+
+The findings support the need for secure deletion evaluations to test multiple devices rather than relying on the behavior of a single SSD. A deletion method that 
+appears effective on one device may produce different recovery results on another device with a different controller or firmware implementation.
+
+Experiment 3 extended this device-specificity from the magnitude of recovery to the shape of its dependence on workload. Under the TRIM-disabled condition, mean 
+recovery increased monotonically with filesystem utilization on the NVMe SSD, whereas the SATA SSD exhibited no consistent trend across the same utilization levels. 
+The same experimental manipulation therefore produced qualitatively different behavior on the two devices, further supporting the need for multi-device evaluation in 
+secure deletion research.
 
 \section{Limitations of the Study}
 
 The first limitation concerns the number and diversity of storage devices. The experiments used two approximately 128 GB SSDs, one NVMe device and one SATA device. The 
-results therefore cannot be generalised to all SSDs, manufacturers, firmware versions, capacities, or interface implementations.
+results therefore cannot be generalized to all SSDs, manufacturers, firmware versions, capacities, or interface implementations.
 
 A significant limitation of the study is the use of USB bridge hardware between the host system and both SSDs. The NVMe SSD was connected through a JMicron JMS583 USB 
 enclosure, while the SATA SSD was connected through a USB-to-SATA adapter. These devices introduced additional firmware and command-translation layers into the storage 
-path. The NVMe enclosure initially did not expose TRIM support to Ubuntu. Discard or unmap behaviour had to be explicitly enabled before the host reported discard 
+path. The NVMe enclosure initially did not expose TRIM support to Ubuntu. Discard or unmap behavior had to be explicitly enabled before the host reported discard 
 capability. This demonstrates that the presence of a physical connection between the host and SSD does not guarantee correct forwarding of discard commands. The bridge 
 may have affected both the recovery results and the measured execution times. For example, the 0\% recovery observed for the TRIM-enabled NVMe condition may be 
 associated with successful command forwarding, controller-level masking, or physical processing by the SSD. The low and similar recovery rates observed on the SATA SSD 
@@ -108,5 +275,18 @@ may likewise have been influenced by the SATA bridge or by the way it handled TR
 correct because commands were not captured at the bridge-to-device boundary and the NAND state was not directly examined. Therefore, the bridge should be treated as a 
 potential confounding variable rather than as a confirmed cause of the results. This limitation also affects comparisons between the two SSDs. The observed differences 
 cannot be attributed exclusively to NVMe and SATA interfaces because the devices were accessed through different connection paths. The findings are valid for the tested 
-configurations, but they should not be generalised without additional experiments using direct native SATA and PCle connections.
+configurations, but they should not be generalized without additional experiments using direct native SATA and PCIe connections. A direct consequence of this confound 
+is that Research Question 5, as investigated here, cannot isolate a vendor effect from a bridge effect. The recovery-rate and latency differences attributed to the 
+NVMe SSD and the SATA SSD in Section 5.2 and Chapter 6 should be read as differences between two specific vendor-plus-bridge configurations, not as general claims about 
+NVMe versus SATA interfaces. Disentangling the two would require testing the same drives over both a native connection and a USB bridge, or testing multiple bridge 
+models with the same drive — neither of which was feasible within the scope of this thesis. This is flagged here as a design limitation rather than a fatal flaw: the 
+qualitative conclusion that deletion behavior is device and configuration specific, and therefore must be evaluated per-configuration rather than assumed from a single 
+tested device, holds regardless of which factor (vendor or bridge) is responsible.
 
+Two further limitations arise from the TRIM-disabled condition of Experiment 3. First, because the recovery attempts identified content from previous iterations and 
+fill levels, the recorded recovery counts may include remnants of datasets other than the one deleted in the current iteration. The values in Table \ref{tab:recovery-statistics} 
+should therefore be interpreted as the total recoverable content visible on the device at each measurement point rather than as recoverability attributable solely to 
+the most recently deleted dataset. Second, the zero-overwrite performed between experimental runs did not prevent the recovery of earlier content, which weakens the 
+isolation between iterations but simultaneously constitutes a finding of independent interest: a host-level overwrite of the entire device did not guarantee logical 
+erasure. As with the recovery results, the experiment could not distinguish FTL remapping from incomplete overwrite coverage as the cause, and the USB bridge present in 
+both connection paths remains a potential confounding variable for the TRIM-disabled results in the same way as for the TRIM-enabled results.

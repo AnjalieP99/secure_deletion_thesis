@@ -8,7 +8,7 @@ physical means of making data irrecoverable in the physical world where confiden
 documents are shredded, and storage media containing classified material are physically 
 destroyed, in the digital domain this is significantly complex. The standard delete 
 operation on modern systems only implements file unlinking, which only changes the file 
-system metadata while full contents will still remain intact in the system but users 
+system metadata while full contents will still remain intact in the system, but users 
 assume that all the content has been permanently erased. \cite{reardon2013sok}
 
 The criticality of this problem has been addressed by two intersecting forces. First, 
@@ -17,7 +17,7 @@ regulatory frameworks including GDPR right to erasure, NIST SP 800-88 Rev. 1, an
 sanitization levels; Clear, Purge and Destroy, with specific assurance against data recovery. 
 Next, the mainstream transition from the usage of Hard Disk Drives (HDDs) to Solid-State 
 Drives (SSDs) has led to a fundamental alteration of the storage landscape resulting in 
-decades of secure deletion practices being inadequate.\cite{aronsson2025secure} The 
+decades of secure deletion practices being inadequate\cite{aronsson2025secure}. The 
 problem of secure deletion not only occurs in the technical domain but also spans into
 the legal and ethical domains. On the legal front, regulations such as the GDPR, the 
 California Consumer Privacy Act (CCPA), and emerging AI governance frameworks impose 
@@ -38,7 +38,7 @@ non-malicious human error—including failure to properly delete sensitive infor
 decommissioned devices \cite{Verizon2024DBIR}. Separately, Blancco Technology Group's annual 
 data sanitization report found that 42\% of used drives sold on secondary markets contain 
 recoverable personally identifiable information (PII), with 15\% containing corporate financial 
-data \cite{Blancco2026}. The public sector contributes some of the earlist cases, In 2002, the 
+data \cite{Blancco2026}. The public sector contributes some of the earliest cases, in 2002, the 
 Pennsylvania Department of Labor and Industry sold computers to local resellers without 
 sanitizing the drives. The machines contained "thousands of files of information about state 
 employees" that had never been removed \cite{MITstudy2003}. More recently, in 2026, Cornwall 
@@ -48,7 +48,7 @@ phone numbers—when opened. The failure mechanism was using visual overlays, a 
 that does not securely delete the underlying data instead of applying permanent redaction with 
 sanitization \cite{ComplianceHub2026}.
 
-Within the financial Sector, Between 2015 and 2022, Morgan Stanley Smith Barney (MSSB) committed 
+Within the financial sector, between 2015 and 2022, Morgan Stanley Smith Barney (MSSB) committed 
 a series of secure deletion failures that became one of the most expensive examples of improper 
 data disposal on record. In 2015, MSSB decommissioned thousands of hard drives and servers by hiring
 a company which had no prior experience or expertise in proper data destruction. These hard drives
@@ -61,7 +61,7 @@ stated the "vast majority" of devices were never recovered \cite{SEC2022}. The c
 paying over \$155 million in fines and settlements related to these incidents \cite{CybersecurityDive2022}. 
 
 The common thread across every case is the same: standard deletion does not remove data. Operating 
-systems typically only remove file system pointers, leaving the underlying data intact on the 
+systems typically only remove filesystem pointers, leaving the underlying data intact on the 
 storage medium. On SSDs, the problem compounds because the Flash Translation Layer performs 
 out-of-place updates, wear leveling, and garbage collection that can silently preserve copies 
 even after overwrite attempts. Whether the mechanism is a visual redaction overlay, a missing 
@@ -76,7 +76,7 @@ Existing literature has produced a rich taxonomy of techniques overwriting, encr
 erasure-based, and integrated approaches each with distinct trade-offs. The central research gap 
 addressed by this thesis is the absence of a standardized and reproducible framework for 
 evaluating secure deletion techniques across modern storage environments. Existing research has 
-examined individual deletion mechanisms, file systems, storage devices, or controller-level 
+examined individual deletion mechanisms, filesystems, storage devices, or controller-level 
 techniques, but the experimental methods, hardware configurations, evaluation criteria, and 
 verification procedures vary considerably. This variation limits the comparability of results and 
 makes it difficult to determine whether a deletion method is effective across different devices 
@@ -85,8 +85,8 @@ completion of a deletion command does not necessarily demonstrate physical data 
 for example, informs the controller that specific logical blocks are no longer required, but it 
 does not provide the host with a definitive indication of when or whether the corresponding 
 physical pages have been erased. The interval between logical invalidation and physical erasure, 
-referred to in this thesis as zombie time and explained in detail in Chapter 2, may depend on 
-workload pressure, garbage-collection behaviour, over-provisioning, and the controller's 
+referred to in this thesis as zombie time and explained in detail later in this chapter, may depend on 
+workload pressure, garbage-collection behavior, over-provisioning, and the controller's 
 victim-block selection policy. 
 
 To address these limitations, this thesis proposes an experimental framework based on observable 
@@ -94,18 +94,18 @@ and reproducible evidence. The framework evaluates data recoverability after TRI
 overwriting, and drive-level sanitization operations. For TRIM experiments, recoverability is 
 examined at different time intervals defined by observable events, such as command-completion 
 signals, failed or successful recovery attempts, and available device-status information. The 
-framework also examines how workload conditions, device characteristics, file-system journaling, 
+framework also examines how workload conditions, device characteristics, filesystem journaling, 
 and overwrite operations affected by FTL remapping influence the persistence of deleted data. In 
 addition to recoverability, the framework evaluates the latency and variability of sanitization 
 operations. Experiments are conducted at different drive fill levels to determine whether a 
 partially used drive behaves differently from a heavily used drive. The analysis considers both 
 average execution time and unpredictability between repeated measurements, since vendor-specific 
-controller behaviour may produce substantially different results even for similar storage devices.
+controller behavior may produce substantially different results even for similar storage devices.
 The proposed framework differs from existing evaluations in several ways. First, it evaluates 
 deletion through post-operation recoverability rather than assuming that a successful command 
 guarantees physical erasure. Second, it combines security, performance, workload, device-state, 
 and verification dimensions within a single evaluation structure. Third, it treats drive fill 
-level, controller implementation, and vendor behaviour as experimental variables rather than 
+level, controller implementation, and vendor behavior as experimental variables rather than 
 uncontrolled background conditions. The objective of this thesis is therefore not to identify a 
 universally effective deletion command. Instead, it is to establish a systematic basis for 
 comparing deletion mechanisms, defining their observable security guarantees, identifying their 
@@ -156,7 +156,7 @@ erase-before-write architecture means that updating even a single byte requires 
 erasing an entire block, which the Flash Translation Layer (FTL) works around using out-of-place 
 updates. The FTL abstracts these physical details behind a standard block-device interface, 
 mapping logical block addresses (LBAs) to physical NAND pages \cite{onarlioglu2018_3}. This 
-abstraction allows traditional file systems (ext4, NTFS, HFS+) to remain compatible, but it also 
+abstraction allows traditional filesystems (ext4, NTFS, HFS+) to remain compatible, but it also 
 hides the true physical state of the data from the host \cite{aronsson2025secure}.
 
 
@@ -171,7 +171,7 @@ those holding superseded data are invalid pages. This write-once property is the
 of the secure deletion challenges discussed in this review.
 
 \subsection{Flash Translation Layer}
-To maintain compatibility with traditional block-based file systems (e.g., ext4, NTFS), SSDs 
+To maintain compatibility with traditional block-based filesystems (e.g., ext4, NTFS), SSDs 
 incorporate a Flash Translation Layer (FTL) that runs on the device controller \cite{aronsson2025secure}.
 The FTL maps logical block addresses (LBAs) issued by the operating system to physical flash 
 addresses. This abstraction hides the complexity of NAND flash from the host and enables the 
@@ -263,13 +263,13 @@ less security assurance since some Vt residue may remain \cite{ahn2019schemes,ah
 
 \subsection{The Communication Path}
 The operating system does not have direct knowledge of the physical flash layout. After a file is 
-deleted, the file system deallocates the logical blocks by removing their entries from the file 
+deleted, the filesystem deallocates the logical blocks by removing their entries from the file 
 system index (inode table, MFT, etc.), but the actual data remains intact on the NAND cells. The host 
 cannot simply overwrite the physical location because the FTL may have remapped those logical 
 addresses to any physical page on the drive. There are three main channels through which the OS 
 conveys block-deallocation information to the storage device
 
-\textbf{TRIM} : The TRIM command is an ATA command that allows the file system to inform the SSD 
+\textbf{TRIM} : The TRIM command is an ATA command that allows the filesystem to inform the SSD 
 controller about which LBAs no longer store valid data. When a file is deleted, the OS issues a TRIM 
 command for the LBAs covered by that file, and the controller adds those blocks to an internal queue 
 of blocks to be blanked. The TRIM command was not designed for secure deletion but rather as an 
@@ -285,7 +285,7 @@ FTL only uses the information to mark address mappings as invalid \cite{reardon2
 
 \textbf{TrueErase} : Diesburg et al. proposed TrueErase as a refinement that provides similar 
 information to TRIM but only for blocks belonging to files specifically marked as sensitive. 
-TrueErase adds a new communication channel between the file system and the device driver that 
+TrueErase adds a new communication channel between the filesystem and the device driver that 
 forwards deallocation information selectively. Device drivers are modified to implement immediate 
 secure deletion when provided with this notification, avoiding the performance cost of blanket TRIM 
 for all deleted blocks \cite{reardon2013sok}.
@@ -320,7 +320,7 @@ The architectural features described above create fundamental obstacles to secur
 cause multiple copies of data to persist across the device as stale pages are left behind. Garbage collection 
 and wear leveling can relocate data transparently, making it impossible for host-level software to predict where 
 data physically resides. Over-provisioned areas are inaccessible to the operating system, yet may retain residual 
-copies of deleted data. These characteristics mean that a conventional delete command at the file-system level 
+copies of deleted data. These characteristics mean that a conventional delete command at the filesystem level 
 does not remove the underlying data from the physical medium, and techniques that are effective on HDDs such as 
 overwriting are ineffective on NAND flash \cite{aronsson2025secure}.
 
@@ -336,7 +336,7 @@ collection time to keep up \cite{onarlioglu2018_3}.
 The zombie time is defined as the interval between the point when the FTL invalidates the address 
 mapping of a file's pages and the point when garbage collection physically erases those pages from 
 the NAND cells \cite{antiforensics2016}. During this window, the data remains fully intact and 
-recoverable, even though the file system and the host consider it deleted. The zombie time has no 
+recoverable, even though the filesystem and the host consider it deleted. The zombie time has no 
 fixed duration: it depends on the storage usage pattern, the prevalence of free blocks in the 
 over-provisioning pool, the FTL's victim selection policy, and whether TRIM commands were issued for 
 the deallocated blocks.
@@ -345,7 +345,7 @@ The fundamental cause of the zombie time is that the FTL is designed to minimize
 frequency, since garbage collection degrades I/O response by introducing read-copy-erase cycles 
 that add latency. The FTL only triggers garbage collection under two conditions. In the foreground 
 (normal garbage collection), garbage collection is triggered when the free-block pool drops below a threshold, 
-meaning the device has no clean blocks available to service incoming writes. n the background, some 
+meaning the device has no clean blocks available to service incoming writes. In the background, some 
 FTL implementations opportunistically erase stale blocks during idle time. The foreground garbage collection event 
 is driven entirely by write pressure: if the host is mostly reading and the free-block pool is 
 adequate, garbage collection may not occur for long periods. There is a compounding factor: even 
@@ -387,8 +387,8 @@ The zombie time is workload-dependent with significant forensic implications. In
 workloads, the free-block pool drains quickly and normal garbage collection is triggered frequently, reducing the 
 zombie time. In read-heavy workloads, the free-block pool remains ample, and normal garbage collection may never 
 activate the blocks containing deleted pages. Under these conditions, the zombie time can be 
-effectively infinite: the deleted data persists until the device is eventually subjected to a write-
-intensive workload that forces garbage collection. Compounding this, the distribution of invalid 
+effectively infinite: the deleted data persists until the device is eventually subjected to a write-intensive 
+workload that forces garbage collection. Compounding this, the distribution of invalid 
 pages across blocks affects whether a given deleted file's pages are reclaimed. The FTL selects the 
 victim with the largest number of invalid pages, so blocks where the deleted file's pages are 
 scattered across many blocks (each containing few invalid pages) experience longer zombie times 
@@ -403,7 +403,7 @@ TRIM and GC, some deleted blocks remained unerased. Importantly, garbage collect
 independently of the host: it can be triggered whenever the disk is powered on, even if no write 
 commands are issued, rendering write blockers and other forensic precautions useless. This means 
 the forensic examiner cannot assume that data persists in a known state across reboots. Most modern 
-operating systems and their default file systems have built-in support for the ATA TRIM command, 
+operating systems and their default filesystems have built-in support for the ATA TRIM command, 
 but the implementation of TRIM varies from controllers in SSDs to kernels in operating systems. \cite{Bonetti2014,trimwearlevelling2019}
 
 \subsection*{FTL Internals and its Forensic Impact}
@@ -412,7 +412,7 @@ wear-out of frequently written blocks. Dynamic wear leveling operates on newly a
 while static wear leveling also moves cold (infrequently rewritten) data to ensure even wear on 
 otherwise idle blocks. Every data migration performed by wear leveling creates opportunities for 
 data duplication: a page may be copied to a new physical location while the old location is not 
-immediately erased, leaving recoverable copies that neither the file system nor the OS is aware of. 
+immediately erased, leaving recoverable copies that neither the filesystem nor the OS is aware of. 
 The write amplification factor (WAF) measures the ratio of physical writes to logical writes. A WAF 
 of 3 means that every logical write from the host causes 3 physical writes due to garbage 
 collection and wear leveling overhead. Each extra write represents a potential duplicate of the 
@@ -479,16 +479,16 @@ Some proposed solutions include pseudo-erase operations that combine partial pro
 lightweight verification, trading full sanitization for real-time performance \cite{ahn2021forensics}.
 
 Achieving secure deletion in modern systems is fundamentally challenging because storage architectures are organized
-into multiple layers application, file system, block device, and physical medium each of which can retain residual 
+into multiple layers application, filesystem, block device, and physical medium each of which can retain residual 
 copies of data \cite{duplicateschen2022}. Performing deletion at the application layer, for example, only removes the 
-logical reference; the underlying data remains in the file system and may persist on the physical media indefinitely \cite{zhang2018ensuring}.
+logical reference; the underlying data remains in the filesystem and may persist on the physical media indefinitely \cite{zhang2018ensuring}.
 
 
 \section{Native Drive-Level Sanitization}
 
 Native drive-level sanitization refers to built-in hardware/firmware commands defined by storage 
 interface standards (ATA, NVMe, SCSI) that instruct a drive's controller to erase all user data on 
-the physical medium. Unlike software-based overwriting tools that operate through the file system, 
+the physical medium. Unlike software-based overwriting tools that operate through the filesystem, 
 these commands execute inside the drive's controller and can potentially reach areas the OS cannot 
 access — including over-provisioned zones and retired blocks \cite{antiforensics2016}. 
 
@@ -551,7 +551,7 @@ undecryptable. This is nearly instantaneous and does not wear the NAND cells. Th
 security rests entirely on the vendor's key management. If the key is not fully destroyed, if a 
 copy persists in a controller cache, or if there is a backdoor, the protection fails. \cite{aronsson2025secure}
 
-As stated above,NVMe's Sanitize command supports Cryptographic Erase as one of its three modes. Cryptographic 
+As stated above, NVMe's Sanitize command supports Cryptographic Erase as one of its three modes. Cryptographic 
 erasure renders data irrecoverable by destroying the media encryption key (MEK) rather than overwriting 
 physical cells and n a self-encrypting drive, all user data is encrypted by a MEK that never leaves the 
 controller's secure boundary. An NVMe self-encrypting drive complying with TCG Opal 2.0 maintains 
@@ -604,8 +604,8 @@ through every NAND block's erase operation sequentially, with verification \cite
 while MEK rotation completes in approximately 0.22 seconds regardless of drive capacity or how much data 
 is stored
 
-But still, these approaches has their practical limitations. Firstly, vendors can be inconsistent in 
-supporting and implementing these commands, with some drives ignoring them or providing false assuarances 
+But still, these approaches have their practical limitations. Firstly, vendors can be inconsistent in 
+supporting and implementing these commands, with some drives ignoring them or providing false assurances 
 of completion \cite{wang2020challenges}. Further, Native commands are all-or-nothing where they sanitize 
 the entire device which makes them suitable for decommissioning but useless in routine per-file deletions.
 And the controller's internal logic is not transparent, making it difficult to verify that the intended 

@@ -302,15 +302,10 @@ ENDTEXT
 dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/large.bin" bs=1M count=10 status=none
 echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_LARGE" >> "${MOUNT_POINT}/${FOLDER_NAME}/large.bin"
 
-# File 4: 500 small text files (500 signatures)
-for i in {1..500}; do
-    echo "UNIQUE_SIGNATURE_DS${DATASET_NUM}_SMALL_${i}" > "${MOUNT_POINT}/${FOLDER_NAME}/tiny_${i}.txt"
-done
-
-# File 5: Binary image file (no signatures)
+# File 4: Binary image file
 dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/image.jpg" bs=1K count=50 status=none
 
-# File 6: Binary PDF file (no signatures)
+# File 5: Binary PDF file
 dd if=/dev/urandom of="${MOUNT_POINT}/${FOLDER_NAME}/document.pdf" bs=1K count=30 status=none
 
 # Create checksum file for verification
@@ -322,53 +317,6 @@ echo "Created dataset $DATASET_NUM in ${MOUNT_POINT}/${FOLDER_NAME}"
 
 \subsection{Command List}
 \subsubsection*{Phase A: TRIM ON Procedure}
-\begin{enumerate}
-    
-\item{Mount with TRIM enabled:}
-
-\begin{verbatim}
-sudo mount -o discard /dev/sda1 /mnt/ssd_test
-\end{verbatim}
-
-\item{Create Datasets 1-5 with unique signatures:}
-
-\begin{verbatim}
-for i in {1..5}; do
-    ./create_dataset.sh /mnt/ssd_test $i
-done
-\end{verbatim}
-
-\item{Delete Datasets 2 and 4:}
-
-\begin{verbatim}
-sudo rm -rf /mnt/ssd_test/TEST_DATA_2_*
-sudo rm -rf /mnt/ssd_test/TEST_DATA_4_*
-\end{verbatim}
-
-\item{Force TRIM:}
-
-\begin{verbatim}
-sudo fstrim -v /mnt/ssd_test
-\end{verbatim}
-
-\item{Create Overwrite Datasets 6-8:}
-
-\begin{verbatim}
-for i in {6..8}; do
-    ./create_dataset.sh /mnt/ssd_test $i
-done
-\end{verbatim}
-
-\item{Unmount the drive:}
-
-\begin{verbatim}
-sudo umount /mnt/ssd_test
-\end{verbatim}
-
-\end{enumerate}
-
-\subsubsection*{Phase B: TRIM OFF Procedure}
-
 \begin{enumerate}
     
 \item{Mount with TRIM enabled:}
@@ -463,7 +411,7 @@ echo "Dataset $i: $count files found"
 done
 \end{verbatim}
 
-Limitations and workarounds:
+\subsubsection*{Steps to configure unmap to pass trim command via enclosure}
 \begin{enumerate}
     \item Identify the USB enclosure's chip and obtain its vendor and product ID using the command:
         \begin{verbatim}
@@ -674,8 +622,7 @@ echo "medium.txt created"
 
 
 # ============================================
-# FILES 3-7: LARGE VALID ZIP FILES
-# Approximately 1 GiB each
+# FILE 3: LARGE VALID ZIP FILE
 # ============================================
 
 echo ""
@@ -706,23 +653,7 @@ echo "Created large ZIP archive"
 
 
 # ============================================
-# FILE 8: MANY SMALL TEXT FILES
-# ============================================
-
-echo ""
-echo "Creating 500 small text files..."
-
-for i in {1..500}; do
-
-    sudo bash -c "echo 'UNIQUE_SIGNATURE_DS${ITER}_SMALL_${i}' > '$ITER_TEST_DIR/tiny_${i}.txt'"
-
-done
-
-echo "Created 500 tiny text files"
-
-
-# ============================================
-# FILE 9: VALID JPEG IMAGE
+# FILE 4: VALID JPEG IMAGE
 # ============================================
 
 echo ""
@@ -748,7 +679,7 @@ echo "image.jpg created"
 
 
 # ============================================
-# FILE 10: VALID PDF
+# FILE 5: VALID PDF
 # ============================================
 
 echo ""
@@ -794,7 +725,7 @@ ENDPDF"
 echo "document.pdf created"
 
 # ============================================
-# FILE 11: CHECKSUMS
+# FILE 6: CHECKSUMS
 # ============================================
 
 echo ""

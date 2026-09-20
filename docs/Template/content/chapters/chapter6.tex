@@ -2,20 +2,112 @@
 \label{sec:conclusions-future-work}
 
 \section{Conclusions}
+This thesis set out to develop an experimental framework for evaluating the effectiveness, performance, and practical limitations of secure deletion techniques in modern 
+storage environments. The framework was applied through four experiments on two consumer SSDs, an NVMe device and a SATA device, using host-side verification as the 
+primary measurement perspective. The central conclusion of the work is that secure deletion cannot be evaluated reliably by observing the successful completion of a 
+deletion command. The outcome visible to the host is produced by the interaction of the filesystem, the storage interface and connection path, the controller and Flash 
+Translation Layer, and the forensic recovery procedure used to test the result. Recoverability should therefore be understood as relative to the recovery procedure 
+employed, rather than as an absolute property of the deleted data.
+
+With respect to Research Question 1, the experiments showed that the extent to which deletion prevented recovery depended on the level at which the deletion operation 
+acted and on the storage device tested. filesystem-level deletion removed inode references and defeated recovery through filesystem metadata, while TRIM reduced 
+host-side recoverability to zero or near-zero under the tested procedures. However, disabling TRIM allowed substantial recovery on the NVMe SSD and limited but 
+inconsistent recovery on the SATA SSD, demonstrating that TRIM is effective but is not a universal guarantee of secure deletion.
+
+With respect to Research Question 2, no measurable change in host-side recoverability was observed during the 30-minute observation period following TRIM. Recovery was 
+zero at all four measurement points across all fill levels and devices, while the TRIM-disabled condition of the same experiment recovered data at every delay, including 
+immediately after deletion. The TRIM operation, rather than the elapsed time after deletion, was therefore the factor that determined the recovery outcome. This result 
+should not be interpreted as proof of instantaneous physical erasure, because the experiments observed only the logical block-access path exposed to the host.
+
+With respect to Research Question 3, TRIM latency was dominated by the first operation in each experimental sequence, with mean initial execution times of 19.71 seconds 
+on the NVMe SSD and 7.90 seconds on the SATA SSD, decreasing to approximately 1.33 and 1.02 seconds for subsequent operations. Latency did not increase monotonically 
+with filesystem utilization, and later operations retained run-to-run variation, indicating that TRIM performance is not fully deterministic. The measured duration 
+represents host-visible latency through the tested connection path, not the time required for the controller to physically erase NAND pages.
+
+With respect to Research Question 4, the experiments demonstrated that filesystem mechanisms can confirm logical deletion while providing no information about the 
+physical state of the storage medium. The FTL mediates between the logical addresses used by the filesystem and the physical pages managed by the controller, which is 
+why zero recovery cannot be interpreted as proof of physical erasure. The most direct empirical illustration was the persistence of recoverable remnants from earlier 
+experimental iterations in the TRIM-disabled condition, despite a host-level zero-overwrite performed between runs. This observation supports the broader conclusion 
+that host-level overwrite techniques cannot guarantee erasure on flash-based storage.
+
+With respect to Research Question 5, the comparison between the two devices showed clear and qualitative differences in secure deletion behavior. Under the nominal 
+TRIM-disabled condition, the NVMe SSD produced mean recovery rates of 79.60\% and 60.00\%, while the SATA SSD produced 0.22\% and 18.05\%. However, because both devices 
+were accessed through different USB bridges rather than native connections, this difference should be attributed to the tested vendor-plus-bridge configurations as a 
+whole, not to the NVMe or SATA interface in isolation; a native-connection comparison would be needed to separate the two factors. The practical conclusion nonetheless 
+holds: secure deletion evaluations must test multiple full configurations because a method or interface that appears effective in one configuration may behave differently 
+in another. The same experimental manipulation also produced different relationships between utilization and recovery on the two devices, with recovery increasing 
+monotonically with fill level on the NVMe SSD but showing no consistent trend on the SATA SSD. Secure deletion evaluations must therefore test multiple devices, because 
+a method that appears effective on one device may behave differently on another with a different controller or firmware implementation.
+
+With respect to Research Question 6, the experiments identified several practical limitations of host-side verification. First, a recovery result of zero establishes 
+only that the selected forensic procedure did not identify the data, as demonstrated by PhotoRec recovering content, including text files, that Foremost did not identify. 
+Second, the connection path can silently block drive-level sanitization commands: the ATA Security Erase command failed explicitly, while the SANITIZE commands produced 
+no output at all, a failure mode that a user could reasonably mistake for success. Third, host-side overwrites did not eliminate all recoverable remnants. These 
+limitations mean that the absence of an independent verification method is itself a result with practical and legal relevance, and that organizations must combine 
+technical evidence with governance evidence rather than treating a command completion message as conclusive proof of erasure.
+
+Taken together, these conclusions support a practical guidance position. Logical deletion alone does not constitute adequate evidence of erasure where residual-data risk 
+is significant. TRIM meaningfully reduces host-side recoverability but its effect is device-specific and cannot be assumed. Drive-level sanitization commands should not 
+be issued through USB bridges without verification, and sanitization procedures should require confirmation from the drive itself rather than relying on the absence of 
+an error. The framework developed in this thesis, with its common experimental conditions, measurable host-side indicators, and repeatable procedures, offers a 
+methodology for making such evaluations comparable across devices and studies.
+
+\subsection{Mapping Experimental Findings to Regulatory Obligations}
+
+The experimental results in Chapters 4 and 5 have direct bearing on the regulatory obligations discussed in Section 2.5, and three concrete findings are highlighted below.
+
+\textbf{Silent sanitization failure and the accountability principle.} The ATA Security Erase command failed explicitly when issued through the USB bridge, but the 
+SANITIZE commands produced no output at all — a failure mode a user or administrator could reasonably mistake for success. This is not a neutral technical detail: GDPR 
+Article 5(2) requires controllers to be able to demonstrate compliance with erasure obligations, and Article 32 requires technical measures appropriate to the risk of 
+processing. A sanitization workflow that reports no error on failure cannot support that demonstration — the absence of an error is not evidence of erasure, and any 
+audit trail built on command-completion status alone would misrepresent the actual state of the drive. Under NIST SP 800-88 Rev. 1, this failure mode also means the 
+operation cannot be credited as Purge-level sanitization: Purge requires an outcome that is verified, not merely attempted, and a silently-failing SANITIZE command 
+provides no basis for that verification.
+
+\textbf{Residual recoverability despite a host-level overwrite, and the boundary between "Clear" and "Purge."} In the TRIM-disabled condition of Experiment 3, content 
+from earlier experimental iterations remained recoverable even after a full-device zero-overwrite was performed between runs. This is a direct illustration of the NIST 
+distinction between Clear-level sanitization (host-level overwrite, which this thesis's results suggest is not reliable on flash media due to FTL remapping) and 
+Purge-level sanitization, which requires a device-native operation with verified physical effect. For a controller relying on a host-side overwrite to satisfy an 
+Article 17 erasure request, this finding indicates that the overwrite alone does not provide the assurance that either NIST Purge or a defensible reading of GDPR 
+"erasure" would require, regardless of whether the overwrite command completes successfully.
+
+\textbf{Device- and configuration-dependent behavior, and the limits of a single compliance procedure.} The NVMe and SATA configurations tested in this thesis produced 
+markedly different recovery outcomes under nominally identical deletion procedures (§5.2, RQ5). For organizations subject to GDPR or NIST-aligned sanitization 
+requirements and operating heterogeneous storage fleets, this finding indicates that a single documented deletion procedure cannot be assumed to provide uniform 
+assurance across devices, vendors, and connection paths. Practical compliance therefore requires either per-configuration verification or sufficiently conservative 
+assumptions (e.g. defaulting to Purge- or Destroy-level procedures) when device-level behavior has not been individually validated — an operational implication that 
+follows directly from the experimental results rather than from the regulatory text alone.
+
+These three findings do not resolve the broader gap between legal and technical definitions of "erasure" discussed in Section 2.5.1, but they show concretely where the 
+technical evidence gathered in this thesis intersects with, and in places sharpens, the accountability and verification obligations that GDPR and NIST SP 800-88 
+already impose.
 
 \section{Future Work}
 
 Future research should repeat the experiments using direct native connections. The NVMe SSD should be connected directly through a PCIe or M.2 interface, while the SATA 
 SSD should be connected directly to a native SATA port without a USB-to-SATA adapter. The same dataset, filesystem, deletion procedure, TRIM conditions, recovery tools, 
-fill levels, and recovery delays should then be applied to the directly connected devices. his design would help distinguish the effect of the SSD controller from the 
+fill levels, and recovery delays should then be applied to the directly connected devices. This design would help distinguish the effect of the SSD controller from the 
 effect of the bridge. It would also allow the same SSD to be tested through different connection paths, reducing the risk that device model differences are mistaken for 
 interface effects. Future work should include more SSD models, different bridge chipsets, direct and USB-connected configurations, multiple filesystems, and longer 
-observation periods. Recovery should also be attempted using more than one forensic method, including specialised laboratory techniques where available. These changes 
-would improve the external validity of the framework and help determine whether atypical recovery results arise from SSD implementation, bridge behaviour, filesystem 
+observation periods. Recovery should also be attempted using more than one forensic method, including specialized laboratory techniques where available. These changes 
+would improve the external validity of the framework and help determine whether atypical recovery results arise from SSD implementation, bridge behavior, filesystem 
 configuration, or the limits of the recovery procedure.
 
 Future work should also evaluate cryptographic erase and block erase sanitization commands using direct native connections. The present study was unable to test these 
 commands because the USB bridge did not forward them to the drive. Repeating the experiment with the SATA SSD connected directly to a native SATA port would allow the 
 effectiveness and latency of ATA Security Erase, SANITIZE Crypto Scramble, and SANITIZE Block Erase to be measured and compared against TRIM and overwriting. The same 
-applies to the NVMe SSD, which should be tested through a direct M.2 or PCIe connection using the \texttt{nvme sanitize} command. These experiments would complete the 
+applies to the NVMe SSD, which should be tested through a direct M.2 or PCIe connection using the \texttt{NVMe sanitize} command. These experiments would complete the 
 comparison matrix by adding measured results for the drive-level sanitization techniques that are currently discussed only theoretically in Chapter 2.
+
+Future work should extend the framework to containerized environments, where deletion exhibits the same layered-abstraction problems identified in this thesis but at the 
+filesystem level rather than the flash level. Container runtimes store container filesystems as stacked copy-on-write layers, typically using OverlayFS. A file deleted 
+inside a running container is not physically erased; the deletion is recorded as a whiteout entry in the upper layer, while the original content remains intact and 
+addressable in the lower layers of the image. This means that sensitive data copied into an image and subsequently removed with an ordinary delete command remains 
+recoverable from the layer tarballs and from the image build history, even though the running filesystem view shows nothing. This behavior parallels the central finding 
+of this thesis at the storage level: the observable outcome of a deletion operation is produced by an abstraction layer, in this case the union filesystem rather than 
+the FTL, and observing the merged filesystem view is insufficient to establish erasure. Future experiments should apply the framework's dataset-and-recovery 
+methodology to Docker and Kubernetes environments, measuring recoverability from image layers, stopped container filesystems, ephemeral volumes, and volumes backed by 
+network or cloud storage. A particularly valuable extension would combine the two abstraction levels examined in this thesis: a deletion performed inside a container 
+on an SSD-backed volume passes through the union filesystem, the host filesystem, and the FTL in sequence, and the extent to which recoverability survives each layer 
+has received little systematic attention. Such work would also connect to the copy-on-write secure deletion literature, where authenticated encryption and per-block key 
+management have been proposed precisely because overwriting cannot address shared, versioned blocks.

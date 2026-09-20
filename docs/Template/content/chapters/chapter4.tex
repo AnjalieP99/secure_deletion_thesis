@@ -2,10 +2,10 @@
 \label{sec:experimental-results}
 
 \section{Results Analysis}
-This chapter presents the results obtained from the three experiments. The findings are reported separately for filesystem-level inspection, TRIM-enabled and TRIM-disabled recovery conditions, storage-device type, filesystem utilisation, recovery delay, and TRIM execution time.
+This chapter presents the results obtained from the four experiments. The findings are reported separately for filesystem-level inspection, TRIM-enabled and TRIM-disabled recovery conditions, storage-device type, filesystem utilisation, recovery delay, and TRIM execution time.
 The results are interpreted using the distinction between logical deletion, host-side recoverability, and physical sanitization. A file may disappear from the filesystem while data remains in storage areas that cannot be observed through ordinary host-level access. Similarly, an absence of recovered signatures indicates that the selected recovery procedure did not identify the data, but it does not independently prove that all physical copies have been erased.
 
-\subsection{Experiment 1: TRIM and Filesystem-Level Data Recoverability}
+\subsection{Experiment 1: TRIM and filesystem-Level Data Recoverability}
 
 \subsubsection{Inode State After Deletion and TRIM}
 The inode examination showed that the deleted file had been logically removed from the ext4 filesystem. The inode reported a size of zero and a block count of zero. Its link count was also zero, indicating that no directory entry referenced the inode. The extent tree was empty, showing that no usable block pointers remained in the inode.
@@ -123,7 +123,7 @@ Found expected sequence 64, type 2 (commit block) at block 652
 No magic number at block 653: end of journal.
 \end{verbatim}
 
-The journal contained four transactions (61–64) related to the deletion. Notably, transaction 64 included a revoke table (type 5), which is used to indicate that 
+The journal contained four transactions (61-64) related to the deletion. Notably, transaction 64 included a revoke table (type 5), which is used to indicate that 
 certain blocks should no longer be considered valid in the journal. This revocation mechanism is relevant to filesystem-level recoverability after deletion.
 
 The detailed descriptor block dump showed which filesystem blocks were logged:
@@ -309,7 +309,7 @@ identifying the expected signatures on the SATA device.
 The post-deletion write datasets also showed almost complete recovery. DS6 produced 5,052 signatures in all five runs, while DS7 and DS8 produced 5,103 signatures in 
 the fifth run and 5,052 signatures in the other four runs. DS14, DS15, and DS16 produced 5,052 signatures in every run. The mean recovery rates for these datasets were 
 therefore approximately 100\%. The values slightly above 100\% resulted from the detection of more signature occurrences than the nominal expected value of 5,052 which 
-were due to file remnants from previous runs being recovered by Photorec. 
+were due to file remnants from previous runs being recovered by PhotoRec. 
 
 The deleted datasets under the nominal TRIM-enabled condition produced only a small number of signatures in the first two runs and no signatures in the remaining three 
 runs. DS2 produced 56, 19, 0, 0, and 0 signatures, resulting in a mean of 15 recovered signatures and a mean recovery rate of approximately 0.30\%. DS4 produced 47, 37, 
@@ -341,9 +341,9 @@ Under the nominal TRIM-enabled condition, both devices produced very low recover
 SATA SSD produced less than 1\% mean recovery for both deleted datasets. This indicates that the explicit TRIM operation was associated with a strong reduction in 
 host-side recovery on both devices.
 
-The results also demonstrate that TRIM behaviour was not uniform across the two SSDs. If the effect of TRIM were determined only by the operating-system deletion 
+The results also demonstrate that TRIM behavior was not uniform across the two SSDs. If the effect of TRIM were determined only by the operating-system deletion 
 command, the two devices would be expected to show similar recovery patterns. Instead, the NVMe SSD showed substantial recovery when TRIM was disabled, while the SATA 
-SSD showed limited recovery under the same nominal condition. This difference indicates that storage-device implementation and controller behaviour affected the 
+SSD showed limited recovery under the same nominal condition. This difference indicates that storage-device implementation and controller behavior affected the 
 persistence and recoverability of deleted data.
 
 The results further show that repeated runs were necessary to identify the variability of the recovery process. The NVMe device produced large changes in recovery 
@@ -357,6 +357,49 @@ underestimate the recoverability of deleted data.
     \caption{Standard Deviation of Recovery on NVMe and SATA SSDs}
     \label{fig:sdv}
 \end{figure}
+
+\textbf{Statistical assessment of the recovery rate differences.} The recovery-rate comparisons reported above were computed from only five repeated runs per dataset, 
+so the difference between two means cannot be interpreted without a measure of its uncertainty. A parametric test such as the t-test was not used because it assumes 
+approximate normality, which cannot be verified with n = 5 and is in any case implausible here: the underlying process behaves closer to a mixture of two states; 
+\textit{fully recoverable} and \textit{not recoverable}, than to a continuous distribution. A two-sided, exact Mann-Whitney U test was therefore applied to the 
+per-run recovery percentages, together with 95\% confidence intervals obtained by percentile bootstrap (10,000 resamples), reported in Table~\ref{tab:mwu}.
+
+For DS10, the NVMe-SATA difference (79.60\% vs 0.22\%) approached but did not reach conventional significance ($U = 22$, $p = 0.056$), despite the large apparent gap 
+between the means. For DS12, the difference (60.00\% vs 18.05\%) was not statistically significant ($U = 18$, $p = 0.31$). This is instructive: the 18.05\% SATA DS12 
+mean is not evidence of a genuinely elevated typical recovery rate on the SATA device, it is driven almost entirely by a single run (Run 2), in which 4,487 of 5,052 
+signatures were recovered (88.82\%), against essentially zero recovery in the other four runs. A mean computed over five runs, one of which is a high-recovery outlier, 
+is fragile: removing or replacing that single run changes the sample mean by an order of magnitude. The result should therefore be read as \textit{SATA occasionally, but 
+inconsistently, permits substantial recovery} rather than as \textit{SATA retains 18\% of deleted data on average} — the latter phrasing implies a stability the data 
+does not support.
+
+When the two per-device datasets are pooled (n=10 vs n=10), the NVMe-SATA difference does reach significance ($U = 80.5$, $p = 0.023$), consistent with the qualitative device-level 
+distinction discussed above. The contrast between the pooled and per-dataset results illustrates the practical limits of n = 5: a difference that is visually large and 
+consistent with the study's broader conclusions can still fail to clear a significance threshold at the individual-dataset level, and a single anomalous run can flip 
+the verdict. This is treated here as a limitation of the sampling design rather than as evidence against the underlying effect, and is revisited in Section 5.3.
+
+Five repeated runs were chosen to balance experimental thoroughness against the time cost of the four-hour wait conditions in Experiments 2 and 3. This is sufficient 
+to detect the qualitative, order-of-magnitude differences between conditions and devices that this thesis reports, but it is not sufficient to estimate tail 
+probabilities precisely — i.e. to say how often a SATA-DS12-style high-recovery run should be expected. Characterizing that rate reliably would require on the order of 
+n = 15-20 runs per condition, which was outside the scope achievable here.
+
+
+\begin{table}[h]
+\centering
+\caption{Mann--Whitney U test and 95\% bootstrap CI for NVMe vs. SATA recovery rates}
+\label{tab:mwu}
+\begin{tabular}{l c c l l}
+\toprule
+\textbf{Comparison} & \textbf{$U$} & \textbf{$p$} & \multicolumn{2}{c}{\textbf{Mean [95\% CI]}} \\
+\cmidrule(lr){4-5}
+& & & \textbf{NVMe} & \textbf{SATA} \\
+\midrule
+DS10 & 22.0 & 0.056 & 79.60\% [39.8, 99.8] & 0.22\% [0.0, 0.7] \\
+DS12 & 18.0 & 0.310 & 60.00\% [20.0, 100.0] & 18.05\% [0.0, 53.6] \\
+Pooled & 80.5 & 0.023 & 69.80\% & 9.14\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 
 \subsection*{Interpretation of the recovery results}
 The results provide evidence that the nominal TRIM-enabled condition substantially reduced the recovery of deleted dataset signatures on both storage devices. The 
@@ -373,7 +416,7 @@ the data had been destroyed.
 
 The connection path must also be considered when interpreting the comparison. The NVMe SSD was accessed through a USB enclosure, while the SATA SSD was accessed through 
 a USB-to-SATA adapter. The host system exposed a discard-capable path, but this did not independently confirm that every discard request was forwarded to and processed 
-by the SSD controller. Therefore, the results describe the behaviour of the complete tested configuration, including the operating system, filesystem, drivers, USB 
+by the SSD controller. Therefore, the results describe the behavior of the complete tested configuration, including the operating system, filesystem, drivers, USB 
 connection, adapter or enclosure, SSD controller, and recovery procedure. 
 
 Overall, Experiment 2 demonstrates that deleted data was least recoverable when the nominal TRIM-enabled procedure was used. When TRIM was disabled, the NVMe SSD 
@@ -382,24 +425,25 @@ that secure deletion performance cannot be inferred from the deletion command al
 
 \subsection{Experiment 3:Testing Recoverability at different fill levels and times intervals}
 
-The recovery-time experiment produced a consistent recovery result across all tested filesystem utilisation levels and recovery intervals. No files were recovered in any 
-of the experimental conditions. At 25\%, 75\%, and 90\% filesystem utilisation, the number of recovered files remained zero for immediate recovery and for recovery 
-attempts performed after 5, 15, and 30 minutes. This result was consistent across both experimental runs. Therefore, within the 30-minute observation period, no 
+\subsubsection*{TRIM ON condition}
+The recovery-time experiment produced a consistent recovery result across all tested filesystem utilization levels and recovery intervals. No files were recovered in any 
+of the experimental conditions. At 25\%, 75\%, and 90\% filesystem utilization, the number of recovered files remained zero for immediate recovery and for recovery 
+attempts performed after 5, 15, and 30 minutes. This result was consistent across all five experimental runs. Therefore, within the 30-minute observation period, no 
 measurable change in host-side recoverability was observed as a function of the time elapsed following the TRIM operation. In particular, the absence of recovered files 
 at the immediate recovery point indicates that the data was already not recoverable through the selected forensic recovery procedure immediately following TRIM. The 
-subsequent 5-, 15-, and 30-minute waiting periods did not produce any additional reduction in the measured recovery outcome because the recovery count was already zero 
+subsequent 5, 15, and 30-minute waiting periods did not produce any additional reduction in the measured recovery outcome because the recovery count was already zero 
 at the initial measurement point.
 
 \begin{table}[H]
     \centering
-    \caption{Recovery Results}
+    \caption{Mean Recovery Results for TRIM ON Condition at Different Fill Levels and Recovery Intervals}
     \label{tab:recovery-results}
 
     \begin{tabular}{c c c c}
         \toprule
         \textbf{Fill Level} & \textbf{Recovery Delay} &
-        \makecell{\textbf{SATA SSD}\\\textbf{Recovered}} &
-        \makecell{\textbf{NVMe SSD}\\\textbf{Recovered}} \\
+        \makecell{\textbf{SATA SSD}\\\textbf{Mean Recovered}} &
+        \makecell{\textbf{NVMe SSD}\\\textbf{Mean Recovered}} \\
         \midrule
         25\% & 0 min  & 0 & 0 \\
         25\% & 5 min  & 0 & 0 \\
@@ -417,40 +461,196 @@ at the initial measurement point.
     \end{tabular}
 \end{table}
 
-The measured TRIM execution times showed a different pattern. The first fstrim operation following deletion generally required substantially more time than subsequent 
-operations. In the first experimental run, the real execution time for the initial TRIM operation was 4.53 seconds at 25\% utilisation, 7.20 seconds at 75\% utilisation, 
-and 7.80 seconds at 90\% utilisation. The corresponding subsequent measurements were generally below approximately one second. A similar pattern was observed in the 
-second experimental run. The initial TRIM operations required 8.36 seconds, 32.30 seconds, and 16.15 seconds at 25\%, 75\%, and 90\% utilisation, respectively. Subsequent 
-TRIM operations generally completed within approximately one to three seconds. The longer execution time observed for the first TRIM operation is consistent with the 
-larger amount of logical storage being discarded after deletion of the experimental dataset. The amount reported as trimmed during the first operation was substantially 
-larger than that reported during the subsequent measurements. However, the variation between runs, particularly at the 75\% and 90\% utilisation levels, indicates that 
-TRIM execution time was not determined solely by filesystem utilisation. Controller-level storage management and the state of the device may also influence the 
-host-observed execution time.
+Three findings follow. First, the zero recovery at the immediate (0-minute) measurement point shows that recoverability was already eliminated at the moment TRIM 
+completed; no additional reduction occurred over the subsequent 30-minute window simply because there was nothing left to reduce. Recoverability of deleted data through 
+the selected forensic procedure was therefore not a function of elapsed time once the explicit TRIM had been issued. Second, filesystem utilization showed no measurable 
+effect on recoverability. The outcome at 25\% utilization, where most of the device was free space, was indistinguishable from the outcome at 90\%, where free space was 
+scarce. This suggests that the controller's handling of TRIM-invalidated ranges was not contingent on remaining free space, at least to the extent observable through 
+host-side recovery. Third, the result contrasts sharply with the TRIM-disabled condition in Experiment 2, in which the same devices retained substantial recoverable 
+data (means of 79.60\% and 60.00\% on the NVMe SSD). The comparison supports the interpretation that the explicit fstrim operation, rather than the passage of time or 
+the workload state, was the decisive factor in removing host-visible recoverability.
+
+\subsubsection*{TRIM execution time}
+
+The latency data revealed two distinct behavioral regimes. The initial fstrim operation of each experimental sequence, which discarded the accumulated free space of the 
+freshly initialized filesystem plus the deleted dataset, required substantially more time than the subsequent operations, which discarded only the 2.5 GB dataset of the 
+current iteration.
 
 \begin{table}[H]
     \centering
-    \caption{Recovery Time Results}
-    \label{tab:recovery-time-results}
-
-    \begin{tabular}{c c c c c c}
+    \caption{Execution Time of the Initial \texttt{fstrim} Operation Across Five Runs}
+    \label{tab:fstrim-execution-time}
+    
+    \begin{tabular}{c c c c c}
         \toprule
-        \textbf{Fill Level} & \textbf{Drive} &
-        \textbf{0 min} & \textbf{5 min} &
-        \textbf{15 min} & \textbf{30 min} \\
+        \textbf{Device} & \textbf{Utilization} & \textbf{Mean (s)} &
+        \textbf{SD (s)}  &  \textbf{Mean Trimmed (GB)} \\
         \midrule
-        25\% & SATA & 4.53 s  & 0.62 s & 0.87 s & 0.73 s \\
-        25\% & NVMe & 8.36 s  & 0.39 s & 0.40 s & 1.14 s \\
-        75\% & SATA & 7.20 s  & 0.72 s & 0.66 s & 0.73 s \\
-        75\% & NVMe & 32.30 s & 2.87 s & 1.26 s & 1.18 s \\
-        90\% & SATA & 7.80 s  & 1.01 s & 1.00 s & 1.00 s \\
-        90\% & NVMe & 16.15 s & 0.96 s & 1.20 s & 1.19 s \\
+        
+        NVMe & 25\% & 12.01 & 4.59  & 94.04 \\
+        NVMe & 75\% & 29.76 & 4.75  & 33.86 \\
+        NVMe & 90\% & 17.36 & 5.46  & 12.54 \\
+        
+        SATA & 25\% & 8.60  & 3.61  & 93.94 \\
+        SATA & 75\% & 7.29  & 0.50  & 31.22 \\
+        SATA & 90\% & 7.80  & 0.56  & 12.42 \\
+        
         \bottomrule
     \end{tabular}
 \end{table}
+Subsequent operations (iterations 2 through 4, discarding only the deleted dataset) completed in a mean of 1.33 s on the NVMe SSD (range 0.39 to 4.68 s) and 1.02 s on 
+the SATA SSD (range 0.61 to 3.27 s)
 
-Overall, the results indicate that, under the tested conditions, the elapsed time between TRIM and forensic recovery did not produce an observable change in 
-recoverability during the 30-minute observation period. The results also show that the host-visible execution time of TRIM varied according to the amount of data being 
-discarded and the state of the storage device.
+Four observations follow from the latency data; 
+
+First, execution time tracked the discarded volume, not the filesystem utilization level. The initial TRIM at 25\% utilization discarded approximately 94 GB on both 
+devices, roughly three times the volume discarded at 75\% (about 31 to 34 GB) and seven times the volume at 90\% (about 12.5 GB). The amount reported as trimmed was 
+highly stable across runs at each fill level (SDs of 0.06 to 3.43 GB), confirming that the trimmable volume was determined by the filesystem geometry rather than by 
+run-specific conditions. When latency is normalized by the discarded volume, both devices slowed as the discard volume decreased: on the SATA SSD the effective 
+initial-trim throughput fell from approximately 13.1 GB/s at 25\% utilization to 4.3 GB/s at 75\% and 1.6 GB/s at 90\%. This pattern is consistent with a fixed 
+per-command or per-range overhead becoming visible once the volume of individual discard requests shrinks.
+
+Second, the two devices differed markedly in absolute latency. Pooled across all fill levels, the initial TRIM required a mean of 19.71 s (SD 8.96, range 8.36 to 33.45) 
+on the NVMe SSD against 7.90 s (SD 2.05, range 4.53 to 11.56) on the SATA SSD, despite both devices discarding nearly identical volumes (mean 46.81 GB versus 45.86 GB 
+per sequence). This difference indicates that TRIM latency is a property of the device and its controller firmware rather than of the filesystem workload alone.
+
+Third, latency predictability differed between devices. The SATA SSD's initial-trim times clustered tightly at 75\% and 90\% utilization (SD 0.50 and 0.56 s 
+respectively), whereas the NVMe SSD showed SDs of 4.59 to 5.46 s under the same conditions. At 25\% utilization the SATA variability was larger (SD 3.61 s), driven by 
+two early runs completing in 4.53 and 4.80 s and three later runs in 10.74 to 11.56 s despite discarding essentially the same volume (93.89 to 94.02 GB). This shift 
+suggests a change in the controller's internal state (accumulated garbage-collection work or cache state) between the earlier and later runs rather than a difference in 
+the workload itself. The same device-state dependence appeared on the NVMe SSD, where the two initial TRIMs at 75\% utilization that discarded 37.62 GB took 33.45 s 
+while those discarding 31.35 GB took 22.86 to 32.30 s. Overall, execution time was not a deterministic function of filesystem utilization: controller-level storage 
+management and device state clearly contributed to the host-observed duration. Fourth, subsequent TRIM operations were not uniformly near-instantaneous. Although they 
+averaged around one second, individual operations reached 4.68 s on the NVMe and 3.27 s on the SATA, and the coefficient of variation was 0.64 and 0.50 respectively. 
+This means that even a routine post-deletion TRIM discarding only the deleted 2.5 GB dataset occasionally took several seconds of host-visible time, which is relevant 
+when TRIM is issued synchronously within a deletion workflow.
+
+It should be emphasized that these measurements represent host-visible TRIM latency, not physical erasure latency. The execution time records the duration of the 
+discard command as observed by the host and does not provide direct evidence of when the SSD controller performs internal garbage collection, block erasure, or other 
+flash-management operations
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/trim_latency.png}
+    \caption{Trim latency across runs}
+    \label{fig:trim-latency}
+\end{figure}
+
+As shown in Figure \ref{fig:trim-latency}, the mean TRIM execution time for each iteration at the 25\%, 75\%, and 90\% filesystem fill levels. The bars are separated by 
+storage device, allowing the latency behavior of the NVMe and SATA SSDs to be compared across repeated experimental sequences.
+
+The most prominent feature is the substantially higher latency recorded during the first iteration. For the NVMe SSD, the first-iteration mean execution times were 
+12.01 seconds at 25\% utilization, 29.76 seconds at 75\% utilization, and 17.36 seconds at 90\% utilization. The corresponding SATA values were lower and more 
+consistent, at 8.60, 7.29, and 7.80 seconds respectively
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/fill_vs_wait_time_recovery.png}
+    \caption{Mean time for trim execution across fill levels and wait times}
+    \label{fig:storage-fill-vs-wait-time}
+\end{figure}
+
+Figure \ref{fig:storage-fill-vs-wait-time} presents the same latency data as two heatmaps, one for the NVMe SSD and one for the SATA SSD. The rows represent the three 
+filesystem fill levels, while the columns represent the nominal recovery delays of 0, 5, 15, and 30 minutes.
+
+The heatmaps make the initial-iteration effect particularly clear. In both devices, the 0-minute column contains the darkest cells and the largest numerical values. For 
+the NVMe SSD, the mean values are 12.01 seconds at 25\% utilization, 29.76 seconds at 75\% utilization, and 17.36 seconds at 90\% utilization. For the SATA SSD, the 
+corresponding values are 8.60, 7.29, and 7.80 seconds. These darker cells indicate that the first TRIM operation was substantially slower than the later operations.
+The remaining columns are much lighter, confirming the reduction in latency after the first iteration. For the NVMe SSD, the post-initial values range from 0.75 to 2.77 
+seconds. For the SATA SSD, they range from 0.65 to 1.71 seconds. The heatmaps therefore provide a clear visual distinction between the initial operation and the 
+subsequent operations.
+
+\subsubsection*{TRIM OFF condition}
+
+In the TRIM-disabled condition, the recovery results were substantially different. 
+
+It was discovered that foremost was not able to recover text files from both the NVMe and SATA SSDs while PhotoRec was able to recover the text files. Further it was 
+observed that during each iteration, the recovery tools recovered content from the previous iteration, ex; for 25\% fill level, the 5-min recovery attempt recovered 
+content from the 0-min recovery attempt, the 15-min recovery attempt recovered content from the 5-min recovery attempt and so on. Then again on 75\% fill level, some 
+files from the 25\% fill level were recovered during the 0-min recovery attempt, and the same pattern was observed for the 90\% fill level. 
+
+At each experimental run, a complete wipe of the SSD was performed before the next iteration. The wipe was performed using \texttt{sudo dd if=/dev/zero of=/dev/sda 
+bs=1M status=progress} to overwrite the entire SSD with zeros. The results of the recovery attempts are presented below in Table \ref{tab:recovery-statistics}.
+
+\begin{table}[h]
+\centering
+\caption{Mann--Whitney U test and Kruskal--Wallis trend test by device and recovery tool}
+\label{tab:recovery-statistics}
+\begin{tabular}{l c l l c c}
+\toprule
+ & & \multicolumn{2}{c}{\textbf{Mean [95\% CI]}} \\
+\cmidrule(lr){3-4}
+\textbf{Tool} & \textbf{Fill level} & \textbf{NVMe} & \textbf{SATA} & \textbf{$U$} & \textbf{$p$} \\
+\midrule
+Foremost & 25\% & 2.30 [1.45, 3.25] & 3.30 [2.60, 4.00] & 135.5 & 0.075 \\
+Foremost & 75\% & 3.60 [2.60, 4.65] & 2.85 [1.90, 3.90] & 251.5 & 0.161 \\
+Foremost & 90\% & 7.05 [5.60, 8.60] & 3.50 [2.80, 4.25] & 328.5 & $<$0.001 \\
+PhotoRec & 25\% & 3.85 [3.30, 4.45] & 4.75 [4.05, 5.40] & 128.0 & 0.048 \\
+PhotoRec & 75\% & 5.15 [4.30, 5.95] & 5.90 [4.95, 6.85] & 164.5 & 0.338 \\
+PhotoRec & 90\% & 9.05 [7.45, 10.70] & 7.00 [6.05, 7.95] & 264.5 & 0.081 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Kruskal--Wallis test for fill-level trend within each device}
+\label{tab:kruskal-wallis}
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Device} & \textbf{Tool} & \textbf{$H$} & \textbf{$p$} & \textbf{Spearman $\rho$} & \textbf{$p$} \\
+\midrule
+NVMe & Foremost & 21.29 & $<$0.001 & 0.592 & $<$0.001 \\
+NVMe & PhotoRec & 23.62 & $<$0.001 & 0.627 & $<$0.001 \\
+SATA & Foremost & 3.12 & 0.210 & 0.052 & 0.696 \\
+SATA & PhotoRec & 9.85 & 0.007 & 0.408 & 0.001 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A Mann-Whitney U test comparing NVMe and SATA recovery counts at each fill level shows that the two devices are statistically indistinguishable at 25\% and 75\% 
+utilization for Foremost ($p = 0.075$, $p = 0.161$) and at 75\% for PhotoRec ($p = 0.338$), but diverge sharply at 90\% utilization, where NVMe recovers significantly 
+more than SATA for both tools (Foremost: $U = 328.5$, $p < 0.001$; PhotoRec: $U = 264.5$, $p = 0.081$). At 25\% utilization, PhotoRec recovery is in fact marginally 
+higher on SATA than on NVMe ($p = 0.048$). With n = 20 per cell, these tests are considerably better powered than the n = 5 comparisons in Experiment 2, and they refine 
+the device-dependence claim: the NVMe-SATA gap is not uniform across the utilization range tested, but concentrated at high fill levels.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/trim_off_recovery.png}
+    \caption{Mean recovery on NVMe and SATA SSDs with TRIM disabled}
+    \label{fig:trim_off_recovery}
+\end{figure}
+
+The results in Table \ref{tab:recovery-statistics} stand in direct contrast to the TRIM-enabled condition reported in Table \ref{tab:recovery-results}. Whereas the 
+TRIM-enabled condition produced zero recovered files in all 120 recorded observations, the TRIM-disabled condition produced non-zero mean recovery in every device, 
+fill level, and tool combination. Mean recovery per run ranged from 2.30 to 7.05 files for Foremost and from 3.85 to 9.05 files for PhotoRec on the NVMe SSD, and from 
+2.85 to 3.50 files for Foremost and from 4.75 to 7.00 files for PhotoRec on the SATA SSD. Recovery was observed at every recovery delay, including the immediate 
+(0-minute) attempt, indicating that deleted data remained recoverable through the selected forensic procedure from the moment of deletion without any waiting period. 
+
+Four observations follow from these results. First, recovery outcome was strongly dependent on the recovery tool. PhotoRec produced a higher mean recovery than Foremost 
+in all six device and fill level combinations. The difference was most consistent for text-based content: Foremost did not recover the deleted text files on either 
+device, whereas PhotoRec recovered them in each iteration. This asymmetry indicates that the recoverability of deleted data cannot be characterized independently of the 
+recovery procedure, and that conclusions drawn from a single carving tool may underestimate the evidence that a competent investigator could recover.
+
+Second, the effect of filesystem utilization was device and tool dependent rather than uniform. On the NVMe SSD, mean recovery increased with fill level for both tools, 
+and a Kruskal-Wallis test confirms this trend is statistically significant (Foremost: $H = 21.29$, $p < 0.001$; PhotoRec: $H = 23.62$, $p < 0.001$; Spearman $\rho = 0.59$ 
+and $0.63$ respectively). On the SATA SSD, the picture is tool-dependent: Foremost showed no significant trend across fill levels ($H = 3.12$, $p = 0.21$), consistent 
+with the non-monotonic pattern in the raw means (3.30, 2.85, 3.50), whereas PhotoRec showed a smaller but statistically significant increasing trend ($H = 9.85$, 
+$p = 0.007$; $\rho = 0.41$), rising from 4.75 to 5.90 to 7.00 files across the three fill levels. The SATA fill-level effect should therefore be described as weaker and 
+tool dependent rather than absent, the two recovery tools do not agree on whether utilization affects SATA recoverability, which is itself consistent with the broader 
+finding that measured recoverability depends on the recovery procedure employed and cannot be treated as a fixed property of the device.
+
+Third, recovery was highly variable between repeated runs. The standard deviations in Table \ref{tab:recovery-statistics} (1.39 to 3.75 files) are of the same order as 
+the means themselves, giving coefficients of variation between approximately 0.32 and 0.92. Nominally identical trials therefore produced materially different recovery 
+outcomes, reinforcing the conclusion that host-side recoverability is not a deterministic property of the deletion operation but is influenced by device state and 
+controller-level storage management.
+
+Fourth, the recovery output contained residual content from earlier iterations. Within each run, the 5-minute recovery attempt recovered content from the 0-minute 
+attempt, the 15-minute attempt recovered content from the 5-minute attempt, and content from the 25\% fill level was recovered during the 0-minute attempt at 75\% and 
+again at 90\%. The persistence of earlier content across fill levels, despite the inter-run zero-overwrite performed with dd, indicates that a host-level overwrite of 
+the device.
+
 
 \subsection{Experiment 4: Cryptographic Erase Attempt}
 

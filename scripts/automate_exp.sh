@@ -181,12 +181,11 @@ echo "✓ medium.txt created"
 
 
 # ============================================
-# FILES 3-7: LARGE VALID ZIP FILES
-# Approximately 1 GiB each
+# FILE 3: LARGE VALID ZIP FILE
 # ============================================
 
 echo ""
-echo "Creating large ZIP dataset (~2.5 GiB each)..."
+echo "Creating large ZIP dataset (~2.5 GiB )..."
 
 
     TEMP_FILE="$ITER_TEST_DIR/.temporary_data.bin"
@@ -211,25 +210,8 @@ echo "Creating large ZIP dataset (~2.5 GiB each)..."
 echo ""
 echo "✓ Created large ZIP archive"
 
-
 # ============================================
-# FILE 8: MANY SMALL TEXT FILES
-# ============================================
-
-echo ""
-echo "Creating 500 small text files..."
-
-for i in {1..500}; do
-
-    sudo bash -c "echo 'UNIQUE_SIGNATURE_DS${ITER}_SMALL_${i}' > '$ITER_TEST_DIR/tiny_${i}.txt'"
-
-done
-
-echo "✓ Created 500 tiny text files"
-
-
-# ============================================
-# FILE 9: VALID JPEG IMAGE
+# FILE 4: VALID JPEG IMAGE
 # ============================================
 
 echo ""
@@ -250,7 +232,7 @@ echo "✓ image.jpg created"
 
 
 # ============================================
-# FILE 10: VALID PDF
+# FILE 5: VALID PDF
 # ============================================
 
 echo ""
@@ -296,7 +278,7 @@ ENDPDF"
 echo "✓ document.pdf created"
 
 # ============================================
-# FILE 11: CHECKSUMS
+# FILE 6: CHECKSUMS
 # ============================================
 
 echo ""

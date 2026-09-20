@@ -1,0 +1,30 @@
+Foremost version 1.5.7 by Jesse Kornblum, Kris Kendall, and Nick Mikus
+Audit File
+
+Foremost started at Wed Sep  9 00:03:21 2026
+Invocation: foremost -i /dev/sda1 -o /root/trim_experiment/logs_nvme_trim_off/run_3/recovered_90_iter3_15min -t all 
+Output directory: /root/trim_experiment/logs_nvme_trim_off/run_3/recovered_90_iter3_15min
+Configuration file: /etc/foremost.conf
+------------------------------------------------------------------
+File: /dev/sda1
+Start: Wed Sep  9 00:03:21 2026
+Length: 119 GB (128034275328 bytes)
+ 
+Num	 Name (bs=512)	       Size	 File Offset	 Comment 
+
+0:	50636296.jpg 	       3 MB 	 25925783552 	 
+1:	67466000.jpg 	       1 MB 	 34542592000 	 
+2:	67466008.pdf 	      518 B 	 34542596096 	 
+3:	194209040.jpg 	       3 MB 	 99435028480 	 
+4:	194209048.pdf 	      518 B 	 99435032576 	 
+5:	194421952.jpg 	       3 MB 	 99544039424 	 
+6:	194421960.pdf 	      518 B 	 99544043520 	 
+Finish: Wed Sep  9 00:30:01 2026
+
+7 FILES EXTRACTED
+	
+jpg:= 4
+pdf:= 3
+------------------------------------------------------------------
+
+Foremost finished at Wed Sep  9 00:30:01 2026

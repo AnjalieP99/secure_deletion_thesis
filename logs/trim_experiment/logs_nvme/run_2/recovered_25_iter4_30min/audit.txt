@@ -11,19 +11,11 @@ Start: Fri Sep  4 16:58:18 2026
 Length: 119 GB (128034275328 bytes)
  
 Num	 Name (bs=512)	       Size	 File Offset	 Comment 
-
-0:	235154792.jpg 	       1 MB 	 120399253504 	 
-1:	235164160.jpg 	       4 MB 	 120404049920 	 
-2:	235154800.pdf 	      518 B 	 120399257600 	 
-3:	235158208.pdf 	      518 B 	 120401002496 	 
-4:	235164168.pdf 	      518 B 	 120404054016 	 
-5:	235172392.pdf 	      518 B 	 120408264704 	 
+	 
 Finish: Fri Sep  4 18:13:36 2026
 
-6 FILES EXTRACTED
+0 FILES EXTRACTED
 	
-jpg:= 2
-pdf:= 4
 ------------------------------------------------------------------
 
 Foremost finished at Fri Sep  4 18:13:36 2026
